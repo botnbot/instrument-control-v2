@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "instrument-control-v2"
+version = "0.1.0"
+description = "Pet project"
+authors = ["Sergey Korobeynikov"]
+license = "GNU"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^6.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
