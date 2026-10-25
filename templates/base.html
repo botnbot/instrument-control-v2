@@ -16,6 +16,12 @@
                 <a class="nav-link" href="{% url 'core:repairer_list' %}">Ремонтники</a>
                 <a class="nav-link" href="{% url 'core:repair_list' %}">Ремонты</a>
                 <a class="nav-link" href="{% url 'core:relocation_list' %}">Перемещения</a>
+                {% if user.is_authenticated %}
+                <span class="text-warning me-3">Вы вошли как: <strong>{{ user.first_name|default:user.username }}</strong></span>
+                <a class="btn btn-outline-light btn-sm" href="{% url 'admin:logout' %}">Выйти</a>
+            {% else %}
+                <a class="btn btn-outline-light btn-sm" href="{% url 'admin:login' %}">Войти</a>
+            {% endif %}
             </div>
         </div>
     </nav>
