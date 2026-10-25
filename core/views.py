@@ -11,6 +11,19 @@ class InstrumentListView(ListView):
     template_name = 'core/instruments/instrument_list.html'
     context_object_name = 'instruments'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category_id = self.request.GET.get('category')
+        if category_id:
+            queryset = queryset.filter(category_id=category_id)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        from .models import Category
+        context['categories'] = Category.objects.all()
+        return context
+
 class InstrumentDetailView(DetailView):
     model = Instrument
     template_name = 'core/instruments/instrument_detail.html'
