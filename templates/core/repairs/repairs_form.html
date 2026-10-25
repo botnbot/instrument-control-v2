@@ -1,9 +1,98 @@
 {% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Редактировать ремонт{% else %}Добавить ремонт{% endif %}{% endblock %}
+
 {% block content %}
-<h2>Добавить ремонт</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-</form>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{% if form.instance.pk %}Редактировать ремонт{% else %}Отправить в ремонт{% endif %}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" id="repair-form">
+                    {% csrf_token %}
+
+                    <!-- Кастомное поле поиска инструмента -->
+                    <div class="mb-3">
+                        <label class="form-label">Инструмент (Инв. номер или Название)</label>
+                        <input type="text" id="instrument-search" class="form-control"
+                               placeholder="Начните вводить номер..." autocomplete="off">
+                        <div id="search-results" class="list-group mt-1"></div>
+
+                        <!-- Скрытое поле Django, куда JS запишет ID -->
+                        {{ form.instrument }}
+                    </div>
+
+                    <!-- Остальные поля формы (кроме instrument) -->
+                    {% for field in form %}
+                        {% if field.name != 'instrument' %}
+                            <div class="mb-3">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <hr>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <a href="{% url 'core:repair_list' %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('instrument-search');
+        const resultsBox = document.getElementById('search-results');
+        const hiddenInput = document.getElementById('id_instrument');
+
+        let timeout = null;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                resultsBox.innerHTML = '';
+                return;
+            }
+
+            // Задержка 300мс, чтобы не слать запрос на каждую букву
+            timeout = setTimeout(() => {
+                fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        resultsBox.innerHTML = '';
+                        if (data.results.length === 0) {
+                            resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
+                            return;
+                        }
+                        data.results.forEach(item => {
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'list-group-item list-group-item-action';
+                            btn.textContent = item.text;
+                            btn.onclick = function() {
+                                searchInput.value = item.text;
+                                hiddenInput.value = item.id;
+                                resultsBox.innerHTML = '';
+                            };
+                            resultsBox.appendChild(btn);
+                        });
+                    });
+            }, 300);
+        });
+
+        // Если мы редактируем существующий ремонт, подставляем текущий инструмент
+        {% if form.instance.instrument %}
+            searchInput.value = "{{ form.instance.instrument.inventory_N }} - {{ form.instance.instrument.name }}";
+            hiddenInput.value = "{{ form.instance.instrument.id }}";
+        {% endif %}
+    });
+</script>
 {% endblock %}
