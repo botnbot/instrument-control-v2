@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header"><h3 class="text-center">Вход по карте</h3></div>
+            <div class="card-body">
+                <p class="text-muted text-center">Приложите карту к считывателю</p>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary w-100">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
