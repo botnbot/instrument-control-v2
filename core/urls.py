@@ -22,4 +22,6 @@ urlpatterns = [
     # Перемещения
     path('relocations/', views.RelocationListView.as_view(), name='relocation_list'),
     path('relocations/create/', views.RelocationCreateView.as_view(), name='relocation_create'),
+
+    path('api/search-instruments/', views.search_instruments, name='search_instruments'),
 ]
