@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ instrument.name }}</h2>
+<p><strong>Инв. номер:</strong> {{ instrument.inventory_N }}</p>
+<p><strong>Категория:</strong> {{ instrument.category.name|default:"—" }}</p>
+<p><strong>Статус:</strong> {{ instrument.get_status_display }}</p>
+<p><strong>Цена:</strong> {{ instrument.price }} ₽</p>
+<p><strong>Дата ввода:</strong> {{ instrument.entry_date }}</p>
+<p><strong>Комментарий:</strong> {{ instrument.comment|default:"—" }}</p>
+{% if instrument.image1 %}<img src="{{ instrument.image1.url }}" width="200" class="me-2">{% endif %}
+{% if instrument.image2 %}<img src="{{ instrument.image2.url }}" width="200" class="me-2">{% endif %}
+{% if instrument.image3 %}<img src="{{ instrument.image3.url }}" width="200">{% endif %}
+<br><br>
+<a href="{% url 'core:instrument_list' %}" class="btn btn-secondary">← Назад</a>
+{% endblock %}

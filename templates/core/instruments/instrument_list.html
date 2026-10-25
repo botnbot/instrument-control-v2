@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>{% extends "base.html" %}
+{% block title %}Инструменты{% endblock %}
+{% block content %}
+<h2>Список инструментов</h2>
+{% if user.is_authenticated %}
+<a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить</a>
+{% endif %}
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Инв. номер</th>
+            <th>Наименование</th>
+            <th>Категория</th>
+            <th>Статус</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for instrument in instruments %}
+        <tr>
+            <td><a href="{% url 'core:instrument_detail' instrument.pk %}">{{ instrument.inventory_N }}</a></td>
+            <td>{{ instrument.name }}</td>
+            <td>{{ instrument.category.name|default:"—" }}</td>
+            <td>{{ instrument.get_status_display }}</td>
+            <td>{{ instrument.price }} ₽</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" class="text-center">Инструментов пока нет.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

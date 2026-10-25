@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Перемещения</h2>
+<a href="{% url 'core:relocation_create' %}" class="btn btn-success mb-3">+ Добавить</a>
+<table class="table table-striped">
+    <thead><tr><th>Инструмент</th><th>Куда</th><th>Дата</th></tr></thead>
+    <tbody>
+        {% for r in relocations %}
+        <tr><td>{{ r.instrument.name }}</td><td>{{ r.location }}</td><td>{{ r.date }}</td></tr>
+        {% empty %}
+        <tr><td colspan="3">Пусто</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
