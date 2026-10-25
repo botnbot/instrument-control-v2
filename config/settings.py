@@ -81,14 +81,21 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Папка для ваших CSS/JS (Bootstrap)
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Папка для CSS/JS (Bootstrap)
 
-# Media files (Загруженные фото)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Кастомная модель пользователя
 AUTH_USER_MODEL = 'user.User'
+
+AUTHENTICATION_BACKENDS = [
+    'user.backends.RFIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_URL = 'rfid_login'
+LOGIN_REDIRECT_URL = 'core:instrument_list'
+LOGOUT_REDIRECT_URL = 'core:instrument_list'
 
 # Email
 MAILERS = {
@@ -96,5 +103,3 @@ MAILERS = {
         "BACKEND": "django.core.mail.backends.console.EmailBackend",
     },
 }
-
-LOGIN_URL = '/admin/login/'
