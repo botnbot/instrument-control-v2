@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>{% extends "base.html" %}
+{% extends "base.html" %}
 {% block title %}Инструменты{% endblock %}
 {% block content %}
 <h2>Список инструментов</h2>
 {% if user.is_authenticated %}
 <a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить</a>
 {% endif %}
+
+<div class="mb-3">
+    <form method="get">
+        <select name="category" class="form-select w-auto" onchange="this.form.submit()">
+            <option value="">Все категории</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+</div>
+
 <table class="table table-striped">
     <thead class="table-dark">
         <tr>
