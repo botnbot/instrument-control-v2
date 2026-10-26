@@ -2,7 +2,7 @@
 {% block title %}Инструменты{% endblock %}
 {% block content %}
 <h2>Список инструментов</h2>
-{% if user.is_authenticated %}
+{% if user.groups.all.0.name == 'Администрация' or user.is_superuser %}
 <a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить</a>
 {% endif %}
 
@@ -19,6 +19,7 @@
     </form>
 </div>
 
+
 <table class="table table-striped">
     <thead class="table-dark">
     <tr>
@@ -27,6 +28,7 @@
         <th>Категория</th>
         <th>Статус</th>
         <th>Цена</th>
+        <th>Действия</th>
     </tr>
     </thead>
     <tbody>
@@ -49,4 +51,6 @@
     {% endfor %}
     </tbody>
 </table>
+{% if user.groups.all.0.name == 'Администрация' or user.is_superuser %}
+{% endif %}
 {% endblock %}
