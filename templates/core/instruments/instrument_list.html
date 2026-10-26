@@ -11,10 +11,9 @@
         <select name="category" class="form-select w-auto" onchange="this.form.submit()">
             <option value="">Все категории</option>
             {% for cat in categories %}
-            <option value="{{ cat.id }}" {% if request.GET.category== cat.id|stringformat:
-            "s" %}selected{% endif %}>
-            {{ cat.name }}
-            </option>
+                <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.name }}
+                </option>
             {% endfor %}
         </select>
     </form>
