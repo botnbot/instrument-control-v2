@@ -19,12 +19,14 @@ class Instrument(models.Model):
     STATUS_IN_REPAIR = "IN_REPAIR"
     STATUS_RELOCATED = "RELOCATED"
     STATUS_BROKEN = "BROKEN"
+    STATUS_WRITTEN_OFF = "WRITTEN_OFF"
 
     STATUS_CHOICES = [
         (STATUS_IN_USE, "в работе"),
         (STATUS_IN_REPAIR, "в ремонте"),
         (STATUS_RELOCATED, "перемещен"),
         (STATUS_BROKEN, "сломан"),
+        (STATUS_WRITTEN_OFF, "списан"),
     ]
 
     category = models.ForeignKey(
@@ -45,6 +47,7 @@ class Instrument(models.Model):
     image3 = models.ImageField(upload_to="instruments/foto", verbose_name="Фото 3", blank=True, null=True)
     comment = models.TextField(max_length=200, blank=True, null=True, verbose_name="Комментарий")
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=STATUS_IN_USE, verbose_name="Статус")
+    is_deleted = models.BooleanField(default=False, verbose_name="Удалён")
 
     def __str__(self):
         return f"{self.name} ({self.inventory_N})"
@@ -56,6 +59,7 @@ class Instrument(models.Model):
             self.STATUS_IN_REPAIR: ("В ремонте", "warning text-dark"),
             self.STATUS_RELOCATED: ("Перемещен", "info text-dark"),
             self.STATUS_BROKEN: ("Сломан", "danger"),
+            self.STATUS_WRITTEN_OFF: ("Списан", "danger text-dark"),
         }.get(self.status, ("Неизвестно", "secondary"))
 
     class Meta:
@@ -105,7 +109,7 @@ class Repair(models.Model):
 
 
 class Relocation(models.Model):
-    instrument = models.ForeignKey(Instrument, on_delete=models.PROTECT, related_name='relocations', verbose_name="Инструмент")
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='relocations', verbose_name="Инструмент")
     comment = models.CharField(max_length=255, verbose_name="Комментарий", blank=True)
     location = models.CharField(max_length=255, verbose_name="Куда перемещен")
     date = models.DateField(auto_now_add=True, verbose_name="Дата перемещения")
