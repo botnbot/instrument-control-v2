@@ -1,20 +1,12 @@
-"""
-Django settings for config project.
-"""
-
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-vgn)wi9c_51yea$&y*g=shv6zf4og8_q^q!l&0wwm4+*1ipi%4"
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -24,7 +16,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    'core',
+    'core.apps.CoreConfig',
     'user',
 ]
 
