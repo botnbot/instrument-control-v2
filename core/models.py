@@ -49,6 +49,15 @@ class Instrument(models.Model):
     def __str__(self):
         return f"{self.name} ({self.inventory_N})"
 
+    @property
+    def status_badge(self):
+        return {
+            self.STATUS_IN_USE: ("В работе", "success"),
+            self.STATUS_IN_REPAIR: ("В ремонте", "warning text-dark"),
+            self.STATUS_RELOCATED: ("Перемещен", "info text-dark"),
+            self.STATUS_BROKEN: ("Сломан", "danger"),
+        }.get(self.status, ("Неизвестно", "secondary"))
+
     class Meta:
         verbose_name = 'Инструмент'
         verbose_name_plural = 'Инструменты'
