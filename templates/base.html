@@ -17,14 +17,14 @@
             <a class="nav-link" href="{% url 'core:repair_list' %}">Ремонты</a>
             <a class="nav-link" href="{% url 'core:relocation_list' %}">Перемещения</a>
             {% if user.is_authenticated %}
-            <span class="text-warning me-3">Вы вошли как: <strong>{{ user.first_name|default:user.username }}</strong></span>
-            <form method="post" action="{% url 'admin:logout' %}" class="d-inline">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-light btn-sm">Выйти</button>
-            </form>
-            {% else %}
-            <a class="btn btn-outline-light btn-sm" href="{% url 'rfid_login' %}">Войти по карте</a>
-            {% endif %}
+    <span class="text-warning me-3">Вы вошли как: <strong>{{ user.first_name|default:user.username }}</strong></span>
+    <form method="post" action="{% url 'logout' %}" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-light btn-sm">Выйти</button>
+    </form>
+{% else %}
+    <a class="btn btn-outline-light btn-sm" href="{% url 'rfid_login' %}">Войти по карте</a>
+{% endif %}
         </div>
     </div>
 </nav>
