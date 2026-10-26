@@ -2,23 +2,33 @@
 {% block title %}Инструменты{% endblock %}
 {% block content %}
 <h2>Список инструментов</h2>
-{% if user.groups.all.0.name == 'Администрация' or user.is_superuser %}
+
+{% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
 <a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить</a>
 {% endif %}
 
-<div class="mb-3">
+<div class="mb-3 d-flex align-items-center gap-3 flex-wrap">
     <form method="get">
         <select name="category" class="form-select w-auto" onchange="this.form.submit()">
             <option value="">Все категории</option>
             {% for cat in categories %}
-                <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
-                    {{ cat.name }}
-                </option>
+            <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
+                {{ cat.name }}
+            </option>
             {% endfor %}
         </select>
     </form>
-</div>
 
+    <form method="get" class="d-flex align-items-center">
+        {% if request.GET.category %}
+        <input type="hidden" name="category" value="{{ request.GET.category }}">
+        {% endif %}
+        <input type="checkbox" name="show_written_off" value="1" class="form-check-input me-2" id="show_written_off"
+               {% if request.GET.show_written_off == '1' %}checked{% endif %}
+               onchange="this.form.submit()">
+        <label for="show_written_off" class="form-check-label">Показывать списанные</label>
+    </form>
+</div>
 
 <table class="table table-striped">
     <thead class="table-dark">
@@ -28,7 +38,9 @@
         <th>Категория</th>
         <th>Статус</th>
         <th>Цена</th>
+        {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
         <th>Действия</th>
+        {% endif %}
     </tr>
     </thead>
     <tbody>
@@ -43,14 +55,48 @@
             {% endwith %}
         </td>
         <td>{{ instrument.price }} ₽</td>
+        {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
+        <td class="d-flex gap-1">
+            <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
+
+            {% if instrument.status == 'IN_USE' %}
+            <form method="post" action="{% url 'core:repair_create' %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="instrument" value="{{ instrument.pk }}">
+                <button type="submit" class="btn btn-sm btn-warning">Сдать в ремонт</button>
+            </form>
+            {% endif %}
+
+            {% if instrument.status != 'WRITTEN_OFF' %}
+            <form method="post" action="{% url 'core:instrument_mark_broken' instrument.pk %}" class="d-inline"
+                  onsubmit="return confirm('Отметить инструмент {{ instrument.name }} как сломанный?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-secondary">Пометить сломаным</button>
+            </form>
+            {% endif %}
+
+            {% if instrument.status == 'BROKEN' %}
+            <form method="post" action="{% url 'core:instrument_write_off' instrument.pk %}" class="d-inline"
+                  onsubmit="return confirm('Вы уверены, что хотите списать инструмент {{ instrument.name }}?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">Списать</button>
+            </form>
+            {% endif %}
+
+            {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
+            <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('Вы уверены, что хотите удалить инструмент {{ instrument.name }}? Это действие необратимо.');">
+                Удалить
+            </a>
+            {% endif %}
+        </td>
+        {% endif %}
     </tr>
     {% empty %}
     <tr>
-        <td colspan="5" class="text-center">Инструментов пока нет.</td>
+        <td colspan="6" class="text-center">Инструментов пока нет.</td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
-{% if user.groups.all.0.name == 'Администрация' or user.is_superuser %}
-{% endif %}
 {% endblock %}
