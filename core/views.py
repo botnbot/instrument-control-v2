@@ -6,6 +6,8 @@ from .models import Instrument, Repairer, Repair, Relocation
 from .forms import InstrumentForm, RepairerForm, RepairForm, RelocationForm
 from django.http import JsonResponse
 from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 
 def search_instruments(request):
@@ -28,22 +30,32 @@ def search_instruments(request):
     return JsonResponse({'results': data})
 
 # === Инструменты ===
+
 class InstrumentListView(ListView):
     model = Instrument
     template_name = 'core/instruments/instrument_list.html'
     context_object_name = 'instruments'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        # 1. Всегда скрываем мягко удалённые инструменты
+        queryset = Instrument.objects.filter(is_deleted=False)
+
+        # 2. По умолчанию скрываем списанные (если не стоит галочка)
+        if self.request.GET.get('show_written_off') != '1':
+            queryset = queryset.exclude(status=Instrument.STATUS_WRITTEN_OFF)
+
+        # 3. Фильтр по категории
         category_id = self.request.GET.get('category')
         if category_id:
             queryset = queryset.filter(category_id=category_id)
+
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         from .models import Category
         context['categories'] = Category.objects.all()
+        context['show_written_off'] = self.request.GET.get('show_written_off') == '1'
         return context
 
 class InstrumentDetailView(DetailView):
@@ -63,10 +75,31 @@ class InstrumentUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'core/instruments/instruments_form.html'
     success_url = reverse_lazy('core:instrument_list')
 
+
 class InstrumentDeleteView(LoginRequiredMixin, DeleteView):
     model = Instrument
     template_name = 'core/instruments/instrument_confirm_delete.html'
     success_url = reverse_lazy('core:instrument_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            messages.error(request, "Удалять инструменты может только суперпользователь.")
+            return redirect('core:instrument_list')
+
+        instrument = self.get_object()
+        if instrument.status != Instrument.STATUS_WRITTEN_OFF:
+            messages.error(request, "Можно удалять только списанные инструменты.")
+            return redirect('core:instrument_list')
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        # Мягкое удаление: не удаляем, а помечаем как удалённый
+        success_url = self.get_success_url()
+        self.object.is_deleted = True
+        self.object.save()
+        messages.success(self.request, f'Инструмент "{self.object.name}" удалён (перемещён в архив).')
+        return redirect(success_url)
 
 # === Ремонтники ===
 class RepairerListView(ListView):
@@ -103,3 +136,46 @@ class RelocationCreateView(LoginRequiredMixin, CreateView):
     form_class = RelocationForm
     template_name = 'core/relocations/relocations_form.html'
     success_url = reverse_lazy('core:relocation_list')
+
+@login_required
+def write_off_instrument(request, pk):
+    instrument = get_object_or_404(Instrument, pk=pk)
+
+    # Проверка прав
+    is_allowed = (
+        request.user.is_superuser or
+        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+    )
+    if not is_allowed:
+        messages.error(request, "У вас нет прав на списание.")
+        return redirect('core:instrument_list')
+
+    # Проверка статуса: списывать можно только сломанные
+    if instrument.status != Instrument.STATUS_BROKEN:
+        messages.error(request, "Списывать можно только сломанные инструменты.")
+        return redirect('core:instrument_list')
+
+    instrument.status = Instrument.STATUS_WRITTEN_OFF
+    instrument.save()
+    messages.success(request, f'Инструмент "{instrument.name}" списан.')
+    return redirect('core:instrument_list')
+
+@login_required
+def mark_as_broken(request, pk):
+    instrument = get_object_or_404(Instrument, pk=pk)
+
+    # Проверка прав: суперпользователь, Администрация или Кладовщики
+    is_allowed = (
+        request.user.is_superuser or
+        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+    )
+    if not is_allowed:
+        messages.error(request, "У вас нет прав на изменение статуса.")
+        return redirect('core:instrument_list')
+
+    # Смена статуса на "Сломан"
+    instrument.status = Instrument.STATUS_BROKEN
+    instrument.save()
+    messages.success(request, f'Инструмент "{instrument.name}" отмечен как сломанный.')
+
+    return redirect('core:instrument_list')
