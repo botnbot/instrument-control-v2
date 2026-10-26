@@ -11,9 +11,10 @@
         <select name="category" class="form-select w-auto" onchange="this.form.submit()">
             <option value="">Все категории</option>
             {% for cat in categories %}
-                <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:"s" %}selected{% endif %}>
-                    {{ cat.name }}
-                </option>
+            <option value="{{ cat.id }}" {% if request.GET.category== cat.id|stringformat:
+            "s" %}selected{% endif %}>
+            {{ cat.name }}
+            </option>
             {% endfor %}
         </select>
     </form>
@@ -21,26 +22,32 @@
 
 <table class="table table-striped">
     <thead class="table-dark">
-        <tr>
-            <th>Инв. номер</th>
-            <th>Наименование</th>
-            <th>Категория</th>
-            <th>Статус</th>
-            <th>Цена</th>
-        </tr>
+    <tr>
+        <th>Инв. номер</th>
+        <th>Наименование</th>
+        <th>Категория</th>
+        <th>Статус</th>
+        <th>Цена</th>
+    </tr>
     </thead>
     <tbody>
-        {% for instrument in instruments %}
-        <tr>
-            <td><a href="{% url 'core:instrument_detail' instrument.pk %}">{{ instrument.inventory_N }}</a></td>
-            <td>{{ instrument.name }}</td>
-            <td>{{ instrument.category.name|default:"—" }}</td>
-            <td>{{ instrument.get_status_display }}</td>
-            <td>{{ instrument.price }} ₽</td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="5" class="text-center">Инструментов пока нет.</td></tr>
-        {% endfor %}
+    {% for instrument in instruments %}
+    <tr>
+        <td><a href="{% url 'core:instrument_detail' instrument.pk %}">{{ instrument.inventory_N }}</a></td>
+        <td>{{ instrument.name }}</td>
+        <td>{{ instrument.category.name|default:"—" }}</td>
+        <td>
+            {% with badge=instrument.status_badge %}
+            <span class="badge bg-{{ badge.1 }}">{{ badge.0 }}</span>
+            {% endwith %}
+        </td>
+        <td>{{ instrument.price }} ₽</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5" class="text-center">Инструментов пока нет.</td>
+    </tr>
+    {% endfor %}
     </tbody>
 </table>
 {% endblock %}
