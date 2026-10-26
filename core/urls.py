@@ -10,6 +10,8 @@ urlpatterns = [
     path('instruments/<int:pk>/', views.InstrumentDetailView.as_view(), name='instrument_detail'),
     path('instruments/<int:pk>/update/', views.InstrumentUpdateView.as_view(), name='instrument_update'),
     path('instruments/<int:pk>/delete/', views.InstrumentDeleteView.as_view(), name='instrument_delete'),
+    path('instruments/<int:pk>/write-off/', views.write_off_instrument, name='instrument_write_off'),
+    path('instruments/<int:pk>/mark-broken/', views.mark_as_broken, name='instrument_mark_broken'),
 
     # Ремонтники
     path('repairers/', views.RepairerListView.as_view(), name='repairer_list'),
