@@ -62,6 +62,13 @@ class Instrument(models.Model):
             self.STATUS_WRITTEN_OFF: ("Списан", "danger text-dark"),
         }.get(self.status, ("Неизвестно", "secondary"))
 
+    @property
+    def total_repair_duration(self):
+        """Суммарная продолжительность всех ремонтов (в днях)"""
+        # Берем все ремонты этого инструмента, у которых заполнена дата возврата
+        repairs = self.repairs.filter(date_of_receipt_from_repair__isnull=False)
+        return sum(r.duration for r in repairs if r.duration is not None)
+
     class Meta:
         verbose_name = 'Инструмент'
         verbose_name_plural = 'Инструменты'
