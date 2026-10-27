@@ -1,34 +1,95 @@
-<div class="mt-4 d-flex flex-wrap gap-2">
-    <a href="{% url 'core:instrument_list' %}" class="btn btn-secondary">← Назад к списку</a>
+{% extends "base.html" %}
+{% block title %}{{ instrument.name }}{% endblock %}
 
-    {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
-        <!-- Кнопка редактирования -->
-        <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-primary">Редактировать</a>
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">{{ instrument.name }}</h3>
+        <span class="badge bg-{{ instrument.status_badge.1 }} fs-6">{{ instrument.status_badge.0 }}</span>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Инвентарный номер:</strong> {{ instrument.inventory_N }}</p>
+                <p><strong>Категория:</strong> {{ instrument.category.name|default:"—" }}</p>
+                <p><strong>Цена:</strong> {{ instrument.price }} ₽</p>
+                <p><strong>Дата ввода:</strong> {{ instrument.entry_date|date:"d.m.Y" }}</p>
+                <p><strong>Состояние:</strong> {% if instrument.is_new %}Новый{% else %}Б/У{% endif %}</p>
+                <p><strong>Комментарий:</strong> {{ instrument.comment|default:"—" }}</p>
+            </div>
+            <div class="col-md-6">
+                {% if instrument.image1 %}
+                    <img src="{{ instrument.image1.url }}" class="img-fluid mb-2 rounded" alt="Фото 1">
+                {% endif %}
+                <div class="d-flex gap-2">
+                    {% if instrument.image2 %}<img src="{{ instrument.image2.url }}" class="img-fluid rounded" width="100" alt="Фото 2">{% endif %}
+                    {% if instrument.image3 %}<img src="{{ instrument.image3.url }}" class="img-fluid rounded" width="100" alt="Фото 3">{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="mt-4 d-flex flex-wrap gap-2">
+            <a href="{% url 'core:instrument_list' %}" class="btn btn-secondary">← Назад к списку</a>
 
-        <!-- Кнопка "Сдать в ремонт" (только для статуса "в работе") -->
-        {% if instrument.status == 'IN_USE' %}
-        <form method="post" action="{% url 'core:repair_create' %}" class="d-inline">
-            {% csrf_token %}
-            <input type="hidden" name="instrument" value="{{ instrument.pk }}">
-            <button type="submit" class="btn btn-warning">Сдать в ремонт</button>
-        </form>
-        {% endif %}
+            {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
+                <!-- Кнопка редактирования -->
+                <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-primary">Редактировать</a>
 
-        <!-- Кнопка "Списать" (кроме списанных и сломанных) -->
-        {% if instrument.status != 'WRITTEN_OFF' and instrument.status == 'BROKEN' %}
-        <form method="post" action="{% url 'core:instrument_write_off' instrument.pk %}" class="d-inline"
-              onsubmit="return confirm('Вы уверены, что хотите списать инструмент {{ instrument.name }}?');">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Списать</button>
-        </form>
-        {% endif %}
+                <!-- Кнопка "Сдать в ремонт" (для "в работе" и "сломан") -->
+                {% if instrument.status == 'IN_USE' or instrument.status == 'BROKEN' %}
+                <form method="post" action="{% url 'core:repair_create' %}" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="instrument" value="{{ instrument.pk }}">
+                    <button type="submit" class="btn btn-warning">Сдать в ремонт</button>
+                </form>
+                {% endif %}
 
-        <!-- Кнопка "Удалить" (только для списанных и только суперпользователю) -->
-        {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
-        <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-outline-danger"
-           onclick="return confirm('Вы уверены, что хотите удалить инструмент {{ instrument.name }}? Это действие необратимо.');">
-            Удалить
-        </a>
-        {% endif %}
-    {% endif %}
+                <!-- Кнопка "Списать" (только для сломанных, открывает модальное окно) -->
+                {% if instrument.status == 'BROKEN' %}
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#writeOffModal">
+                    Списать
+                </button>
+                {% endif %}
+
+                <!-- Кнопка "Удалить" (только для списанных и только суперпользователю) -->
+                {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
+                <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-outline-danger"
+                   onclick="return confirm('Вы уверены, что хотите удалить инструмент {{ instrument.name }}? Это действие необратимо.');">
+                    Удалить
+                </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
 </div>
+
+<!-- Модальное окно для списания (вне блока кнопок, но внутри блока content) -->
+{% if instrument.status == 'BROKEN' %}
+<div class="modal fade" id="writeOffModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'core:instrument_write_off' instrument.pk %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Списание инструмента</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Вы уверены, что хотите списать <strong>{{ instrument.name }}</strong>?</p>
+                    <div class="mb-3">
+                        <label for="reason" class="form-label">Причина списания</label>
+                        <textarea name="reason" id="reason" class="form-control" rows="3" required
+                                  placeholder="Например: механическое повреждение, износ, утрата..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-danger">Списать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
