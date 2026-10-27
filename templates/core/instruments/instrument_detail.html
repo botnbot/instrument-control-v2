@@ -13,6 +13,7 @@
                 <p><strong>Инвентарный номер:</strong> {{ instrument.inventory_N }}</p>
                 <p><strong>Категория:</strong> {{ instrument.category.name|default:"—" }}</p>
                 <p><strong>Цена:</strong> {{ instrument.price }} ₽</p>
+                <p><strong>Суммарная продолжительность ремонтов:</strong> {{ instrument.total_repair_duration }} дн.</p>
                 <p><strong>Дата ввода:</strong> {{ instrument.entry_date|date:"d.m.Y" }}</p>
                 <p><strong>Состояние:</strong> {% if instrument.is_new %}Новый{% else %}Б/У{% endif %}</p>
                 <p><strong>Комментарий:</strong> {{ instrument.comment|default:"—" }}</p>
