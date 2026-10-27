@@ -38,6 +38,7 @@
         <th>Категория</th>
         <th>Статус</th>
         <th>Цена</th>
+        <th>Всего в ремонте</th>
         {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
         <th>Действия</th>
         {% endif %}
@@ -55,6 +56,7 @@
             {% endwith %}
         </td>
         <td>{{ instrument.price }} ₽</td>
+        <td>{{ instrument.total_repair_duration }} дн.</td>
         {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
         <td class="d-flex gap-1">
             <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
@@ -83,12 +85,11 @@
             {% endif %}
 
             {% if instrument.status == 'IN_REPAIR' %}
-            <form method="post" action="{% url 'core:instrument_return_from_repair' instrument.pk %}" class="d-inline"
-                  onsubmit="return confirm('Вернуть инструмент {{ instrument.name }} из ремонта?');">
-                    {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-success">Вернуть из ремонта</button>
-            </form>
-            {% endif %}
+<button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#returnFromRepairModal"
+        data-instrument-id="{{ instrument.pk }}" data-instrument-name="{{ instrument.name }}">
+    Вернуть из ремонта
+</button>
+{% endif %}
 
             {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
             <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-sm btn-outline-danger"
@@ -101,7 +102,7 @@
     </tr>
     {% empty %}
     <tr>
-        <td colspan="6" class="text-center">Инструментов пока нет.</td>
+        <td colspan="7" class="text-center">Инструментов пока нет.</td>
     </tr>
     {% endfor %}
     </tbody>
@@ -145,6 +146,51 @@
             const form = document.getElementById('writeOffFormList');
             form.action = `/instruments/${instrumentId}/write-off/`;
             document.getElementById('modalInstrumentNameList').innerHTML = `Вы уверены, что хотите списать <strong>${instrumentName}</strong>?`;
+        });
+    });
+</script>
+
+<div class="modal fade" id="returnFromRepairModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="returnFromRepairForm" action="">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Возврат из ремонта</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalReturnInstrumentName"></p>
+                    <div class="mb-3">
+                        <label for="date_of_receipt_from_repair" class="form-label">Дата возврата</label>
+                        <input type="date" name="date_of_receipt_from_repair" id="date_of_receipt_from_repair"
+                               class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="repair_cost" class="form-label">Стоимость ремонта (₽)</label>
+                        <input type="number" step="0.01" name="repair_cost" id="repair_cost" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-success">Вернуть из ремонта</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const returnModal = document.getElementById('returnFromRepairModal');
+        returnModal.addEventListener('show.bs.modal', function(event) {
+            const button = event.relatedTarget;
+            const instrumentId = button.getAttribute('data-instrument-id');
+            const instrumentName = button.getAttribute('data-instrument-name');
+
+            const form = document.getElementById('returnFromRepairForm');
+            form.action = `/instruments/${instrumentId}/return-from-repair/`;
+            document.getElementById('modalReturnInstrumentName').innerHTML = `Вернуть инструмент <strong>${instrumentName}</strong> из ремонта?`;
         });
     });
 </script>
