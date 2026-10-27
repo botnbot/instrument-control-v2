@@ -85,12 +85,14 @@ class Repairer(models.Model):
 
 
 class Repair(models.Model):
-    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='repairs', verbose_name='Инструмент')
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='repairs',
+                                   verbose_name='Инструмент')
     repairer = models.ForeignKey(Repairer, on_delete=models.PROTECT, related_name='repairs', verbose_name='Исполнитель')
     failure_date = models.DateField(verbose_name='Дата поломки')
     date_of_delivery_for_repair = models.DateField(verbose_name="Дата сдачи в ремонт")
     date_of_receipt_from_repair = models.DateField(blank=True, null=True, verbose_name="Дата получения из ремонта")
-    repair_cost = models.DecimalField(decimal_places=2, max_digits=10, verbose_name="Стоимость ремонта", blank=True, null=True)
+    repair_cost = models.DecimalField(decimal_places=2, max_digits=10, verbose_name="Стоимость ремонта", blank=True,
+                                      null=True)
     comment = models.TextField(verbose_name="Комментарий", blank=True, null=True)
 
     @property
@@ -109,7 +111,8 @@ class Repair(models.Model):
 
 
 class Relocation(models.Model):
-    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='relocations', verbose_name="Инструмент")
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='relocations',
+                                   verbose_name="Инструмент")
     comment = models.CharField(max_length=255, verbose_name="Комментарий", blank=True)
     location = models.CharField(max_length=255, verbose_name="Куда перемещен")
     date = models.DateField(auto_now_add=True, verbose_name="Дата перемещения")
@@ -124,3 +127,19 @@ class Relocation(models.Model):
 
     def __str__(self):
         return f"{self.instrument.name} -> {self.location}"
+
+
+class WriteOff(models.Model):
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE, related_name='write_offs',
+                                   verbose_name="Инструмент")
+
+    reason = models.CharField(max_length=250, verbose_name='Причина списания')
+    date = models.DateField(auto_now_add=True, verbose_name='Дата списания')
+    user = models.ForeignKey('user.User', on_delete=models.SET_NULL, null=True, verbose_name="Кто списал")
+
+    class Meta:
+        verbose_name = 'Списание'
+        verbose_name_plural = 'Списания'
+
+    def __str__(self):
+        return f"Списание {self.instrument.name} {self.date}"
