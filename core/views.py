@@ -179,3 +179,27 @@ def mark_as_broken(request, pk):
     messages.success(request, f'Инструмент "{instrument.name}" отмечен как сломанный.')
 
     return redirect('core:instrument_list')
+
+@login_required
+def return_from_repair(request, pk):
+    instrument = get_object_or_404(Instrument, pk=pk)
+
+    # Проверка прав: суперпользователь, Администрация или Кладовщики
+    is_allowed = (
+        request.user.is_superuser or
+        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+    )
+    if not is_allowed:
+        messages.error(request, "У вас нет прав на возврат из ремонта.")
+        return redirect('core:instrument_list')
+
+    # Проверка статуса: возвращать можно только из ремонта
+    if instrument.status != Instrument.STATUS_IN_REPAIR:
+        messages.error(request, "Этот инструмент не находится в ремонте.")
+        return redirect('core:instrument_list')
+
+    # Меняем статус на "В работе"
+    instrument.status = Instrument.STATUS_IN_USE
+    instrument.save()
+    messages.success(request, f'Инструмент "{instrument.name}" возвращён из ремонта.')
+    return redirect('core:instrument_list')
