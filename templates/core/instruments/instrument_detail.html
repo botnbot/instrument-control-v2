@@ -52,6 +52,14 @@
                 </button>
                 {% endif %}
 
+                 {% if instrument.status == 'IN_REPAIR' %}
+                    <form method="post" action="{% url 'core:instrument_return_from_repair' instrument.pk %}" class="d-inline"
+                        onsubmit="return confirm('Вернуть инструмент {{ instrument.name }} из ремонта?');">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Вернуть из ремонта</button>
+                    </form>
+                {% endif %}
+
                 <!-- Кнопка "Удалить" (только для списанных и только суперпользователю) -->
                 {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
                 <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-outline-danger"
