@@ -184,7 +184,6 @@ def mark_as_broken(request, pk):
 def return_from_repair(request, pk):
     instrument = get_object_or_404(Instrument, pk=pk)
 
-    # Проверка прав: суперпользователь, Администрация или Кладовщики
     is_allowed = (
         request.user.is_superuser or
         request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
@@ -193,13 +192,36 @@ def return_from_repair(request, pk):
         messages.error(request, "У вас нет прав на возврат из ремонта.")
         return redirect('core:instrument_list')
 
-    # Проверка статуса: возвращать можно только из ремонта
     if instrument.status != Instrument.STATUS_IN_REPAIR:
         messages.error(request, "Этот инструмент не находится в ремонте.")
         return redirect('core:instrument_list')
 
-    # Меняем статус на "В работе"
-    instrument.status = Instrument.STATUS_IN_USE
-    instrument.save()
-    messages.success(request, f'Инструмент "{instrument.name}" возвращён из ремонта.')
+    if request.method == 'POST':
+        date_of_receipt = request.POST.get('date_of_receipt_from_repair')
+        repair_cost = request.POST.get('repair_cost')
+
+        if not date_of_receipt:
+            messages.error(request, "Укажите дату возврата из ремонта.")
+            return redirect('core:instrument_list')
+
+        # Находим последний ремонт этого инструмента, у которого нет даты возврата
+        repair = Repair.objects.filter(
+            instrument=instrument,
+            date_of_receipt_from_repair__isnull=True
+        ).order_by('-date_of_delivery_for_repair').first()
+
+        if repair:
+            repair.date_of_receipt_from_repair = date_of_receipt
+            if repair_cost:
+                repair.repair_cost = repair_cost
+            repair.save()
+            messages.success(request, f'Инструмент "{instrument.name}" возвращён из ремонта.')
+        else:
+            messages.warning(request, "Не найден активный ремонт для этого инструмента.")
+
+        instrument.status = Instrument.STATUS_IN_USE
+        instrument.save()
+        return redirect('core:instrument_list')
+
+    # Если GET — показываем модальное окно (но оно уже в шаблоне)
     return redirect('core:instrument_list')

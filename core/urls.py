@@ -10,6 +10,7 @@ urlpatterns = [
     path('instruments/<int:pk>/', views.InstrumentDetailView.as_view(), name='instrument_detail'),
     path('instruments/<int:pk>/update/', views.InstrumentUpdateView.as_view(), name='instrument_update'),
     path('instruments/<int:pk>/delete/', views.InstrumentDeleteView.as_view(), name='instrument_delete'),
+    path('api/search-instruments/', views.search_instruments, name='search_instruments'),
     path('instruments/<int:pk>/write-off/', views.write_off_instrument, name='instrument_write_off'),
     path('instruments/<int:pk>/mark-broken/', views.mark_as_broken, name='instrument_mark_broken'),
 
@@ -25,6 +26,4 @@ urlpatterns = [
     # Перемещения
     path('relocations/', views.RelocationListView.as_view(), name='relocation_list'),
     path('relocations/create/', views.RelocationCreateView.as_view(), name='relocation_create'),
-
-    path('api/search-instruments/', views.search_instruments, name='search_instruments'),
 ]
