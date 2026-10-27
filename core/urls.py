@@ -20,6 +20,7 @@ urlpatterns = [
     # Ремонты
     path('repairs/', views.RepairListView.as_view(), name='repair_list'),
     path('repairs/create/', views.RepairCreateView.as_view(), name='repair_create'),
+    path('instruments/<int:pk>/return-from-repair/', views.return_from_repair, name='instrument_return_from_repair'),
 
     # Перемещения
     path('relocations/', views.RelocationListView.as_view(), name='relocation_list'),
