@@ -1,15 +1,40 @@
 {% extends "base.html" %}
+{% block title %}Ремонты{% endblock %}
+
 {% block content %}
 <h2>Ремонты</h2>
 <a href="{% url 'core:repair_create' %}" class="btn btn-success mb-3">+ Добавить</a>
+
 <table class="table table-striped">
-    <thead><tr><th>Инструмент</th><th>Исполнитель</th><th>Сдано</th><th>Получено</th></tr></thead>
+    <thead class="table-dark">
+    <tr>
+        <th>Инструмент</th>
+        <th>Исполнитель</th>
+        <th>Сдано</th>
+        <th>Получено</th>
+        <th>Продолжительность</th>
+    </tr>
+    </thead>
     <tbody>
-        {% for r in repairs %}
-        <tr><td>{{ r.instrument.name }}</td><td>{{ r.repairer.name }}</td><td>{{ r.date_of_delivery_for_repair }}</td><td>{{ r.date_of_receipt_from_repair|default:"—" }}</td></tr>
-        {% empty %}
-        <tr><td colspan="4">Пусто</td></tr>
-        {% endfor %}
+    {% for r in repairs %}
+    <tr>
+        <td>{{ r.instrument.name }}</td>
+        <td>{{ r.repairer.name }}</td>
+        <td>{{ r.date_of_delivery_for_repair }}</td>
+        <td>{{ r.date_of_receipt_from_repair|default:"—" }}</td>
+        <td>
+            {% if r.duration is not None %}
+                {{ r.duration }} дн.
+            {% else %}
+                <span class="text-muted">В процессе</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5" class="text-center">Ремонтов пока нет.</td>
+    </tr>
+    {% endfor %}
     </tbody>
 </table>
 {% endblock %}
