@@ -8,11 +8,46 @@
 <table class="table table-striped">
     <thead class="table-dark">
     <tr>
-        <th>Инструмент</th>
-        <th>Исполнитель</th>
-        <th>Сдано</th>
-        <th>Получено</th>
-        <th>Продолжительность</th>
+        <th>
+            <a href="?sort=instrument__name&order={% if current_sort == 'instrument__name' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Инструмент
+                {% if current_sort == 'instrument__name' %}
+                    {% if current_order == 'asc' %}▲{% else %}▼{% endif %}
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="?sort=repairer__name&order={% if current_sort == 'repairer__name' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Исполнитель
+                {% if current_sort == 'repairer__name' %}
+                    {% if current_order == 'asc' %}▲{% else %}▼{% endif %}
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="?sort=date_of_delivery_for_repair&order={% if current_sort == 'date_of_delivery_for_repair' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Сдано
+                {% if current_sort == 'date_of_delivery_for_repair' %}
+                    {% if current_order == 'asc' %}▲{% else %}▼{% endif %}
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="?sort=date_of_receipt_from_repair&order={% if current_sort == 'date_of_receipt_from_repair' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Получено
+                {% if current_sort == 'date_of_receipt_from_repair' %}
+                    {% if current_order == 'asc' %}▲{% else %}▼{% endif %}
+                {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="?sort=duration&order={% if current_sort == 'duration' and current_order == 'asc' %}desc{% else %}asc{% endif %}">
+                Продолжительность
+                {% if current_sort == 'duration' %}
+                    {% if current_order == 'asc' %}▲{% else %}▼{% endif %}
+                {% endif %}
+            </a>
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -23,8 +58,8 @@
         <td>{{ r.date_of_delivery_for_repair }}</td>
         <td>{{ r.date_of_receipt_from_repair|default:"—" }}</td>
         <td>
-            {% if r.duration is not None %}
-                {{ r.duration }} дн.
+            {% if r.date_of_receipt_from_repair %}
+                {{ r.duration_days.days }} дн.
             {% else %}
                 <span class="text-muted">В процессе</span>
             {% endif %}

@@ -114,10 +114,52 @@ class RepairerCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('core:repairer_list')
 
 # === Ремонты ===
+from django.db.models import F, ExpressionWrapper, DurationField
+from django.db.models.functions import Coalesce
+from django.utils import timezone
+
+
 class RepairListView(ListView):
     model = Repair
     template_name = 'core/repairs/repairs_list.html'
     context_object_name = 'repairs'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Аннотация: продолжительность в днях (для завершённых ремонтов)
+        queryset = queryset.annotate(
+            duration_days=ExpressionWrapper(
+                F('date_of_receipt_from_repair') - F('date_of_delivery_for_repair'),
+                output_field=DurationField()
+            )
+        )
+
+        sort = self.request.GET.get('sort', 'date_of_delivery_for_repair')
+        order = self.request.GET.get('order', 'desc')
+
+        if sort == 'duration':
+            sort = 'duration_days'
+
+        allowed_sort_fields = [
+            'instrument__name',
+            'repairer__name',
+            'date_of_delivery_for_repair',
+            'date_of_receipt_from_repair',
+            'duration_days',
+        ]
+        if sort in allowed_sort_fields:
+            if order == 'desc':
+                sort = '-' + sort
+            queryset = queryset.order_by(sort)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_sort'] = self.request.GET.get('sort', 'date_of_delivery_for_repair')
+        context['current_order'] = self.request.GET.get('order', 'desc')
+        return context
 
 class RepairCreateView(LoginRequiredMixin, CreateView):
     model = Repair
@@ -222,6 +264,4 @@ def return_from_repair(request, pk):
         instrument.status = Instrument.STATUS_IN_USE
         instrument.save()
         return redirect('core:instrument_list')
-
-    # Если GET — показываем модальное окно (но оно уже в шаблоне)
     return redirect('core:instrument_list')
