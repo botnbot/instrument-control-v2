@@ -38,6 +38,7 @@
         <th>Категория</th>
         <th>Статус</th>
         <th>Цена</th>
+        <th>Выдан</th>
         <th>Всего в ремонте</th>
         {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
         <th>Действия</th>
@@ -56,6 +57,13 @@
             {% endwith %}
         </td>
         <td>{{ instrument.price }} ₽</td>
+        <td>
+            {% if instrument.assigned_to %}
+                {{ instrument.assigned_to.first_name|default:instrument.assigned_to.username }} {{ instrument.assigned_to.last_name }}
+            {% else %}
+                —
+            {% endif %}
+        </td>
         <td>{{ instrument.total_repair_duration }} дн.</td>
         {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
         <td class="d-flex gap-1">
@@ -78,18 +86,20 @@
             {% endif %}
 
             {% if instrument.status == 'BROKEN' %}
-            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#writeOffModalList"
+            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#writeOffModalList"
                     data-instrument-id="{{ instrument.pk }}" data-instrument-name="{{ instrument.name }}">
                 Списать
             </button>
             {% endif %}
 
             {% if instrument.status == 'IN_REPAIR' %}
-<button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#returnFromRepairModal"
-        data-instrument-id="{{ instrument.pk }}" data-instrument-name="{{ instrument.name }}">
-    Вернуть из ремонта
-</button>
-{% endif %}
+            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                    data-bs-target="#returnFromRepairModal"
+                    data-instrument-id="{{ instrument.pk }}" data-instrument-name="{{ instrument.name }}">
+                Вернуть из ремонта
+            </button>
+            {% endif %}
 
             {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
             <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-sm btn-outline-danger"
@@ -102,7 +112,7 @@
     </tr>
     {% empty %}
     <tr>
-        <td colspan="7" class="text-center">Инструментов пока нет.</td>
+        <td colspan="8" class="text-center">Инструментов пока нет.</td>
     </tr>
     {% endfor %}
     </tbody>
@@ -194,16 +204,17 @@
         });
     });
 </script>
+
 {% if is_paginated %}
 <nav aria-label="Page navigation" class="mt-4">
     <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">« Первая</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Предыдущая</a>
-            </li>
+        <li class="page-item">
+            <a class="page-link" href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">« Первая</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Предыдущая</a>
+        </li>
         {% endif %}
 
         <li class="page-item active">
@@ -211,12 +222,12 @@
         </li>
 
         {% if page_obj.has_next %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Следующая</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Последняя »</a>
-            </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Следующая</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Последняя »</a>
+        </li>
         {% endif %}
     </ul>
 </nav>
