@@ -35,6 +35,7 @@ class InstrumentListView(ListView):
     model = Instrument
     template_name = 'core/instruments/instrument_list.html'
     context_object_name = 'instruments'
+    paginate_by = 10
 
     def get_queryset(self):
         # 1. Всегда скрываем мягко удалённые инструменты
