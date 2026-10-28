@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,17 +15,34 @@
         th a:hover {
             text-decoration: underline;
         }
+        .btn {
+        white-space: nowrap;
+        }
+        .table td .btn {
+    height: 31px; /* Фиксированная высота (подберите под ваш размер кнопок) */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'core:instrument_list' %}">🛠️ Учёт инструментов</a>
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'core:instrument_list' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Логотип" height="30" class="me-2">
+            🛠️ Учёт инструментов
+        </a>
         <div class="navbar-nav">
             <a class="nav-link" href="{% url 'core:instrument_list' %}">Инструменты</a>
             <a class="nav-link" href="{% url 'core:repairer_list' %}">Ремонтники</a>
             <a class="nav-link" href="{% url 'core:repair_list' %}">Ремонты</a>
             <a class="nav-link" href="{% url 'core:relocation_list' %}">Перемещения</a>
+            {% if user.is_authenticated %}
+                {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
+                    <a class="nav-link" href="{% url 'core:issue_instrument' %}">Выдача</a>
+                {% endif %}
+            {% endif %}
             {% if user.is_authenticated %}
                 <span class="text-warning me-3">Вы вошли как: <strong>{{ user.first_name|default:user.username }}</strong></span>
                 <form method="post" action="{% url 'logout' %}" class="d-inline">
