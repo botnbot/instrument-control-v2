@@ -3,14 +3,21 @@ from .models import Instrument, Repairer, Repair, Relocation
 
 
 class InstrumentForm(forms.ModelForm):
+
     class Meta:
         model = Instrument
         fields = '__all__'
         widgets = {
+            'assigned_to': forms.Select(attrs={'class': 'form-select'}),
             'entry_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'comment': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-select'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Показываем только активных пользователей
+        self.fields['assigned_to'].queryset = self.fields['assigned_to'].queryset.filter(is_active=True)
 
 
 class RepairerForm(forms.ModelForm):
