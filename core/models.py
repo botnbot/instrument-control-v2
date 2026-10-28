@@ -48,6 +48,14 @@ class Instrument(models.Model):
     comment = models.TextField(max_length=200, blank=True, null=True, verbose_name="Комментарий")
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default=STATUS_IN_USE, verbose_name="Статус")
     is_deleted = models.BooleanField(default=False, verbose_name="Удалён")
+    assigned_to = models.ForeignKey(
+        'user.User',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='assigned_instruments',
+        verbose_name="Выдан"
+    )
 
     def __str__(self):
         return f"{self.name} ({self.inventory_N})"
