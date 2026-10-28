@@ -1,4 +1,5 @@
 [tool.poetry]
+package-mode = false
 name = "instrument-control-v2"
 version = "0.1.0"
 description = "Pet project"
