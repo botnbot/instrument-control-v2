@@ -1,14 +1,19 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import ExpressionWrapper, F, DurationField
+from django.db.models import Q
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
-from .models import Instrument, Repairer, Repair, Relocation
-from .forms import InstrumentForm, RepairerForm, RepairForm, RelocationForm
-from django.http import JsonResponse
-from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 
+from user.models import User
+from .forms import InstrumentForm, RepairerForm, RepairForm, RelocationForm
+from .models import Instrument, Repairer, Repair, Relocation
+
+
+# === Инструменты ===
 
 def search_instruments(request):
     query = request.GET.get('q', '')
@@ -29,7 +34,6 @@ def search_instruments(request):
     ]
     return JsonResponse({'results': data})
 
-# === Инструменты ===
 
 class InstrumentListView(ListView):
     model = Instrument
@@ -115,10 +119,6 @@ class RepairerCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('core:repairer_list')
 
 # === Ремонты ===
-from django.db.models import F, ExpressionWrapper, DurationField
-from django.db.models.functions import Coalesce
-from django.utils import timezone
-
 
 class RepairListView(ListView):
     model = Repair
@@ -167,6 +167,59 @@ class RepairCreateView(LoginRequiredMixin, CreateView):
     form_class = RepairForm
     template_name = 'core/repairs/repairs_form.html'
     success_url = reverse_lazy('core:repair_list')
+
+@login_required
+def issue_instrument(request):
+    # Проверка прав: только кладовщик или админ
+    is_allowed = (
+        request.user.is_superuser or
+        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+    )
+    if not is_allowed:
+        messages.error(request, "У вас нет прав на выдачу инструментов.")
+        return redirect('core:instrument_list')
+
+    user_to_assign = None
+    rfid_error = None
+
+    # Шаг 1: Поиск пользователя по карте
+    if request.method == 'POST' and 'rfid_card' in request.POST:
+        rfid = request.POST.get('rfid_card', '').strip()
+        if rfid:
+            try:
+                user_to_assign = User.objects.get(rfid_card=rfid, is_active=True)
+                messages.success(request, f'Пользователь найден: {user_to_assign}')
+            except User.DoesNotExist:
+                rfid_error = "Пользователь с такой картой не найден или неактивен."
+
+    # === Выдача ===
+    if request.method == 'POST' and 'instrument_id' in request.POST:
+        instrument = get_object_or_404(Instrument, pk=request.POST.get('instrument_id'))
+        user_id = request.POST.get('user_id')
+        user_to_assign = get_object_or_404(User, pk=user_id)
+
+        if instrument.status != Instrument.STATUS_IN_USE:
+            messages.error(request, "Можно выдавать только инструменты со статусом «В работе».")
+        elif instrument.assigned_to:
+            messages.warning(request, f'Инструмент уже закреплён за {instrument.assigned_to}.')
+        else:
+            instrument.assigned_to = user_to_assign
+            instrument.save()
+            messages.success(request, f'Инструмент "{instrument.name}" выдан пользователю {user_to_assign}.')
+            return redirect('core:issue_instrument')
+
+    # Список доступных инструментов (не закреплённых и не списанных)
+    available_instruments = Instrument.objects.filter(
+        is_deleted=False,
+        status=Instrument.STATUS_IN_USE,
+        assigned_to__isnull=True
+    )
+
+    return render(request, 'core/issue_instrument.html', {
+        'user_to_assign': user_to_assign,
+        'rfid_error': rfid_error,
+        'available_instruments': available_instruments,
+    })
 
 # === Перемещения ===
 class RelocationListView(ListView):
