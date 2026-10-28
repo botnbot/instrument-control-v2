@@ -48,7 +48,7 @@
     {% for instrument in instruments %}
     <tr>
         <td><a href="{% url 'core:instrument_detail' instrument.pk %}">{{ instrument.inventory_N }}</a></td>
-        <td>{{ instrument.name }}</td>
+        <td><a href="{% url 'core:instrument_detail' instrument.pk %}">{{ instrument.name }}</a></td>
         <td>{{ instrument.category.name|default:"—" }}</td>
         <td>
             {% with badge=instrument.status_badge %}
@@ -194,4 +194,31 @@
         });
     });
 </script>
+{% if is_paginated %}
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">« Первая</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Предыдущая</a>
+            </li>
+        {% endif %}
+
+        <li class="page-item active">
+            <span class="page-link">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Следующая</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.show_written_off %}&show_written_off=1{% endif %}">Последняя »</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
 {% endblock %}
