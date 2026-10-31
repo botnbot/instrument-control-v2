@@ -1,18 +1,15 @@
 [tool.poetry]
-package-mode = false
 name = "instrument-control-v2"
-version = "0.1.0"
+version = "2.0.0"
 description = "Pet project"
 authors = ["Sergey Korobeynikov"]
-license = "GNU"
+license = "GPL-3.0-only"
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-django = "^6.1.2"
-pillow = "^13.0.0"
-gunicorn = "^26.2.0"
-
+django = "^5.1"
+pillow = "^10.4"
 
 [build-system]
 requires = ["poetry-core"]
