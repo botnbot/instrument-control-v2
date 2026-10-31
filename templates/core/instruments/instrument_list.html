@@ -69,7 +69,7 @@
         <td class="d-flex gap-1">
             <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
 
-            {% if instrument.status == 'IN_USE' %}
+            {% if instrument.status != 'WRITTEN_OFF' %}
             <form method="post" action="{% url 'core:repair_create' %}" class="d-inline">
                 {% csrf_token %}
                 <input type="hidden" name="instrument" value="{{ instrument.pk }}">
@@ -166,7 +166,7 @@
             <form method="post" id="returnFromRepairForm" action="">
                 {% csrf_token %}
                 <div class="modal-header">
-                    <h5 class="modal-title">Возврат из ремонта</h5>
+                    <h5 class="modal-title">Получение из ремонта</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -183,7 +183,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="submit" class="btn btn-success">Вернуть из ремонта</button>
+                    <button type="submit" class="btn btn-success">Получить из ремонта</button>
                 </div>
             </form>
         </div>
