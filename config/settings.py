@@ -7,7 +7,19 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-key-for-dev')
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1'
+).split(',')
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8001',
+    'http://localhost:8001',
+    'http://192.168.10.6:8001',
+]
+
+# Чтобы Django доверял заголовкам от Nginx
+USE_X_FORWARDED_HOST = True
 
 INSTALLED_APPS = [
     "django.contrib.admin",
