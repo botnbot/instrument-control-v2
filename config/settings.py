@@ -1,11 +1,21 @@
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-key-for-dev')
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes', 'on')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'dev-only-insecure-key'
+    else:
+        raise ImproperlyConfigured('SECRET_KEY environment variable is required in production')
+
+
 
 ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
@@ -104,8 +114,4 @@ LOGIN_REDIRECT_URL = 'core:instrument_list'
 LOGOUT_REDIRECT_URL = 'core:instrument_list'
 
 # Email
-MAILERS = {
-    "default": {
-        "BACKEND": "django.core.mail.backends.console.EmailBackend",
-    },
-}
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

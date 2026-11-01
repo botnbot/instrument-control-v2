@@ -45,53 +45,61 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('instrument-search');
-        const resultsBox = document.getElementById('search-results');
-        const hiddenInput = document.getElementById('id_instrument');
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('instrument-search');
+    const resultsBox = document.getElementById('search-results');
+    const hiddenInput = document.getElementById('id_instrument');
 
-        let timeout = null;
+    let timeout = null;
 
-        searchInput.addEventListener('input', function() {
-            clearTimeout(timeout);
-            const query = this.value.trim();
+    searchInput.addEventListener('input', function() {
+        clearTimeout(timeout);
+        const query = this.value.trim();
+        if (query.length < 2) {
+            resultsBox.innerHTML = '';
+            return;
+        }
 
-            if (query.length < 2) {
-                resultsBox.innerHTML = '';
-                return;
-            }
-
-            // Задержка 300мс, чтобы не слать запрос на каждую букву
-            timeout = setTimeout(() => {
-                fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        resultsBox.innerHTML = '';
-                        if (data.results.length === 0) {
-                            resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
-                            return;
-                        }
-                        data.results.forEach(item => {
-                            const btn = document.createElement('button');
-                            btn.type = 'button';
-                            btn.className = 'list-group-item list-group-item-action';
-                            btn.textContent = item.text;
-                            btn.onclick = function() {
-                                searchInput.value = item.text;
-                                hiddenInput.value = item.id;
-                                resultsBox.innerHTML = '';
-                            };
-                            resultsBox.appendChild(btn);
-                        });
+        timeout = setTimeout(() => {
+            fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    resultsBox.innerHTML = '';
+                    if (data.results.length === 0) {
+                        resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
+                        return;
+                    }
+                    data.results.forEach(item => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'list-group-item list-group-item-action';
+                        btn.textContent = item.text;
+                        btn.onclick = function() {
+                            searchInput.value = item.text;
+                            hiddenInput.value = item.id;
+                            resultsBox.innerHTML = '';
+                        };
+                        resultsBox.appendChild(btn);
                     });
-            }, 300);
-        });
-
-        // Если мы редактируем существующий ремонт, подставляем текущий инструмент
-        {% if form.instance.instrument %}
-            searchInput.value = "{{ form.instance.instrument.inventory_N }} - {{ form.instance.instrument.name }}";
-            hiddenInput.value = "{{ form.instance.instrument.id }}";
-        {% endif %}
+                });
+        }, 300);
     });
+
+    // Если редактируем существующий ремонт
+    {% if form.instance.instrument %}
+        searchInput.value = "{{ form.instance.instrument.inventory_N }} - {{ form.instance.instrument.name }}";
+        hiddenInput.value = "{{ form.instance.instrument.id }}";
+    {% elif form.initial.instrument %}
+        // Если пришли с GET-параметром ?instrument=...
+        fetch(`/api/search-instruments/?q={{ form.initial.instrument }}`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.results.length > 0) {
+                    searchInput.value = data.results[0].text;
+                    hiddenInput.value = data.results[0].id;
+                }
+            });
+    {% endif %}
+});
 </script>
 {% endblock %}
