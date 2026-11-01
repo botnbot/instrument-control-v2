@@ -20,11 +20,13 @@
             </div>
             <div class="col-md-6">
                 {% if instrument.image1 %}
-                    <img src="{{ instrument.image1.url }}" class="img-fluid mb-2 rounded" alt="Фото 1">
+                <img src="{{ instrument.image1.url }}" class="img-fluid mb-2 rounded" alt="Фото 1">
                 {% endif %}
                 <div class="d-flex gap-2">
-                    {% if instrument.image2 %}<img src="{{ instrument.image2.url }}" class="img-fluid rounded" width="100" alt="Фото 2">{% endif %}
-                    {% if instrument.image3 %}<img src="{{ instrument.image3.url }}" class="img-fluid rounded" width="100" alt="Фото 3">{% endif %}
+                    {% if instrument.image2 %}<img src="{{ instrument.image2.url }}" class="img-fluid rounded"
+                                                   width="100" alt="Фото 2">{% endif %}
+                    {% if instrument.image3 %}<img src="{{ instrument.image3.url }}" class="img-fluid rounded"
+                                                   width="100" alt="Фото 3">{% endif %}
                 </div>
             </div>
         </div>
@@ -33,41 +35,44 @@
         <div class="mt-4 d-flex flex-wrap gap-2">
             <a href="{% url 'core:instrument_list' %}" class="btn btn-secondary">← Назад к списку</a>
 
-            {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
-                <!-- Кнопка редактирования -->
-                <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-primary">Редактировать</a>
+            {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in
+            user.groups.all|join:', ' %}
+            <!-- Кнопка редактирования -->
+            <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-primary">Редактировать</a>
 
-                <!-- Кнопка "Сдать в ремонт" (для "в работе" и "сломан") -->
-                {% if instrument.status == 'IN_USE' or instrument.status == 'BROKEN' %}
-                <form method="post" action="{% url 'core:repair_create' %}" class="d-inline">
-                    {% csrf_token %}
-                    <input type="hidden" name="instrument" value="{{ instrument.pk }}">
-                    <button type="submit" class="btn btn-warning">Сдать в ремонт</button>
-                </form>
-                {% endif %}
+            <!-- Кнопка "Сдать в ремонт" (для "в работе" и "сломан") -->
+            {% if instrument.status == 'IN_USE' or instrument.status == 'BROKEN' %}
+            <a href="{% url 'core:repair_create' %}?instrument={{ instrument.pk }}" class="btn btn-warning">
+                Сдать в ремонт
+            </a>
+            {% endif %}
 
-                <!-- Кнопка "Списать" (только для сломанных, открывает модальное окно) -->
-                {% if instrument.status == 'BROKEN' %}
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#writeOffModal">
-                    Списать
-                </button>
-                {% endif %}
+            <!-- Кнопка "Переместить"  -->
+            <a href="{% url 'core:relocation_create' %}?instrument={{ instrument.pk }}" class="btn btn-info">
+                Переместить
+            </a>
 
-                 {% if instrument.status == 'IN_REPAIR' %}
-                    <form method="post" action="{% url 'core:instrument_return_from_repair' instrument.pk %}" class="d-inline"
-                        onsubmit="return confirm('Вернуть инструмент {{ instrument.name }} из ремонта?');">
-                        {% csrf_token %}
-                    <button type="submit" class="btn btn-success">Вернуть из ремонта</button>
-                    </form>
-                {% endif %}
+            <!-- Кнопка "Списать" (только для сломанных, открывает модальное окно) -->
+            {% if instrument.status == 'BROKEN' %}
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#writeOffModal">
+                Списать
+            </button>
+            {% endif %}
 
-                <!-- Кнопка "Удалить" (только для списанных и только суперпользователю) -->
-                {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
-                <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-outline-danger"
-                   onclick="return confirm('Вы уверены, что хотите удалить инструмент {{ instrument.name }}? Это действие необратимо.');">
-                    Удалить
-                </a>
-                {% endif %}
+            {% if instrument.status == 'IN_REPAIR' %}
+            <form method="post" action="{% url 'core:instrument_return_from_repair' instrument.pk %}" class="d-inline"
+                  onsubmit="return confirm('Вернуть инструмент {{ instrument.name }} из ремонта?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Вернуть из ремонта</button>
+            </form>
+            {% endif %}
+
+            <!-- Кнопка "Удалить" (только для списанных и только суперпользователю) -->
+            {% if instrument.status == 'WRITTEN_OFF' and user.is_superuser %}
+            <a href="{% url 'core:instrument_delete' instrument.pk %}" class="btn btn-outline-danger"
+               onclick="return confirm('Вы уверены, что хотите удалить инструмент {{ instrument.name }}? Это действие необратимо.');">
+                Удалить
+            </a>
             {% endif %}
         </div>
     </div>
