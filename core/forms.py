@@ -47,10 +47,13 @@ class RepairForm(forms.ModelForm):
 class RelocationForm(forms.ModelForm):
     class Meta:
         model = Relocation
-        fields = '__all__'
+        fields = ['instrument', 'location', 'comment']
         widgets = {
-            'instrument': forms.HiddenInput(),}
+             'instrument': forms.HiddenInput(),
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['instrument'].required = False
+        self.fields['instrument'].required = True
