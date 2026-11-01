@@ -14,6 +14,7 @@ urlpatterns = [
     path('instruments/<int:pk>/write-off/', views.write_off_instrument, name='instrument_write_off'),
     path('instruments/<int:pk>/mark-broken/', views.mark_as_broken, name='instrument_mark_broken'),
     path('issue/', views.issue_instrument, name='issue_instrument'),
+    path('return/', views.return_instrument, name='return_instrument'),
 
     # Ремонтники
     path('repairers/', views.RepairerListView.as_view(), name='repairer_list'),
