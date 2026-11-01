@@ -1,9 +1,112 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Добавить перемещение</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-</form>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Добавить перемещение</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" id="relocation-form">
+                    {% csrf_token %}
+
+                    <!-- Поле поиска инструмента -->
+                    <div class="mb-3">
+                        <label class="form-label">Инструмент (Инв. номер или Название)</label>
+                        <input type="text" id="instrument-search" class="form-control"
+                               placeholder="Начните вводить номер или название..." autocomplete="off" required>
+                        <div id="search-results" class="list-group mt-1"></div>
+
+                        <!-- Скрытое поле Django, куда JS запишет ID -->
+                        {{ form.instrument }}
+
+                        {% if form.instrument.errors %}
+                            <div class="text-danger">{{ form.instrument.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Остальные поля формы (location, comment) -->
+                    {% for field in form %}
+                        {% if field.name != 'instrument' %}
+                            <div class="mb-3">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <a href="{% url 'core:relocation_list' %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('instrument-search');
+        const resultsBox = document.getElementById('search-results');
+        const hiddenInput = document.getElementById('id_instrument');
+        let timeout = null;
+
+        // Обработчик ввода в поле поиска
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                resultsBox.innerHTML = '';
+                hiddenInput.value = ''; // Сбрасываем ID, если пользователь стер текст
+                return;
+            }
+
+            // Задержка 300мс (debounce)
+            timeout = setTimeout(() => {
+                fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        resultsBox.innerHTML = '';
+                        if (data.results.length === 0) {
+                            resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
+                            return;
+                        }
+                        data.results.forEach(item => {
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'list-group-item list-group-item-action';
+                            btn.textContent = item.text;
+                            btn.onclick = function() {
+                                searchInput.value = item.text;
+                                hiddenInput.value = item.id; // Записываем ID в скрытое поле
+                                resultsBox.innerHTML = '';
+                            };
+                            resultsBox.appendChild(btn);
+                        });
+                    });
+            }, 300);
+        });
+
+        // Если форма открыта из карточки инструмента (?instrument=1),
+        // нужно подставить его название в поле поиска
+        {% if form.initial.instrument %}
+            fetch(`/api/search-instruments/?q={{ form.initial.instrument }}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.results.length > 0) {
+                        // Ищем именно тот ID, который пришел
+                        const found = data.results.find(i => i.id == {{ form.initial.instrument }});
+                        if (found) {
+                            searchInput.value = found.text;
+                            hiddenInput.value = found.id;
+                        }
+                    }
+                });
+        {% endif %}
+    });
+</script>
 {% endblock %}
