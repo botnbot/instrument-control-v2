@@ -113,5 +113,7 @@ LOGIN_URL = 'rfid_login'
 LOGIN_REDIRECT_URL = 'core:instrument_list'
 LOGOUT_REDIRECT_URL = 'core:instrument_list'
 
+FORCE_SCRIPT_NAME = '/instruments'
+
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
