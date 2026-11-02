@@ -15,6 +15,11 @@ if not SECRET_KEY:
     else:
         raise ImproperlyConfigured('SECRET_KEY environment variable is required in production')
 
+    # Переменные для синхронизации с TimeControl #
+    TIMECONTROL_URL = os.environ.get('TIMECONTROL_URL', 'http://127.0.0.1:5053/api')
+    TIMECONTROL_USER = os.environ.get('TIMECONTROL_USER', '')
+    TIMECONTROL_PASSWORD = os.environ.get('TIMECONTROL_PASSWORD', '')
+
 
 
 ALLOWED_HOSTS = os.environ.get(
