@@ -11,6 +11,7 @@ python = "^3.12"
 django = "^6.1.2"
 pillow = "^13.0.0"
 dotenv = "^0.9.9"
+waitress = "^3.0.2"
 
 [build-system]
 requires = ["poetry-core"]
