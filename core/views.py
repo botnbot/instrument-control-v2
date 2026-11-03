@@ -1,27 +1,31 @@
 import os
 import shutil
+import sqlite3
 import zipfile
 from datetime import date
 from datetime import datetime
 from decimal import Decimal, InvalidOperation
+from pathlib import Path
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import ExpressionWrapper, F, DurationField, Q
-from django.http import FileResponse
+from django.http import FileResponse, Http404
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from user.models import User
 from .forms import InstrumentForm, RepairerForm, RepairForm, RelocationForm
 from .models import Instrument, Repairer, Repair, Relocation, WriteOff
+
+User = get_user_model()
 
 
 # === Инструменты ===
@@ -443,9 +447,11 @@ def return_from_repair(request, pk):
         return redirect('core:instrument_list')
     return redirect('core:instrument_list')
 
+
 # Проверка, что пользователь - суперпользователь (админ)
 def is_admin(user):
     return user.is_superuser
+
 
 #  ==========  BACKUP  ==========
 
@@ -455,28 +461,38 @@ def backup_view(request):
     if request.method == 'POST':
         timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         backup_filename = f"backup_{timestamp}.zip"
-        backup_path = os.path.join(settings.BACKUP_ROOT, backup_filename)
 
-        db_path = settings.BASE_DIR / 'db.sqlite3'
-        media_path = settings.MEDIA_ROOT
+        backup_dir = Path(settings.BACKUP_ROOT)
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        backup_path = backup_dir / backup_filename
+
+        db_path = Path(settings.BASE_DIR) / 'db.sqlite3'
+        media_path = Path(settings.MEDIA_ROOT)
 
         try:
+            temp_db_path = backup_dir / 'temp_db.sqlite3'
+            if db_path.exists():
+                # Безопасное копирование SQLite
+                src_conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+                dst_conn = sqlite3.connect(temp_db_path)
+                src_conn.backup(dst_conn)
+                dst_conn.close()
+                src_conn.close()
+
             with zipfile.ZipFile(backup_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
                 # Добавляем базу данных
-                if os.path.exists(db_path):
-                    zipf.write(db_path, arcname='db.sqlite3')
+                if temp_db_path.exists():
+                    zipf.write(temp_db_path, arcname='db.sqlite3')
+                    temp_db_path.unlink()  # Удаляем временный файл
 
-                # Добавляем медиа-файлы (фото)
-                if os.path.exists(media_path):
-                    for root, dirs, files in os.walk(media_path):
-                        for file in files:
-                            file_path = os.path.join(root, file)
-                            arcname = os.path.relpath(file_path, settings.BASE_DIR)
-                            zipf.write(file_path, arcname=arcname)
+                # Добавляем медиа-файлы
+                if media_path.exists():
+                    for file_path in media_path.rglob('*'):
+                        if file_path.is_file():
+                            arcname = Path('media') / file_path.relative_to(media_path)
+                            zipf.write(file_path, arcname=arcname.as_posix())
 
             messages.success(request, f'Бэкап успешно создан: {backup_filename}')
-
-            # Отдаем файл пользователю на скачивание
             return FileResponse(open(backup_path, 'rb'), as_attachment=True, filename=backup_filename)
 
         except Exception as e:
@@ -485,13 +501,33 @@ def backup_view(request):
 
     # Список существующих бэкапов
     backups = []
-    if os.path.exists(settings.BACKUP_ROOT):
-        for f in os.listdir(settings.BACKUP_ROOT):
-            if f.endswith('.zip'):
-                backups.append(f)
-    backups.sort(reverse=True)  # Сначала новые
+    backup_dir = Path(settings.BACKUP_ROOT)
+    if backup_dir.exists():
+        for f in backup_dir.glob('*.zip'):
+            backups.append(f.name)
+    backups.sort(reverse=True)
 
     return render(request, 'core/backup.html', {'backups': backups})
+
+
+@user_passes_test(is_admin)
+def backup_download(request, filename: str):
+    """Скачивание ранее созданного бэкапа (защита от Path Traversal)"""
+    if not filename.startswith("backup_") or not filename.endswith(".zip"):
+        raise Http404
+
+    root = Path(settings.BACKUP_ROOT).resolve()
+    target = (root / filename).resolve()
+
+    if root not in target.parents or not target.is_file():
+        raise Http404
+
+    return FileResponse(
+        open(target, "rb"),
+        as_attachment=True,
+        filename=target.name,
+        content_type="application/zip",
+    )
 
 
 @user_passes_test(is_admin)
@@ -504,34 +540,31 @@ def restore_view(request):
             messages.error(request, 'Файл должен быть в формате .zip')
             return redirect('core:backup_view')
 
-        temp_zip_path = os.path.join(settings.BACKUP_ROOT, 'temp_restore.zip')
+        backup_dir = Path(settings.BACKUP_ROOT)
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        temp_zip_path = backup_dir / 'temp_restore.zip'
 
         try:
-            # 1. Сохраняем загруженный архив
             with open(temp_zip_path, 'wb+') as destination:
                 for chunk in uploaded_file.chunks():
                     destination.write(chunk)
 
-            # 2. Делаем страховочную копию текущей базы
-            db_path = settings.BASE_DIR / 'db.sqlite3'
-            if os.path.exists(db_path):
+            db_path = Path(settings.BASE_DIR) / 'db.sqlite3'
+            if db_path.exists():
                 shutil.copy2(db_path, str(db_path) + '.backup_before_restore')
 
-            # 3. Распаковываем архив
             with zipfile.ZipFile(temp_zip_path, 'r') as zipf:
                 zipf.extractall(settings.BASE_DIR)
 
-            # 4. Удаляем временный файл
-            os.remove(temp_zip_path)
+            temp_zip_path.unlink()
 
-            messages.success(request,
-                             'База данных и файлы успешно восстановлены. Перезапустите сервер (Waitress), если изменения не применились.')
+            messages.success(request, 'База данных и файлы успешно восстановлены. Перезапустите сервер.')
             return redirect('core:instrument_list')
 
         except Exception as e:
             messages.error(request, f'Ошибка при восстановлении: {str(e)}')
-            if os.path.exists(temp_zip_path):
-                os.remove(temp_zip_path)
+            if temp_zip_path.exists():
+                temp_zip_path.unlink()
             return redirect('core:backup_view')
 
     return redirect('core:backup_view')
