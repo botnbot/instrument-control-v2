@@ -42,6 +42,7 @@
                 {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
                     <a class="nav-link" href="{% url 'core:issue_instrument' %}">Выдача</a>
                     <a class="nav-link" href="{% url 'core:return_instrument' %}">Сдача</a>
+                    <a class="nav-link text-warning" href="{% url 'core:backup_view' %}">Бэкап</a>
                 {% endif %}
             {% endif %}
             {% if user.is_authenticated %}
