@@ -120,3 +120,8 @@ LOGOUT_REDIRECT_URL = 'core:instrument_list'
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Папка для хранения резервных копий
+BACKUP_ROOT = BASE_DIR / 'backups'
+if not os.path.exists(BACKUP_ROOT):
+    os.makedirs(BACKUP_ROOT)

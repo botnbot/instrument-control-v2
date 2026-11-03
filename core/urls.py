@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 app_name = 'core'
@@ -28,4 +29,8 @@ urlpatterns = [
     # Перемещения
     path('relocations/', views.RelocationListView.as_view(), name='relocation_list'),
     path('relocations/create/', views.RelocationCreateView.as_view(), name='relocation_create'),
+
+    #backups
+    path("backup/", views.backup_view, name="backup_view"),
+    path("backup/download/<str:filename>/", views.backup_download, name="backup_download"),
 ]
