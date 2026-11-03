@@ -1,13 +1,21 @@
+import os
+import shutil
+import zipfile
 from datetime import date
+from datetime import datetime
 from decimal import Decimal, InvalidOperation
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import ExpressionWrapper, F, DurationField, Q
+from django.http import FileResponse
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -238,7 +246,7 @@ def issue_instrument(request):
             except User.DoesNotExist:
                 rfid_error = "Пользователь с такой картой не найден или неактивен."
 
-    # Шаг 1: === Выдача ===
+    # === Выдача ===
     if request.method == 'POST' and 'instrument_id' in request.POST:
         instrument = get_object_or_404(Instrument, pk=request.POST.get('instrument_id'))
         user_id = request.POST.get('user_id')
@@ -433,5 +441,97 @@ def return_from_repair(request, pk):
 
         messages.success(request, f'Инструмент "{instrument.name}" возвращён из ремонта.')
         return redirect('core:instrument_list')
-
     return redirect('core:instrument_list')
+
+# Проверка, что пользователь - суперпользователь (админ)
+def is_admin(user):
+    return user.is_superuser
+
+#  ==========  BACKUP  ==========
+
+@user_passes_test(is_admin)
+def backup_view(request):
+    """Создание бэкапа базы данных и медиа-файлов"""
+    if request.method == 'POST':
+        timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        backup_filename = f"backup_{timestamp}.zip"
+        backup_path = os.path.join(settings.BACKUP_ROOT, backup_filename)
+
+        db_path = settings.BASE_DIR / 'db.sqlite3'
+        media_path = settings.MEDIA_ROOT
+
+        try:
+            with zipfile.ZipFile(backup_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                # Добавляем базу данных
+                if os.path.exists(db_path):
+                    zipf.write(db_path, arcname='db.sqlite3')
+
+                # Добавляем медиа-файлы (фото)
+                if os.path.exists(media_path):
+                    for root, dirs, files in os.walk(media_path):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            arcname = os.path.relpath(file_path, settings.BASE_DIR)
+                            zipf.write(file_path, arcname=arcname)
+
+            messages.success(request, f'Бэкап успешно создан: {backup_filename}')
+
+            # Отдаем файл пользователю на скачивание
+            return FileResponse(open(backup_path, 'rb'), as_attachment=True, filename=backup_filename)
+
+        except Exception as e:
+            messages.error(request, f'Ошибка при создании бэкапа: {str(e)}')
+            return redirect('core:backup_view')
+
+    # Список существующих бэкапов
+    backups = []
+    if os.path.exists(settings.BACKUP_ROOT):
+        for f in os.listdir(settings.BACKUP_ROOT):
+            if f.endswith('.zip'):
+                backups.append(f)
+    backups.sort(reverse=True)  # Сначала новые
+
+    return render(request, 'core/backup.html', {'backups': backups})
+
+
+@user_passes_test(is_admin)
+def restore_view(request):
+    """Восстановление из загруженного бэкапа"""
+    if request.method == 'POST' and request.FILES.get('backup_file'):
+        uploaded_file = request.FILES['backup_file']
+
+        if not uploaded_file.name.endswith('.zip'):
+            messages.error(request, 'Файл должен быть в формате .zip')
+            return redirect('core:backup_view')
+
+        temp_zip_path = os.path.join(settings.BACKUP_ROOT, 'temp_restore.zip')
+
+        try:
+            # 1. Сохраняем загруженный архив
+            with open(temp_zip_path, 'wb+') as destination:
+                for chunk in uploaded_file.chunks():
+                    destination.write(chunk)
+
+            # 2. Делаем страховочную копию текущей базы
+            db_path = settings.BASE_DIR / 'db.sqlite3'
+            if os.path.exists(db_path):
+                shutil.copy2(db_path, str(db_path) + '.backup_before_restore')
+
+            # 3. Распаковываем архив
+            with zipfile.ZipFile(temp_zip_path, 'r') as zipf:
+                zipf.extractall(settings.BASE_DIR)
+
+            # 4. Удаляем временный файл
+            os.remove(temp_zip_path)
+
+            messages.success(request,
+                             'База данных и файлы успешно восстановлены. Перезапустите сервер (Waitress), если изменения не применились.')
+            return redirect('core:instrument_list')
+
+        except Exception as e:
+            messages.error(request, f'Ошибка при восстановлении: {str(e)}')
+            if os.path.exists(temp_zip_path):
+                os.remove(temp_zip_path)
+            return redirect('core:backup_view')
+
+    return redirect('core:backup_view')
