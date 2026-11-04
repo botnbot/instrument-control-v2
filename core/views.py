@@ -1,4 +1,3 @@
-import os
 import shutil
 import sqlite3
 import zipfile
@@ -24,6 +23,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 
 from .forms import InstrumentForm, RepairerForm, RepairForm, RelocationForm
 from .models import Instrument, Repairer, Repair, Relocation, WriteOff
+from .services.timecontrol import sync_users_from_timecontrol
 
 User = get_user_model()
 
@@ -363,6 +363,7 @@ class RelocationCreateView(LoginRequiredMixin, CreateView):
         return initial
 
 # === Пометка сломанным ===
+
 @login_required
 def mark_as_broken(request, pk):
     instrument = get_object_or_404(Instrument, pk=pk)
@@ -568,3 +569,29 @@ def restore_view(request):
             return redirect('core:backup_view')
 
     return redirect('core:backup_view')
+
+
+# ========== СИНХРОНИЗАЦИЯ С TIMECONTROL ==========
+
+@user_passes_test(is_admin)
+def sync_timecontrol_view(request):
+    """Страница и логика синхронизации сотрудников из TimeControl"""
+    if request.method == 'POST':
+        try:
+            stats = sync_users_from_timecontrol()
+
+            if stats['errors']:
+                for err in stats['errors']:
+                    messages.error(request, err)
+            else:
+                messages.success(
+                    request,
+                    f"Синхронизация завершена. Создано: {stats['created']}, Обновлено: {stats['updated']}. "
+                    f"Всего обработано: {stats['total_processed']}."
+                )
+        except Exception as e:
+            messages.error(request, f"Критическая ошибка: {str(e)}")
+
+        return redirect('core:sync_timecontrol')
+
+    return render(request, 'core/sync_timecontrol.html')
