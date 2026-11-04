@@ -4,7 +4,6 @@ from django.db import models
 
 class User(AbstractUser):
 
-
     username = models.CharField(max_length=20, unique=True, verbose_name="Имя пользователя")
     email = models.EmailField(unique=True, verbose_name='Email')
     rfid_card = models.CharField(
@@ -14,6 +13,14 @@ class User(AbstractUser):
         null=True,
         verbose_name="Номер RFID-карты"
     )
+
+    tabnum = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+        verbose_name="Табельный номер"
+    )
+
     is_active = models.BooleanField(default=True, verbose_name='Активен')
 
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']

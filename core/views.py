@@ -1,19 +1,31 @@
+import shutil
+import sqlite3
+import zipfile
 from datetime import date
+from datetime import datetime
 from decimal import Decimal, InvalidOperation
+from pathlib import Path
 
+from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import ExpressionWrapper, F, DurationField, Q
+from django.http import FileResponse, Http404
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from user.models import User
 from .forms import InstrumentForm, RepairerForm, RepairForm, RelocationForm
 from .models import Instrument, Repairer, Repair, Relocation, WriteOff
+from .services.timecontrol import sync_users_from_timecontrol
+
+User = get_user_model()
 
 
 # === Инструменты ===
@@ -238,7 +250,7 @@ def issue_instrument(request):
             except User.DoesNotExist:
                 rfid_error = "Пользователь с такой картой не найден или неактивен."
 
-    # Шаг 1: === Выдача ===
+    # === Выдача ===
     if request.method == 'POST' and 'instrument_id' in request.POST:
         instrument = get_object_or_404(Instrument, pk=request.POST.get('instrument_id'))
         user_id = request.POST.get('user_id')
@@ -351,6 +363,7 @@ class RelocationCreateView(LoginRequiredMixin, CreateView):
         return initial
 
 # === Пометка сломанным ===
+
 @login_required
 def mark_as_broken(request, pk):
     instrument = get_object_or_404(Instrument, pk=pk)
@@ -433,5 +446,152 @@ def return_from_repair(request, pk):
 
         messages.success(request, f'Инструмент "{instrument.name}" возвращён из ремонта.')
         return redirect('core:instrument_list')
-
     return redirect('core:instrument_list')
+
+
+# Проверка, что пользователь - суперпользователь (админ)
+def is_admin(user):
+    return user.is_superuser
+
+
+#  ==========  BACKUP  ==========
+
+@user_passes_test(is_admin)
+def backup_view(request):
+    """Создание бэкапа базы данных и медиа-файлов"""
+    if request.method == 'POST':
+        timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        backup_filename = f"backup_{timestamp}.zip"
+
+        backup_dir = Path(settings.BACKUP_ROOT)
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        backup_path = backup_dir / backup_filename
+
+        db_path = Path(settings.BASE_DIR) / 'db.sqlite3'
+        media_path = Path(settings.MEDIA_ROOT)
+
+        try:
+            temp_db_path = backup_dir / 'temp_db.sqlite3'
+            if db_path.exists():
+                # Безопасное копирование SQLite
+                src_conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+                dst_conn = sqlite3.connect(temp_db_path)
+                src_conn.backup(dst_conn)
+                dst_conn.close()
+                src_conn.close()
+
+            with zipfile.ZipFile(backup_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                # Добавляем базу данных
+                if temp_db_path.exists():
+                    zipf.write(temp_db_path, arcname='db.sqlite3')
+                    temp_db_path.unlink()  # Удаляем временный файл
+
+                # Добавляем медиа-файлы
+                if media_path.exists():
+                    for file_path in media_path.rglob('*'):
+                        if file_path.is_file():
+                            arcname = Path('media') / file_path.relative_to(media_path)
+                            zipf.write(file_path, arcname=arcname.as_posix())
+
+            messages.success(request, f'Бэкап успешно создан: {backup_filename}')
+            return FileResponse(open(backup_path, 'rb'), as_attachment=True, filename=backup_filename)
+
+        except Exception as e:
+            messages.error(request, f'Ошибка при создании бэкапа: {str(e)}')
+            return redirect('core:backup_view')
+
+    # Список существующих бэкапов
+    backups = []
+    backup_dir = Path(settings.BACKUP_ROOT)
+    if backup_dir.exists():
+        for f in backup_dir.glob('*.zip'):
+            backups.append(f.name)
+    backups.sort(reverse=True)
+
+    return render(request, 'core/backup.html', {'backups': backups})
+
+
+@user_passes_test(is_admin)
+def backup_download(request, filename: str):
+    """Скачивание ранее созданного бэкапа (защита от Path Traversal)"""
+    if not filename.startswith("backup_") or not filename.endswith(".zip"):
+        raise Http404
+
+    root = Path(settings.BACKUP_ROOT).resolve()
+    target = (root / filename).resolve()
+
+    if root not in target.parents or not target.is_file():
+        raise Http404
+
+    return FileResponse(
+        open(target, "rb"),
+        as_attachment=True,
+        filename=target.name,
+        content_type="application/zip",
+    )
+
+
+@user_passes_test(is_admin)
+def restore_view(request):
+    """Восстановление из загруженного бэкапа"""
+    if request.method == 'POST' and request.FILES.get('backup_file'):
+        uploaded_file = request.FILES['backup_file']
+
+        if not uploaded_file.name.endswith('.zip'):
+            messages.error(request, 'Файл должен быть в формате .zip')
+            return redirect('core:backup_view')
+
+        backup_dir = Path(settings.BACKUP_ROOT)
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        temp_zip_path = backup_dir / 'temp_restore.zip'
+
+        try:
+            with open(temp_zip_path, 'wb+') as destination:
+                for chunk in uploaded_file.chunks():
+                    destination.write(chunk)
+
+            db_path = Path(settings.BASE_DIR) / 'db.sqlite3'
+            if db_path.exists():
+                shutil.copy2(db_path, str(db_path) + '.backup_before_restore')
+
+            with zipfile.ZipFile(temp_zip_path, 'r') as zipf:
+                zipf.extractall(settings.BASE_DIR)
+
+            temp_zip_path.unlink()
+
+            messages.success(request, 'База данных и файлы успешно восстановлены. Перезапустите сервер.')
+            return redirect('core:instrument_list')
+
+        except Exception as e:
+            messages.error(request, f'Ошибка при восстановлении: {str(e)}')
+            if temp_zip_path.exists():
+                temp_zip_path.unlink()
+            return redirect('core:backup_view')
+
+    return redirect('core:backup_view')
+
+
+# ========== СИНХРОНИЗАЦИЯ С TIMECONTROL ==========
+
+@user_passes_test(is_admin)
+def sync_timecontrol_view(request):
+    """Страница и логика синхронизации сотрудников из TimeControl"""
+    if request.method == 'POST':
+        try:
+            stats = sync_users_from_timecontrol()
+
+            if stats['errors']:
+                for err in stats['errors']:
+                    messages.error(request, err)
+            else:
+                messages.success(
+                    request,
+                    f"Синхронизация завершена. Создано: {stats['created']}, Обновлено: {stats['updated']}. "
+                    f"Всего обработано: {stats['total_processed']}."
+                )
+        except Exception as e:
+            messages.error(request, f"Критическая ошибка: {str(e)}")
+
+        return redirect('core:sync_timecontrol')
+
+    return render(request, 'core/sync_timecontrol.html')

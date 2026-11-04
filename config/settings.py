@@ -106,6 +106,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+BACKUP_ROOT = BASE_DIR / '.backups'
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -122,3 +123,8 @@ FORCE_SCRIPT_NAME = '/instruments'
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Папка для хранения резервных копий
+BACKUP_ROOT = BASE_DIR / 'backups'
+if not os.path.exists(BACKUP_ROOT):
+    os.makedirs(BACKUP_ROOT)
