@@ -449,14 +449,13 @@ def return_from_repair(request, pk):
     return redirect('core:instrument_list')
 
 
-# Проверка, что пользователь - суперпользователь (админ)
-def is_admin(user):
-    return user.is_superuser
+def is_storekeeper_or_admin(user):
+    return user.is_superuser or user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
 
 
 #  ==========  BACKUP  ==========
 
-@user_passes_test(is_admin)
+@user_passes_test(is_storekeeper_or_admin)
 def backup_view(request):
     """Создание бэкапа базы данных и медиа-файлов"""
     if request.method == 'POST':
@@ -511,7 +510,7 @@ def backup_view(request):
     return render(request, 'core/backup.html', {'backups': backups})
 
 
-@user_passes_test(is_admin)
+@user_passes_test(is_storekeeper_or_admin)
 def backup_download(request, filename: str):
     """Скачивание ранее созданного бэкапа (защита от Path Traversal)"""
     if not filename.startswith("backup_") or not filename.endswith(".zip"):
@@ -531,7 +530,7 @@ def backup_download(request, filename: str):
     )
 
 
-@user_passes_test(is_admin)
+@user_passes_test(is_storekeeper_or_admin)
 def restore_view(request):
     """Восстановление из загруженного бэкапа"""
     if request.method == 'POST' and request.FILES.get('backup_file'):
@@ -573,7 +572,7 @@ def restore_view(request):
 
 # ========== СИНХРОНИЗАЦИЯ С TIMECONTROL ==========
 
-@user_passes_test(is_admin)
+@user_passes_test(is_storekeeper_or_admin)
 def sync_timecontrol_view(request):
     """Страница и логика синхронизации сотрудников из TimeControl"""
     if request.method == 'POST':

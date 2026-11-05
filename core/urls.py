@@ -33,4 +33,6 @@ urlpatterns = [
     #backups
     path("backup/", views.backup_view, name="backup_view"),
     path("backup/download/<str:filename>/", views.backup_download, name="backup_download"),
+
+    path('sync-timecontrol/', views.sync_timecontrol_view, name='sync_timecontrol'),
 ]
