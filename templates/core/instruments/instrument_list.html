@@ -5,6 +5,7 @@
 
 {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
 <a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить</a>
+<a href="{% url 'core:sync_timecontrol' %}" class="btn btn-info mb-3">🔄 Синхронизировать пользователей</a>
 {% endif %}
 
 <div class="mb-3 d-flex align-items-center gap-3 flex-wrap">
