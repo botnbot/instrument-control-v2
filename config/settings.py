@@ -16,9 +16,9 @@ if not SECRET_KEY:
         raise ImproperlyConfigured('SECRET_KEY environment variable is required in production')
 
     # Переменные для синхронизации с TimeControl #
-    TIMECONTROL_URL = os.environ.get('TIMECONTROL_URL', 'http://127.0.0.1:5053/api')
-    TIMECONTROL_USER = os.environ.get('TIMECONTROL_USER', '')
-    TIMECONTROL_PASSWORD = os.environ.get('TIMECONTROL_PASSWORD', '')
+TIMECONTROL_URL = os.environ.get('TIMECONTROL_URL', 'http://127.0.0.1:5053/api')
+TIMECONTROL_USER = os.environ.get('TIMECONTROL_USER', '')
+TIMECONTROL_PASSWORD = os.environ.get('TIMECONTROL_PASSWORD', '')
 
 
 
@@ -104,7 +104,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Папка для CSS/JS (Bootstrap)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/instruments/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 BACKUP_ROOT = BASE_DIR / '.backups'
 
