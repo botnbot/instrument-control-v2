@@ -6,7 +6,21 @@ class InstrumentForm(forms.ModelForm):
 
     class Meta:
         model = Instrument
-        fields = '__all__'
+        fields = [
+            'category',
+            'name',
+            'inventory_N',
+            'is_new',
+            'entry_date',
+            'price',
+            'image1',
+            'image2',
+            'image3',
+            'comment',
+            'assigned_to',
+            'status',
+            'is_deleted',
+        ]
         widgets = {
             'assigned_to': forms.Select(attrs={'class': 'form-select'}),
             'entry_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
@@ -16,8 +30,8 @@ class InstrumentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Показываем только активных пользователей
-        self.fields['assigned_to'].queryset = self.fields['assigned_to'].queryset.filter(is_active=True)
+        self.fields['category'].empty_label = "-- Выберите категорию --"
+        # self.fields['assigned_to'].queryset = self.fields['assigned_to'].queryset.filter(is_active=True)
 
 
 class RepairerForm(forms.ModelForm):
