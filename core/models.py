@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -12,6 +13,8 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
 
 
 class Instrument(models.Model):
@@ -56,6 +59,21 @@ class Instrument(models.Model):
         related_name='assigned_instruments',
         verbose_name="Выдан"
     )
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            try:
+                old_instance = Instrument.objects.get(pk=self.pk)
+                if not old_instance.is_new and self.is_new:
+                    self.entry_date = timezone.now().date()
+            except Instrument.DoesNotExist:
+                pass
+        else:
+            # Если это создание нового инструмента
+            if self.is_new and not self.entry_date:
+                self.entry_date = timezone.now().date()
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f"{self.name} ({self.inventory_N})"
