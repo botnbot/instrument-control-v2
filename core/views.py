@@ -574,23 +574,28 @@ def restore_view(request):
 
 @user_passes_test(is_storekeeper_or_admin)
 def sync_timecontrol_view(request):
-    """Страница и логика синхронизации сотрудников из TimeControl"""
     if request.method == 'POST':
-        try:
-            stats = sync_users_from_timecontrol()
+        # Проверяем, нажата ли кнопка "Перезаписать"
+        force = request.POST.get('force_overwrite') == '1'
 
-            if stats['errors']:
-                for err in stats['errors']:
-                    messages.error(request, err)
-            else:
-                messages.success(
-                    request,
-                    f"Синхронизация завершена. Создано: {stats['created']}, Обновлено: {stats['updated']}. "
-                    f"Всего обработано: {stats['total_processed']}."
-                )
-        except Exception as e:
-            messages.error(request, f"Критическая ошибка: {str(e)}")
+        stats = sync_users_from_timecontrol(force_overwrite=force)
 
-        return redirect('core:sync_timecontrol')
+        if stats['errors']:
+            for err in stats['errors']:
+                messages.error(request, err)
+
+        if stats['conflicts'] and not force:
+            # Если есть конфликты и пользователь пока не нажал "Да"
+            return render(request, 'core/sync_timecontrol.html', {
+                'conflicts': stats['conflicts'],
+                'show_confirm': True,
+            })
+        else:
+            messages.success(
+                request,
+                f"Синхронизация завершена. Создано: {stats['created']}, Обновлено: {stats['updated']}. "
+                f"Всего: {stats['total_processed']}."
+            )
+            return redirect('core:sync_timecontrol')
 
     return render(request, 'core/sync_timecontrol.html')
