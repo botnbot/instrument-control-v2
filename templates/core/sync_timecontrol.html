@@ -4,21 +4,38 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8"> <!-- Сделал колонку шире для списка конфликтов -->
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Синхронизация с TimeControl</h4>
                 </div>
-                <div class="card-body text-center">
-                    <p>Нажмите кнопку ниже, чтобы загрузить актуальный список сотрудников из TimeControl.</p>
-                    <p class="text-muted small">Сопоставление происходит по табельному номеру.</p>
-                    
-                    <form method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success btn-lg w-100">
-                            🔄 Запустить синхронизацию
-                        </button>
-                    </form>
+                <div class="card-body">
+                    {% if show_confirm %}
+                        <h5 class="text-danger">Обнаружены конфликты карт!</h5>
+                        <ul class="list-group mb-3">
+                            {% for conflict in conflicts %}
+                                <li class="list-group-item list-group-item-warning">{{ conflict }}</li>
+                            {% endfor %}
+                        </ul>
+                        <p>Если вы уверены, что хотите перезаписать карты, нажмите кнопку ниже.</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="force_overwrite" value="1">
+                            <button type="submit" class="btn btn-danger w-100">
+                                ⚠️ Перезаписать и продолжить
+                            </button>
+                            <a href="{% url 'core:sync_timecontrol' %}" class="btn btn-secondary w-100 mt-2">Отмена</a>
+                        </form>
+                    {% else %}
+                        <p>Нажмите кнопку ниже, чтобы загрузить актуальный список сотрудников из TimeControl.</p>
+                        <p class="text-muted small">Сопоставление происходит по табельному номеру.</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-lg w-100">
+                                🔄 Запустить синхронизацию
+                            </button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
