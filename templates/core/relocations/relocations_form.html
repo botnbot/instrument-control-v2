@@ -52,22 +52,21 @@
         const searchInput = document.getElementById('instrument-search');
         const resultsBox = document.getElementById('search-results');
         const hiddenInput = document.getElementById('id_instrument');
+
         let timeout = null;
 
-        // Обработчик ввода в поле поиска
         searchInput.addEventListener('input', function() {
             clearTimeout(timeout);
             const query = this.value.trim();
 
             if (query.length < 2) {
                 resultsBox.innerHTML = '';
-                hiddenInput.value = ''; // Сбрасываем ID, если пользователь стер текст
                 return;
             }
 
-            // Задержка 300мс (debounce)
             timeout = setTimeout(() => {
-                fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
+                // Обратите внимание на префикс /instruments/
+                fetch(`/instruments/api/search-instruments/?q=${encodeURIComponent(query)}`)
                     .then(response => response.json())
                     .then(data => {
                         resultsBox.innerHTML = '';
@@ -82,31 +81,15 @@
                             btn.textContent = item.text;
                             btn.onclick = function() {
                                 searchInput.value = item.text;
-                                hiddenInput.value = item.id; // Записываем ID в скрытое поле
+                                hiddenInput.value = item.id;
                                 resultsBox.innerHTML = '';
                             };
                             resultsBox.appendChild(btn);
                         });
-                    });
+                    })
+                    .catch(err => console.error('Ошибка поиска:', err));
             }, 300);
         });
-
-        // Если форма открыта из карточки инструмента (?instrument=1),
-        // нужно подставить его название в поле поиска
-        {% if form.initial.instrument %}
-            fetch(`/api/search-instruments/?q={{ form.initial.instrument }}`)
-                .then(r => r.json())
-                .then(data => {
-                    if (data.results.length > 0) {
-                        // Ищем именно тот ID, который пришел
-                        const found = data.results.find(i => i.id == {{ form.initial.instrument }});
-                        if (found) {
-                            searchInput.value = found.text;
-                            hiddenInput.value = found.id;
-                        }
-                    }
-                });
-        {% endif %}
     });
 </script>
 {% endblock %}
