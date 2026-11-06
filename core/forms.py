@@ -16,9 +16,11 @@ class InstrumentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Показываем только активных пользователей
-        self.fields['assigned_to'].queryset = self.fields['assigned_to'].queryset.filter(is_active=True)
 
+        # Показываем только активных пользователей
+        # self.fields['assigned_to'].queryset = self.fields['assigned_to'].queryset.filter(is_active=True)
+
+        self.fields['category'].empty_label = "-- Выберите категорию --"
 
 class RepairerForm(forms.ModelForm):
     class Meta:
