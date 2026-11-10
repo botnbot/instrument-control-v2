@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Синхронизация{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Синхронизация с TimeControl</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p>Нажмите кнопку ниже, чтобы загрузить актуальный список сотрудников из TimeControl.</p>
+                    <p class="text-muted small">Сопоставление происходит по табельному номеру.</p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success btn-lg w-100">
+                            🔄 Запустить синхронизацию
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

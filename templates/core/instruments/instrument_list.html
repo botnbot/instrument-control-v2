@@ -3,12 +3,8 @@
 {% block content %}
 <h2>Список инструментов</h2>
 
-<!--{% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}-->
-<!--<a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить</a>-->
-<!--{% endif %}-->
-
 {% if user.is_superuser or 'Администрация' in user.groups.all|join:', ' or 'Кладовщики' in user.groups.all|join:', ' %}
-<a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить инструменты</a>
+<a href="{% url 'core:instrument_create' %}" class="btn btn-success mb-3">+ Добавить</a>
 <a href="{% url 'core:sync_timecontrol' %}" class="btn btn-info mb-3">🔄 Синхронизировать пользователей</a>
 {% endif %}
 
@@ -74,7 +70,7 @@
         <td class="d-flex gap-1">
             <a href="{% url 'core:instrument_update' instrument.pk %}" class="btn btn-sm btn-outline-primary">Редактировать</a>
 
-            {% if instrument.status == 'IN_USE' or instrument.status == 'RELOCATED' %}
+            {% if instrument.status != 'WRITTEN_OFF' %}
             <a href="{% url 'core:repair_create' %}?instrument={{ instrument.pk }}" class="btn btn-sm btn-warning">
                 Сдать в ремонт
             </a>
