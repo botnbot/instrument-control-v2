@@ -33,18 +33,10 @@ User = get_user_model()
 def search_instruments(request):
     query = request.GET.get('q', '').strip()
     if query:
-        query_lower = query.lower()
-
-        all_instruments = Instrument.objects.all()
-
-        results = []
-        for inst in all_instruments:
-            if query_lower in inst.name.lower() or query_lower in inst.inventory_N.lower():
-                results.append(inst)
-                if len(results) >= 10:
-                    break
-
-        instruments = results
+        # PostgreSQL сам сделает поиск без учета регистра для кириллицы
+        instruments = Instrument.objects.filter(
+            Q(inventory_N__icontains=query) | Q(name__icontains=query)
+        )[:10]
     else:
         instruments = Instrument.objects.none()
 
