@@ -13,8 +13,7 @@ pillow = "^13.0.0"
 dotenv = "^0.9.9"
 waitress = "^3.0.2"
 requests = "^2.34.2"
-psycopg2-binary = "^2.9.13"
-python-dotenv = "^1.2.4"
+psycopg = {extras = ["binary"], version = "^3.3.8"}
 
 [build-system]
 requires = ["poetry-core"]

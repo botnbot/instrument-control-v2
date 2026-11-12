@@ -3,10 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-
     username = models.CharField(max_length=20, unique=True, verbose_name="Имя пользователя")
-    password = models.CharField(max_length=128, null=True, blank=True)
-    email = models.EmailField(null=True, blank=True, verbose_name='Email')
+    email = models.EmailField(unique=False, blank=True, null=True, verbose_name='Email')
     rfid_card = models.CharField(
         max_length=50,
         unique=True,
@@ -22,9 +20,17 @@ class User(AbstractUser):
         verbose_name="Табельный номер"
     )
 
-    is_active = models.BooleanField(default=True, verbose_name='Активен')
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Активен'
+    )
 
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+    password = models.CharField(
+        blank=True,
+        null=True
+    )
+
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = UserManager()
 

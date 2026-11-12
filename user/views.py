@@ -1,10 +1,9 @@
-
+from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django import forms
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from django.contrib import messages
-from .forms import UserRegisterForm
+
+from .forms import LoginForm, UserRegisterForm
 
 
 def register_view(request):
@@ -12,10 +11,9 @@ def register_view(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = True  # Активируем сразу (или False, если нужна проверка админом)
+            user.is_active = True
             user.save()
 
-            # Автоматически добавляем в группу "Кладовщики"
             from django.contrib.auth.models import Group
             try:
                 group = Group.objects.get(name='Кладовщики')
@@ -31,11 +29,13 @@ def register_view(request):
 
     return render(request, 'user/register.html', {'form': form})
 
+
 class RFIDLoginForm(forms.Form):
     rfid_card = forms.CharField(
         label="Приложите карту",
         widget=forms.TextInput(attrs={'autofocus': True, 'placeholder': 'Ожидание карты...', 'class': 'form-control'})
     )
+
 
 def rfid_login_view(request):
     if request.method == 'POST':
@@ -51,3 +51,22 @@ def rfid_login_view(request):
     else:
         form = RFIDLoginForm()
     return render(request, 'user/card_login.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, f'Добро пожаловать, {user.first_name or user.username}!')
+                return redirect('core:instrument_list')
+            else:
+                messages.error(request, 'Неверный логин или пароль.')
+    else:
+        form = LoginForm()
+
+    return render(request, 'user/login.html', {'form': form})
