@@ -4,7 +4,9 @@ import os
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / '.env')
+
+# ВАЖНО: override=True принудительно перезаписывает системные переменные окружения
+load_dotenv(BASE_DIR / '.env', override=True)
 
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('1', 'true', 'yes', 'on')
 
@@ -15,12 +17,10 @@ if not SECRET_KEY:
     else:
         raise ImproperlyConfigured('SECRET_KEY environment variable is required in production')
 
-    # Переменные для синхронизации с TimeControl #
-    TIMECONTROL_URL = os.environ.get('TIMECONTROL_URL', 'http://127.0.0.1:5053/api')
-    TIMECONTROL_USER = os.environ.get('TIMECONTROL_USER', '')
-    TIMECONTROL_PASSWORD = os.environ.get('TIMECONTROL_PASSWORD', '')
-
-
+# Переменные для синхронизации с TimeControl
+TIMECONTROL_URL = os.environ.get('TIMECONTROL_URL', 'http://127.0.0.1:5053/api')
+TIMECONTROL_USER = os.environ.get('TIMECONTROL_USER', '')
+TIMECONTROL_PASSWORD = os.environ.get('TIMECONTROL_PASSWORD', '')
 
 ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
@@ -31,6 +31,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8001',
     'http://localhost:8001',
     'http://192.168.10.6:8001',
+    'http://192.168.88.6:8000', # Добавил ваш текущий IP и порт для удобства
 ]
 
 # Чтобы Django доверял заголовкам от Nginx
@@ -63,7 +64,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],  # Добавлена папка для общих шаблонов
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -80,12 +81,13 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.postgresql"),
         "NAME": os.environ.get("DB_NAME", "instrument_db"),
         "USER": os.environ.get("DB_USER", "postgres"),
         "PASSWORD": os.environ.get("DB_PASSWORD", ""),
         "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
         "PORT": os.environ.get("DB_PORT", "5433"),
+        "DISABLE_SERVER_SIDE_CURSORS": True,
     }
 }
 
@@ -110,7 +112,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-BACKUP_ROOT = BASE_DIR / '.backups'
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -119,7 +120,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-LOGIN_URL = 'rfid_login'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'core:instrument_list'
 LOGOUT_REDIRECT_URL = 'core:instrument_list'
 
