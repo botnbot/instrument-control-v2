@@ -31,9 +31,9 @@ User = get_user_model()
 # === Инструменты ===
 
 def search_instruments(request):
-    query = request.GET.get('q', '')
+    query = request.GET.get('q', '').strip()
     if query:
-        # Ищем по инвентарному номеру или названию
+        # PostgreSQL сам сделает поиск без учета регистра для кириллицы
         instruments = Instrument.objects.filter(
             Q(inventory_N__icontains=query) | Q(name__icontains=query)
         )[:10]
