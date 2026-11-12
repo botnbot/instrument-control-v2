@@ -10,15 +10,16 @@
                 <form method="post" id="relocation-form">
                     {% csrf_token %}
 
+                    <!-- Скрытое поле для ID инструмента -->
+                    <input type="hidden" name="instrument" id="id_instrument"
+                           value="{{ form.instrument.value|default:'' }}">
+
                     <!-- Поле поиска инструмента -->
                     <div class="mb-3">
                         <label class="form-label">Инструмент (Инв. номер или Название)</label>
                         <input type="text" id="instrument-search" class="form-control"
                                placeholder="Начните вводить номер или название..." autocomplete="off" required>
                         <div id="search-results" class="list-group mt-1"></div>
-
-                        <!-- Скрытое поле Django, куда JS запишет ID -->
-                        {{ form.instrument }}
 
                         {% if form.instrument.errors %}
                             <div class="text-danger">{{ form.instrument.errors }}</div>
@@ -87,7 +88,8 @@
                             };
                             resultsBox.appendChild(btn);
                         });
-                    });
+                    })
+                    .catch(err => console.error('Ошибка поиска:', err));
             }, 300);
         });
 
@@ -105,7 +107,8 @@
                             hiddenInput.value = found.id;
                         }
                     }
-                });
+                })
+                .catch(err => console.error('Ошибка предзаполнения:', err));
         {% endif %}
     });
 </script>
