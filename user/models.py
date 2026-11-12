@@ -5,7 +5,8 @@ from django.db import models
 class User(AbstractUser):
 
     username = models.CharField(max_length=20, unique=True, verbose_name="Имя пользователя")
-    email = models.EmailField(unique=True, verbose_name='Email')
+    password = models.CharField(max_length=128, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True, verbose_name='Email')
     rfid_card = models.CharField(
         max_length=50,
         unique=True,
