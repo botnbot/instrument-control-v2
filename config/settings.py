@@ -106,7 +106,7 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Папка для CSS/JS (Bootstrap)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
@@ -120,11 +120,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-LOGIN_URL = '/login/'
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'core:instrument_list'
 LOGOUT_REDIRECT_URL = 'core:instrument_list'
 
-FORCE_SCRIPT_NAME = '/instruments'
+# FORCE_SCRIPT_NAME = '/instruments'
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
