@@ -1,23 +1,19 @@
 import shutil
 import sqlite3
 import zipfile
-from datetime import date
-from datetime import datetime
+from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import ExpressionWrapper, F, DurationField, Q
-from django.http import FileResponse, Http404
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render, redirect
+from django.http import FileResponse, Http404, JsonResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -240,7 +236,7 @@ def issue_instrument(request):
     user_to_assign = None
     rfid_error = None
 
-    # Шаг 1: Поиск пользователя по карте
+    # Шаг 1:=== Поиск пользователя по карте ===
     if request.method == 'POST' and 'rfid_card' in request.POST:
         rfid = request.POST.get('rfid_card', '').strip()
         if rfid:
@@ -250,7 +246,7 @@ def issue_instrument(request):
             except User.DoesNotExist:
                 rfid_error = "Пользователь с такой картой не найден или неактивен."
 
-    # === Выдача ===
+    # Шаг 2:=== Выдача ===
     if request.method == 'POST' and 'instrument_id' in request.POST:
         instrument = get_object_or_404(Instrument, pk=request.POST.get('instrument_id'))
         user_id = request.POST.get('user_id')
@@ -259,11 +255,13 @@ def issue_instrument(request):
         if instrument.status != Instrument.STATUS_IN_USE:
             messages.error(request, "Можно выдавать только инструменты со статусом «В работе».")
         elif instrument.assigned_to:
-            messages.warning(request, f'Инструмент уже закреплён за {instrument.assigned_to}.')
+            messages.warning(request, f'Инструмент уже закреплён за {user_to_assign.get_full_name()
+                                                                     or user_to_assign.username}')
         else:
             instrument.assigned_to = user_to_assign
             instrument.save()
-            messages.success(request, f'Инструмент "{instrument.name}" выдан пользователю {user_to_assign}.')
+            messages.success(request, f'Инструмент "{instrument.name}" выдан пользователю'
+                                      f' {user_to_assign.get_full_name()or user_to_assign.username}')
             return redirect('core:issue_instrument')
 
     # Список доступных инструментов
@@ -279,8 +277,7 @@ def issue_instrument(request):
         'available_instruments': available_instruments,
     })
 
-# ===  Сдача инструмента ===
-
+    # Шаг 3:=== Сдача инструмента ===
 @login_required
 def return_instrument(request):
     # Проверка прав
@@ -295,7 +292,7 @@ def return_instrument(request):
     user_to_return = None
     rfid_error = None
 
-    # Шаг 1: Поиск пользователя по карте
+    # Шаг 1:=== Поиск пользователя по карте ===
     if request.method == 'POST' and 'rfid_card' in request.POST:
         rfid = request.POST.get('rfid_card', '').strip()
         if rfid:
@@ -305,7 +302,7 @@ def return_instrument(request):
             except User.DoesNotExist:
                 rfid_error = "Пользователь с такой картой не найден или неактивен."
 
-    # Шаг 2: Прием инструмента
+    # Шаг 2:=== Прием инструмента ===
     if request.method == 'POST' and 'instrument_id' in request.POST:
         instrument = get_object_or_404(Instrument, pk=request.POST.get('instrument_id'))
 
@@ -575,27 +572,22 @@ def restore_view(request):
 @user_passes_test(is_storekeeper_or_admin)
 def sync_timecontrol_view(request):
     if request.method == 'POST':
-        # Проверяем, нажата ли кнопка "Перезаписать"
-        force = request.POST.get('force_overwrite') == '1'
+        stats = sync_users_from_timecontrol(force_overwrite=True)  # Всегда жесткая синхронизация
 
-        stats = sync_users_from_timecontrol(force_overwrite=force)
+        # Выводим предупреждения о дубликатах и ошибки
+        if stats.get('conflicts'):
+            for msg in stats['conflicts']:
+                messages.warning(request, msg)  # Желтая плашка
 
-        if stats['errors']:
+        if stats.get('errors'):
             for err in stats['errors']:
-                messages.error(request, err)
+                messages.error(request, err)  # Красная плашка
 
-        if stats['conflicts'] and not force:
-            # Если есть конфликты и пользователь пока не нажал "Да"
-            return render(request, 'core/sync_timecontrol.html', {
-                'conflicts': stats['conflicts'],
-                'show_confirm': True,
-            })
-        else:
-            messages.success(
-                request,
-                f"Синхронизация завершена. Создано: {stats['created']}, Обновлено: {stats['updated']}. "
-                f"Всего: {stats['total_processed']}."
-            )
-            return redirect('core:sync_timecontrol')
+        messages.success(
+            request,
+            f"Синхронизация завершена. Создано: {stats.get('created', 0)}, Обновлено: {stats.get('updated', 0)}. "
+            f"Всего: {stats.get('total_processed', 0)}."
+        )
+        return redirect('core:sync_timecontrol')
 
     return render(request, 'core/sync_timecontrol.html')
