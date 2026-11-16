@@ -80,12 +80,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("DB_NAME", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("DB_USER", ""),
+        "ENGINE": os.environ.get("DB_ENGINE", "django.db.backends.postgresql"),
+        "NAME": os.environ.get("DB_NAME", "instrument_db"),
+        "USER": os.environ.get("DB_USER", "postgres"),
         "PASSWORD": os.environ.get("DB_PASSWORD", ""),
-        "HOST": os.environ.get("DB_HOST", ""),
-        "PORT": os.environ.get("DB_PORT", ""),
+        "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
+        "PORT": os.environ.get("DB_PORT", "5433")
     }
 }
 
@@ -119,11 +119,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-LOGIN_URL = 'rfid_login'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'core:instrument_list'
 LOGOUT_REDIRECT_URL = 'core:instrument_list'
 
-FORCE_SCRIPT_NAME = '/instruments'
+# FORCE_SCRIPT_NAME = '/instruments'
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
