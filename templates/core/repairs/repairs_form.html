@@ -20,7 +20,7 @@
                         <div id="search-results" class="list-group mt-1"></div>
 
                         <!-- Скрытое поле Django, куда JS запишет ID -->
-                        {{ form.instrument }}
+                        <input type="hidden" name="instrument" id="id_instrument" value="">
                     </div>
 
                     <!-- Остальные поля формы (кроме instrument) -->
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         timeout = setTimeout(() => {
-            fetch(`/instruments/api/search-instruments/?q=${encodeURIComponent(query)}`)
+            fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
                 .then(response => response.json())
                 .then(data => {
                     resultsBox.innerHTML = '';
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hiddenInput.value = "{{ form.instance.instrument.id }}";
     {% elif form.initial.instrument %}
         // Если пришли с GET-параметром ?instrument=...
-        fetch(`/instruments/api/search-instruments/?q={{ form.initial.instrument }}`)
+        fetch(`/api/search-instruments/?q={{ form.initial.instrument }}`)
             .then(r => r.json())
             .then(data => {
                 if (data.results.length > 0) {
