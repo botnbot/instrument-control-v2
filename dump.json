@@ -1,0 +1,1604 @@
+[
+{
+  "model": "core.category",
+  "pk": 1,
+  "fields": {
+    "name": "Ручной"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 2,
+  "fields": {
+    "name": "Электрический"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 3,
+  "fields": {
+    "name": "Бензиновый/Дизельный"
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 1,
+  "fields": {
+    "name": "ООО \"Левша\"",
+    "address": "ул. Ленина д. 1",
+    "phone": "222333",
+    "contact_person": "Петрович",
+    "email": "ggg@ius.ru",
+    "comment": "[jhji"
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 2,
+  "fields": {
+    "name": "ООО \"Рукожопы\"",
+    "address": "Заднепроходный пер д.2",
+    "phone": "987-666-765",
+    "contact_person": "Иван",
+    "email": "email@dog.com",
+    "comment": "плох"
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 3,
+  "fields": {
+    "name": "Своими силами",
+    "address": "Турундаевская 126",
+    "phone": null,
+    "contact_person": "Сергей",
+    "email": "24@smn35.com",
+    "comment": null
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 4,
+  "fields": {
+    "name": "ИП Жуков",
+    "address": "Заводская 22",
+    "phone": null,
+    "contact_person": null,
+    "email": null,
+    "comment": null
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 1,
+  "fields": {
+    "instrument": 2,
+    "repairer": 2,
+    "failure_date": "2026-10-23",
+    "date_of_delivery_for_repair": "2026-10-22",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "10.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 2,
+  "fields": {
+    "instrument": 5,
+    "repairer": 1,
+    "failure_date": "2026-10-26",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "54785.25",
+    "comment": "комент"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 3,
+  "fields": {
+    "instrument": 5,
+    "repairer": 1,
+    "failure_date": "2026-10-22",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "9.00",
+    "comment": "всем"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 4,
+  "fields": {
+    "instrument": 3,
+    "repairer": 1,
+    "failure_date": "2026-10-26",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": null,
+    "comment": "хор"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 5,
+  "fields": {
+    "instrument": 9,
+    "repairer": 2,
+    "failure_date": "2026-10-09",
+    "date_of_delivery_for_repair": "2026-10-08",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "100.00",
+    "comment": "рпнгап"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 6,
+  "fields": {
+    "instrument": 9,
+    "repairer": 3,
+    "failure_date": "2026-10-19",
+    "date_of_delivery_for_repair": "2026-10-27",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "10.00",
+    "comment": "тирр"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 7,
+  "fields": {
+    "instrument": 9,
+    "repairer": 2,
+    "failure_date": "2026-10-21",
+    "date_of_delivery_for_repair": "2026-10-23",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "77.00",
+    "comment": "псоьсп"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 8,
+  "fields": {
+    "instrument": 2,
+    "repairer": 2,
+    "failure_date": "2026-10-29",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "1111.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 9,
+  "fields": {
+    "instrument": 9,
+    "repairer": 1,
+    "failure_date": "2026-10-14",
+    "date_of_delivery_for_repair": "2026-10-16",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "4.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 10,
+  "fields": {
+    "instrument": 2,
+    "repairer": 2,
+    "failure_date": "2026-10-23",
+    "date_of_delivery_for_repair": "2026-10-25",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "6.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 11,
+  "fields": {
+    "instrument": 2,
+    "repairer": 3,
+    "failure_date": "2026-10-20",
+    "date_of_delivery_for_repair": "2026-10-22",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": null,
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 12,
+  "fields": {
+    "instrument": 5,
+    "repairer": 3,
+    "failure_date": "2026-10-13",
+    "date_of_delivery_for_repair": "2026-10-27",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "390.00",
+    "comment": "комментарий"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 13,
+  "fields": {
+    "instrument": 2,
+    "repairer": 3,
+    "failure_date": "2026-10-21",
+    "date_of_delivery_for_repair": "2026-10-29",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "200.00",
+    "comment": "комент"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 14,
+  "fields": {
+    "instrument": 9,
+    "repairer": 2,
+    "failure_date": "2026-10-31",
+    "date_of_delivery_for_repair": "2026-11-01",
+    "date_of_receipt_from_repair": "2026-11-01",
+    "repair_cost": "456.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 15,
+  "fields": {
+    "instrument": 11,
+    "repairer": 2,
+    "failure_date": "2026-10-27",
+    "date_of_delivery_for_repair": "2026-11-02",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "100.00",
+    "comment": "плохо"
+  }
+},
+{
+  "model": "core.relocation",
+  "pk": 1,
+  "fields": {
+    "instrument": 1,
+    "comment": "на денек",
+    "location": "домой",
+    "date": "2026-10-25"
+  }
+},
+{
+  "model": "core.relocation",
+  "pk": 2,
+  "fields": {
+    "instrument": 3,
+    "comment": "Дрова пилить",
+    "location": "в ад",
+    "date": "2026-11-02"
+  }
+},
+{
+  "model": "core.relocation",
+  "pk": 3,
+  "fields": {
+    "instrument": 12,
+    "comment": "",
+    "location": "в кузню",
+    "date": "2026-11-02"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Категория",
+    "content_type": [
+      "core",
+      "category"
+    ],
+    "codename": "add_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Категория",
+    "content_type": [
+      "core",
+      "category"
+    ],
+    "codename": "change_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Категория",
+    "content_type": [
+      "core",
+      "category"
+    ],
+    "codename": "delete_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Категория",
+    "content_type": [
+      "core",
+      "category"
+    ],
+    "codename": "view_category"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Ремонтник",
+    "content_type": [
+      "core",
+      "repairer"
+    ],
+    "codename": "add_repairer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Ремонтник",
+    "content_type": [
+      "core",
+      "repairer"
+    ],
+    "codename": "change_repairer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Ремонтник",
+    "content_type": [
+      "core",
+      "repairer"
+    ],
+    "codename": "delete_repairer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Ремонтник",
+    "content_type": [
+      "core",
+      "repairer"
+    ],
+    "codename": "view_repairer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Инструмент",
+    "content_type": [
+      "core",
+      "instrument"
+    ],
+    "codename": "add_instrument"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Инструмент",
+    "content_type": [
+      "core",
+      "instrument"
+    ],
+    "codename": "change_instrument"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Инструмент",
+    "content_type": [
+      "core",
+      "instrument"
+    ],
+    "codename": "delete_instrument"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Инструмент",
+    "content_type": [
+      "core",
+      "instrument"
+    ],
+    "codename": "view_instrument"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Перемещение",
+    "content_type": [
+      "core",
+      "relocation"
+    ],
+    "codename": "add_relocation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Перемещение",
+    "content_type": [
+      "core",
+      "relocation"
+    ],
+    "codename": "change_relocation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Перемещение",
+    "content_type": [
+      "core",
+      "relocation"
+    ],
+    "codename": "delete_relocation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Перемещение",
+    "content_type": [
+      "core",
+      "relocation"
+    ],
+    "codename": "view_relocation"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Ремонт",
+    "content_type": [
+      "core",
+      "repair"
+    ],
+    "codename": "add_repair"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Ремонт",
+    "content_type": [
+      "core",
+      "repair"
+    ],
+    "codename": "change_repair"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Ремонт",
+    "content_type": [
+      "core",
+      "repair"
+    ],
+    "codename": "delete_repair"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Ремонт",
+    "content_type": [
+      "core",
+      "repair"
+    ],
+    "codename": "view_repair"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user",
+    "content_type": [
+      "user",
+      "user"
+    ],
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user",
+    "content_type": [
+      "user",
+      "user"
+    ],
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user",
+    "content_type": [
+      "user",
+      "user"
+    ],
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user",
+    "content_type": [
+      "user",
+      "user"
+    ],
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add Списание",
+    "content_type": [
+      "core",
+      "writeoff"
+    ],
+    "codename": "add_writeoff"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change Списание",
+    "content_type": [
+      "core",
+      "writeoff"
+    ],
+    "codename": "change_writeoff"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete Списание",
+    "content_type": [
+      "core",
+      "writeoff"
+    ],
+    "codename": "delete_writeoff"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view Списание",
+    "content_type": [
+      "core",
+      "writeoff"
+    ],
+    "codename": "view_writeoff"
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Админы",
+    "permissions": [
+      [
+        "add_logentry",
+        "admin",
+        "logentry"
+      ],
+      [
+        "change_logentry",
+        "admin",
+        "logentry"
+      ],
+      [
+        "delete_logentry",
+        "admin",
+        "logentry"
+      ],
+      [
+        "view_logentry",
+        "admin",
+        "logentry"
+      ],
+      [
+        "add_group",
+        "auth",
+        "group"
+      ],
+      [
+        "change_group",
+        "auth",
+        "group"
+      ],
+      [
+        "delete_group",
+        "auth",
+        "group"
+      ],
+      [
+        "view_group",
+        "auth",
+        "group"
+      ],
+      [
+        "add_permission",
+        "auth",
+        "permission"
+      ],
+      [
+        "change_permission",
+        "auth",
+        "permission"
+      ],
+      [
+        "delete_permission",
+        "auth",
+        "permission"
+      ],
+      [
+        "view_permission",
+        "auth",
+        "permission"
+      ],
+      [
+        "add_contenttype",
+        "contenttypes",
+        "contenttype"
+      ],
+      [
+        "change_contenttype",
+        "contenttypes",
+        "contenttype"
+      ],
+      [
+        "delete_contenttype",
+        "contenttypes",
+        "contenttype"
+      ],
+      [
+        "view_contenttype",
+        "contenttypes",
+        "contenttype"
+      ],
+      [
+        "add_category",
+        "core",
+        "category"
+      ],
+      [
+        "change_category",
+        "core",
+        "category"
+      ],
+      [
+        "delete_category",
+        "core",
+        "category"
+      ],
+      [
+        "view_category",
+        "core",
+        "category"
+      ],
+      [
+        "add_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "change_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "delete_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "view_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "add_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "change_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "delete_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "view_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "add_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "change_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "delete_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "view_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "add_repairer",
+        "core",
+        "repairer"
+      ],
+      [
+        "change_repairer",
+        "core",
+        "repairer"
+      ],
+      [
+        "delete_repairer",
+        "core",
+        "repairer"
+      ],
+      [
+        "view_repairer",
+        "core",
+        "repairer"
+      ],
+      [
+        "add_session",
+        "sessions",
+        "session"
+      ],
+      [
+        "change_session",
+        "sessions",
+        "session"
+      ],
+      [
+        "delete_session",
+        "sessions",
+        "session"
+      ],
+      [
+        "view_session",
+        "sessions",
+        "session"
+      ],
+      [
+        "add_user",
+        "user",
+        "user"
+      ],
+      [
+        "change_user",
+        "user",
+        "user"
+      ],
+      [
+        "delete_user",
+        "user",
+        "user"
+      ],
+      [
+        "view_user",
+        "user",
+        "user"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Кладовщики",
+    "permissions": [
+      [
+        "view_group",
+        "auth",
+        "group"
+      ],
+      [
+        "view_permission",
+        "auth",
+        "permission"
+      ],
+      [
+        "add_category",
+        "core",
+        "category"
+      ],
+      [
+        "change_category",
+        "core",
+        "category"
+      ],
+      [
+        "view_category",
+        "core",
+        "category"
+      ],
+      [
+        "add_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "change_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "view_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "add_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "change_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "view_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "add_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "change_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "view_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "add_repairer",
+        "core",
+        "repairer"
+      ],
+      [
+        "change_repairer",
+        "core",
+        "repairer"
+      ],
+      [
+        "view_repairer",
+        "core",
+        "repairer"
+      ],
+      [
+        "add_user",
+        "user",
+        "user"
+      ]
+    ]
+  }
+},
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Рабочие",
+    "permissions": [
+      [
+        "view_group",
+        "auth",
+        "group"
+      ],
+      [
+        "view_category",
+        "core",
+        "category"
+      ],
+      [
+        "view_instrument",
+        "core",
+        "instrument"
+      ],
+      [
+        "view_relocation",
+        "core",
+        "relocation"
+      ],
+      [
+        "view_repair",
+        "core",
+        "repair"
+      ],
+      [
+        "view_user",
+        "user",
+        "user"
+      ]
+    ]
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-04T08:31:42.486Z",
+    "is_superuser": true,
+    "first_name": "admin",
+    "last_name": "adminof",
+    "is_staff": true,
+    "date_joined": "2026-10-24T18:21:01Z",
+    "username": "admin",
+    "password": "pbkdf2_sha256$1500000$gSDraZ1XwdlZXyf36OyBck$/m1+Sa9hsnoQWkB0SfYMpwkBK23V6RnQcmxPu5nKjz0=",
+    "email": "ICadmin@smn35.com",
+    "rfid_card": "12255221",
+    "tabnum": null,
+    "is_active": true,
+    "groups": [
+      [
+        "Админы"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-10-26T19:24:29.818Z",
+    "is_superuser": false,
+    "first_name": "Вася",
+    "last_name": "Пупкин",
+    "is_staff": false,
+    "date_joined": "2026-10-24T20:52:49Z",
+    "username": "ВАСЯ",
+    "password": "pbkdf2_sha256$1500000$exbRvckwrg9nAYoD1mFyje$Sk4hd7qSt+wIsyyKsw8WW1aq/mxUXqqXvRUw6rIQUZw=",
+    "email": "jhb@dfg.er",
+    "rfid_card": "123456987",
+    "tabnum": null,
+    "is_active": true,
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-10-26T21:17:42.923Z",
+    "is_superuser": false,
+    "first_name": "Петр",
+    "last_name": "Иванов",
+    "is_staff": false,
+    "date_joined": "2026-10-26T12:07:18Z",
+    "username": "Петя",
+    "password": "pbkdf2_sha256$1500000$T3A3eHLJ6am6Mi4PR4zlRj$opwOohLCsXM39GymJpx9mrr4vDrlXiIBvTiyFGwoPpM=",
+    "email": "petr@smn35.com",
+    "rfid_card": "2222222222",
+    "tabnum": null,
+    "is_active": true,
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-01T19:49:19.418Z",
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Петров",
+    "is_staff": false,
+    "date_joined": "2026-10-26T12:12:17Z",
+    "username": "Ваня",
+    "password": "!tDQoGxPzLZczH3k6mXTQUnj5vZkuV8QlejQVGtFT",
+    "email": "ivan@smn35.com",
+    "rfid_card": "33333333333333333333",
+    "tabnum": null,
+    "is_active": true,
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Дмитриев",
+    "is_staff": false,
+    "date_joined": "2026-10-27T12:04:49.536Z",
+    "username": "user",
+    "password": "pbkdf2_sha256$1500000$sTh1Na4vqd839VQXbQhpJu$iDfosDVrApGlvT/aLz6z79R3u1eU/9Lleeupb3/tfdE=",
+    "email": "vctc@snn.com",
+    "rfid_card": "123321123",
+    "tabnum": null,
+    "is_active": true,
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-10-27T12:23:05.514Z",
+    "is_superuser": false,
+    "first_name": "Григорий",
+    "last_name": "Задов",
+    "is_staff": false,
+    "date_joined": "2026-10-27T12:23:03.322Z",
+    "username": "grigor",
+    "password": "pbkdf2_sha256$1500000$PEdzYn66fkH8vqlryCqHXH$J1IeXTMzGAvMnjWR8W8vAdfaMGjgHWprTvE9y6jM+ks=",
+    "email": "user@wer.ru",
+    "rfid_card": "11",
+    "tabnum": null,
+    "is_active": true,
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 1,
+  "fields": {
+    "category": null,
+    "name": "Лопата",
+    "inventory_N": "1",
+    "entry_date": "2026-10-24",
+    "price": "5.00",
+    "is_new": true,
+    "image1": "instruments/foto/_5e32d6178e231-big-1000x1000x.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "Топор",
+    "inventory_N": "2",
+    "entry_date": "2026-10-25",
+    "price": "6.00",
+    "is_new": true,
+    "image1": "instruments/foto/images.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_REPAIR",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 3,
+  "fields": {
+    "category": 3,
+    "name": "пила",
+    "inventory_N": "4",
+    "entry_date": "2026-10-27",
+    "price": "12.00",
+    "is_new": true,
+    "image1": "instruments/foto/пила.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "BROKEN",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 4,
+  "fields": {
+    "category": 2,
+    "name": "перфоратор",
+    "inventory_N": "1156",
+    "entry_date": "2026-09-01",
+    "price": "999.99",
+    "is_new": true,
+    "image1": "instruments/foto/18769951.webp",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 5,
+  "fields": {
+    "category": 1,
+    "name": "Вилы",
+    "inventory_N": "6725",
+    "entry_date": "2025-10-02",
+    "price": "13.13",
+    "is_new": false,
+    "image1": "instruments/foto/вилы.png",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "BROKEN",
+    "is_deleted": false,
+    "assigned_to": [
+      "Петя"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 6,
+  "fields": {
+    "category": 1,
+    "name": "руки",
+    "inventory_N": "0",
+    "entry_date": "2026-10-26",
+    "price": "10000.00",
+    "is_new": true,
+    "image1": "instruments/foto/pexels-nashu-otieno-2155157031-33573924.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 7,
+  "fields": {
+    "category": 3,
+    "name": "Вертолет",
+    "inventory_N": "1й12ц3у4",
+    "entry_date": "2026-08-04",
+    "price": "547.00",
+    "is_new": false,
+    "image1": "instruments/foto/4f03b18097dc27bc5524957e058ffb2a.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 8,
+  "fields": {
+    "category": null,
+    "name": "Молоток",
+    "inventory_N": "89754",
+    "entry_date": "2026-10-27",
+    "price": "555.55",
+    "is_new": true,
+    "image1": "instruments/foto/молоток.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 9,
+  "fields": {
+    "category": 2,
+    "name": "УШМ",
+    "inventory_N": "7643340",
+    "entry_date": "2026-10-27",
+    "price": "555.00",
+    "is_new": true,
+    "image1": "instruments/foto/УШМ_230.webp",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_USE",
+    "is_deleted": false,
+    "assigned_to": [
+      "admin"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 10,
+  "fields": {
+    "category": 2,
+    "name": "Дрель",
+    "inventory_N": "98165",
+    "entry_date": "2026-05-12",
+    "price": "88.00",
+    "is_new": true,
+    "image1": "instruments/foto/204497_00.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 11,
+  "fields": {
+    "category": 2,
+    "name": "Дрель",
+    "inventory_N": "12апд90",
+    "entry_date": "2026-11-01",
+    "price": "20.00",
+    "is_new": false,
+    "image1": "instruments/foto/204497_00_tdcjpWB.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "Красная дрель",
+    "status": "IN_REPAIR",
+    "is_deleted": false,
+    "assigned_to": [
+      "grigor"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 12,
+  "fields": {
+    "category": 1,
+    "name": "напильник",
+    "inventory_N": "1111111",
+    "entry_date": "2026-11-01",
+    "price": "100.00",
+    "is_new": true,
+    "image1": "instruments/foto/напильник.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "Комент",
+    "status": "IN_USE",
+    "is_deleted": false,
+    "assigned_to": [
+      "ВАСЯ"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 13,
+  "fields": {
+    "category": 2,
+    "name": "Сварочный аппарат",
+    "inventory_N": "0005435",
+    "entry_date": "2024-01-02",
+    "price": "500047.00",
+    "is_new": true,
+    "image1": "instruments/foto/сварочник.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_USE",
+    "is_deleted": false,
+    "assigned_to": [
+      "Ваня"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 14,
+  "fields": {
+    "category": 1,
+    "name": "Сварочный аппарат",
+    "inventory_N": "9000476",
+    "entry_date": "2025-12-01",
+    "price": "89400.00",
+    "is_new": true,
+    "image1": "instruments/foto/сварочный.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_USE",
+    "is_deleted": false,
+    "assigned_to": [
+      "Ваня"
+    ]
+  }
+}
+]
