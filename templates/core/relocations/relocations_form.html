@@ -1,31 +1,46 @@
 {% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Редактировать перемещение{% else %}Добавить перемещение{% endif %}{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Добавить перемещение</h4>
+                <h4 class="mb-0">{% if form.instance.pk %}Редактировать перемещение{% else %}Новое перемещение{% endif %}</h4>
             </div>
             <div class="card-body">
+                <!-- Блок вывода ошибок формы -->
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <form method="post" id="relocation-form">
                     {% csrf_token %}
 
-                    <!-- Поле поиска инструмента -->
+                    <!-- Кастомное поле поиска инструмента -->
                     <div class="mb-3">
                         <label class="form-label">Инструмент (Инв. номер или Название)</label>
                         <input type="text" id="instrument-search" class="form-control"
-                               placeholder="Начните вводить номер или название..." autocomplete="off" required>
+                               placeholder="Начните вводить номер или название..." autocomplete="off">
                         <div id="search-results" class="list-group mt-1"></div>
 
-                        <!-- Скрытое поле Django, куда JS запишет ID -->
-                        {{ form.instrument }}
-
-                        {% if form.instrument.errors %}
-                            <div class="text-danger">{{ form.instrument.errors }}</div>
-                        {% endif %}
+                        <!-- Скрытое поле, куда JS запишет ID инструмента -->
+                        <input type="hidden" name="instrument" id="id_instrument"
+                               value="{% if form.instance.instrument %}{{ form.instance.instrument.id }}{% endif %}">
                     </div>
 
-                    <!-- Остальные поля формы (location, comment) -->
+                    <!-- Остальные поля формы (кроме instrument) -->
                     {% for field in form %}
                         {% if field.name != 'instrument' %}
                             <div class="mb-3">
@@ -34,12 +49,15 @@
                                 {% if field.errors %}
                                     <div class="text-danger">{{ field.errors }}</div>
                                 {% endif %}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
                             </div>
                         {% endif %}
                     {% endfor %}
 
                     <hr>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
                     <a href="{% url 'core:relocation_list' %}" class="btn btn-secondary">Отмена</a>
                 </form>
             </div>
@@ -48,48 +66,76 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('instrument-search');
-        const resultsBox = document.getElementById('search-results');
-        const hiddenInput = document.getElementById('id_instrument');
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('instrument-search');
+    const resultsBox = document.getElementById('search-results');
+    const hiddenInput = document.getElementById('id_instrument');
 
-        let timeout = null;
+    // Если это редактирование существующего перемещения, показываем название инструмента
+    {% if form.instance.instrument %}
+        searchInput.value = "{{ form.instance.instrument.inventory_N }} - {{ form.instance.instrument.name }}";
+    {% elif form.initial.instrument %}
+        // Если пришли с GET-параметром ?instrument=...
+        fetch(`/api/search-instruments/?q={{ form.initial.instrument }}`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.results && data.results.length > 0) {
+                    searchInput.value = data.results[0].text;
+                    hiddenInput.value = data.results[0].id;
+                }
+            });
+    {% endif %}
 
-        searchInput.addEventListener('input', function() {
-            clearTimeout(timeout);
-            const query = this.value.trim();
+    let timeout = null;
 
-            if (query.length < 2) {
-                resultsBox.innerHTML = '';
-                return;
-            }
+    searchInput.addEventListener('input', function() {
+        clearTimeout(timeout);
+        const query = this.value.trim();
 
-            timeout = setTimeout(() => {
-                // Обратите внимание на префикс /instruments/
-                fetch(`/instruments/api/search-instruments/?q=${encodeURIComponent(query)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        resultsBox.innerHTML = '';
-                        if (data.results.length === 0) {
-                            resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
-                            return;
-                        }
-                        data.results.forEach(item => {
-                            const btn = document.createElement('button');
-                            btn.type = 'button';
-                            btn.className = 'list-group-item list-group-item-action';
-                            btn.textContent = item.text;
-                            btn.onclick = function() {
-                                searchInput.value = item.text;
-                                hiddenInput.value = item.id;
-                                resultsBox.innerHTML = '';
-                            };
-                            resultsBox.appendChild(btn);
-                        });
-                    })
-                    .catch(err => console.error('Ошибка поиска:', err));
-            }, 300);
-        });
+        if (query.length < 2) {
+            resultsBox.innerHTML = '';
+            return;
+        }
+
+        timeout = setTimeout(() => {
+            // Путь строго /api/search-instruments/
+            fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
+                .then(data => {
+                    resultsBox.innerHTML = '';
+                    if (!data.results || data.results.length === 0) {
+                        resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
+                        return;
+                    }
+                    data.results.forEach(item => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'list-group-item list-group-item-action';
+                        btn.textContent = item.text;
+                        btn.onclick = function() {
+                            searchInput.value = item.text;
+                            hiddenInput.value = item.id;
+                            resultsBox.innerHTML = '';
+                        };
+                        resultsBox.appendChild(btn);
+                    });
+                })
+                .catch(err => {
+                    console.error('Ошибка поиска:', err);
+                    resultsBox.innerHTML = '<div class="list-group-item text-danger">Ошибка сервера</div>';
+                });
+        }, 300);
     });
+
+    // Закрываем список при клике вне его
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+            resultsBox.innerHTML = '';
+        }
+    });
+});
 </script>
 {% endblock %}
