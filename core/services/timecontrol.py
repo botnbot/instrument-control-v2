@@ -14,69 +14,71 @@ def sync_users_from_timecontrol(force_overwrite=False):
         'created': 0,
         'updated': 0,
         'errors': [],
-        'conflicts': [],
+        'conflicts': [],  # Сюда будем писать дубликаты из ТаймКонтроля
+        'transferred': [],
         'total_processed': 0
     }
 
     try:
         response = requests.get(url, auth=auth, timeout=15)
         response.raise_for_status()
-        data = response.json()
-        persons = data.get('data', [])
+        persons = response.json().get('data', [])
 
+        # --- ШАГ 1: Ищем дубликаты карт В САМОМ ТАЙМКОНТРОЛЕ ---
+        # Создаем словарь: карта -> список ФИО, кому она принадлежит
+        card_owners = {}
+        for person in persons:
+            rfid = person.get('SHEDCARDKEY', '').strip()
+            fullname = person.get('FULLNAME', '').strip()
+            is_locked = person.get('ISLOCKED') == '1'
+
+            # Учитываем только карты активных сотрудников
+            if rfid and not is_locked:
+                if rfid not in card_owners:
+                    card_owners[rfid] = []
+                card_owners[rfid].append(fullname)
+
+        # Находим карты, которые принадлежат более чем одному человеку
+        duplicate_cards = {card: names for card, names in card_owners.items() if len(names) > 1}
+
+        # Если дубликаты есть, пишем их в конфликты, чтобы пользователь увидел
+        for card, names in duplicate_cards.items():
+            stats['conflicts'].append(
+                f"ОШИБКА В ТАЙМКОНТРОЛЕ: Карта {card} назначена сразу нескольким сотрудникам: {', '.join(names)}. Карта не будет присвоена никому."
+            )
+
+        # --- ШАГ 2: Жесткая очистка и присвоение ---
         with transaction.atomic():
+            # 1. Очищаем ВСЕ карты в базе Django
+            User.objects.update(rfid_card=None)
+
+            # 2. Раздаем карты заново
             for person in persons:
                 uid = person.get('UID')
                 tabnum = person.get('TABNUM', '')
                 fullname = person.get('FULLNAME', '')
                 is_locked = person.get('ISLOCKED') == '1'
-                rfid_card = person.get('SHEDCARDKEY', '')
+                rfid_card = person.get('SHEDCARDKEY', '').strip()
 
                 if not uid or not fullname:
                     continue
 
                 stats['total_processed'] += 1
 
-                user, created = User.objects.get_or_create(
-                    username=str(uid),
-                    defaults={'email': None}
-                )
+                user, created = User.objects.get_or_create(username=str(uid), defaults={'email': None})
 
                 parts = fullname.split()
-                last_name = parts[0] if len(parts) > 0 else ''
-                first_name = parts[1] if len(parts) > 1 else ''
-
-                user.first_name = first_name
-                user.last_name = last_name
+                user.last_name = parts[0] if len(parts) > 0 else ''
+                user.first_name = parts[1] if len(parts) > 1 else ''
                 user.is_active = not is_locked
-                user.tabnum = tabnum.strip() if tabnum else None
+                user.tabnum = tabnum.strip() if tabnum else ""
 
-                # === БЛОК ОБРАБОТКИ КАРТЫ ===
-                if rfid_card and rfid_card.strip():
-                    clean_card = rfid_card.strip()
-                    # Ищем, не занята ли карта другим пользователем
-                    existing_owner = User.objects.filter(rfid_card=clean_card).exclude(pk=user.pk).first()
-
-                    if existing_owner:
-                        if force_overwrite:
-                            # Перезаписываем (только если пользователь нажал "Да")
-                            existing_owner.rfid_card = None
-                            existing_owner.save(update_fields=['rfid_card'])
-                            user.rfid_card = clean_card
-                            stats['errors'].append(
-                                f"Карта {clean_card} передана от '{existing_owner.first_name} {existing_owner.last_name}' "
-                                f"к '{first_name} {last_name}'."
-                            )
-                        else:
-                            # Если не нажал "Да", не трогаем карту
-                            stats['conflicts'].append(
-                                f"Карта {clean_card} уже есть у '{existing_owner.first_name} {existing_owner.last_name}'. "
-                                f"Требуется передать её '{first_name} {last_name}'."
-                            )
-                    else:
-                        user.rfid_card = clean_card
-                else:
+                # === ГЛАВНАЯ ПРОВЕРКА ===
+                # Если карта есть в списке дубликатов, НЕ ПРИСВАИВАЕМ её этому сотруднику
+                if rfid_card and rfid_card in duplicate_cards:
                     user.rfid_card = None
+                else:
+                    user.rfid_card = rfid_card if rfid_card else None
 
                 user.save()
 
@@ -86,8 +88,8 @@ def sync_users_from_timecontrol(force_overwrite=False):
                     stats['updated'] += 1
 
     except requests.exceptions.RequestException as e:
-        stats['errors'].append(f"Ошибка подключения: {str(e)}")
+        stats['errors'].append(f"Ошибка подключения к TimeControl: {str(e)}")
     except Exception as e:
-        stats['errors'].append(f"Ошибка обработки: {str(e)}")
+        stats['errors'].append(f"Ошибка обработки данных: {str(e)}")
 
     return stats
