@@ -30,6 +30,16 @@ class User(AbstractUser):
         null=True
     )
 
+    department  = models.CharField(
+        blank=True,
+        null=True
+    )
+
+    position = models.CharField(
+        blank=True,
+        null=True
+    )
+
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = UserManager()
