@@ -9,21 +9,33 @@
                 <h4 class="mb-0">{% if form.instance.pk %}Редактировать ремонт{% else %}Отправить в ремонт{% endif %}</h4>
             </div>
             <div class="card-body">
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <form method="post" id="repair-form">
                     {% csrf_token %}
 
-                    <!-- Кастомное поле поиска инструмента -->
                     <div class="mb-3">
                         <label class="form-label">Инструмент (Инв. номер или Название)</label>
                         <input type="text" id="instrument-search" class="form-control"
-                               placeholder="Начните вводить номер..." autocomplete="off">
+                               placeholder="Начните вводить номер или название..." autocomplete="off">
                         <div id="search-results" class="list-group mt-1"></div>
-
-                        <!-- Скрытое поле Django, куда JS запишет ID -->
-                        <input type="hidden" name="instrument" id="id_instrument" value="">
+                        <input type="hidden" name="instrument" id="id_instrument"
+                               value="{% if form.instance.instrument %}{{ form.instance.instrument.id }}{% endif %}">
                     </div>
 
-                    <!-- Остальные поля формы (кроме instrument) -->
                     {% for field in form %}
                         {% if field.name != 'instrument' %}
                             <div class="mb-3">
@@ -32,9 +44,13 @@
                                 {% if field.errors %}
                                     <div class="text-danger">{{ field.errors }}</div>
                                 {% endif %}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
                             </div>
                         {% endif %}
                     {% endfor %}
+
                     <hr>
                     <button type="submit" class="btn btn-success">Сохранить</button>
                     <a href="{% url 'core:repair_list' %}" class="btn btn-secondary">Отмена</a>
@@ -50,22 +66,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultsBox = document.getElementById('search-results');
     const hiddenInput = document.getElementById('id_instrument');
 
+    {% if form.instance.instrument %}
+        searchInput.value = "{{ form.instance.instrument.inventory_N }} - {{ form.instance.instrument.name }}";
+    {% elif form.initial.instrument %}
+        const initialText = "{{ form.initial.instrument|escapejs }}";
+        fetch(`/api/search-instruments/?q=${encodeURIComponent(initialText)}`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.results && data.results.length > 0) {
+                    const found = data.results.find(item => item.text === initialText) || data.results[0];
+                    searchInput.value = found.text;
+                    hiddenInput.value = found.id;
+                } else {
+                    searchInput.value = initialText;
+                }
+            })
+            .catch(err => console.error('Ошибка предзаполнения:', err));
+    {% endif %}
+
     let timeout = null;
 
     searchInput.addEventListener('input', function() {
         clearTimeout(timeout);
         const query = this.value.trim();
+
         if (query.length < 2) {
             resultsBox.innerHTML = '';
+            hiddenInput.value = '';
             return;
         }
 
         timeout = setTimeout(() => {
             fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
                 .then(data => {
                     resultsBox.innerHTML = '';
-                    if (data.results.length === 0) {
+                    if (!data.results || data.results.length === 0) {
                         resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
                         return;
                     }
@@ -81,25 +120,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         };
                         resultsBox.appendChild(btn);
                     });
+                })
+                .catch(err => {
+                    console.error('Ошибка поиска:', err);
+                    resultsBox.innerHTML = '<div class="list-group-item text-danger">Ошибка сервера</div>';
                 });
         }, 300);
     });
 
-    // Если редактируем существующий ремонт
-    {% if form.instance.instrument %}
-        searchInput.value = "{{ form.instance.instrument.inventory_N }} - {{ form.instance.instrument.name }}";
-        hiddenInput.value = "{{ form.instance.instrument.id }}";
-    {% elif form.initial.instrument %}
-        // Если пришли с GET-параметром ?instrument=...
-        fetch(`/api/search-instruments/?q={{ form.initial.instrument }}`)
-            .then(r => r.json())
-            .then(data => {
-                if (data.results.length > 0) {
-                    searchInput.value = data.results[0].text;
-                    hiddenInput.value = data.results[0].id;
-                }
-            });
-    {% endif %}
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+            resultsBox.innerHTML = '';
+        }
+    });
 });
 </script>
 {% endblock %}
