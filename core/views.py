@@ -215,12 +215,33 @@ class RepairCreateView(LoginRequiredMixin, CreateView):
     template_name = 'core/repairs/repairs_form.html'
     success_url = reverse_lazy('core:repair_list')
 
+    def get_instrument_id(self):
+        # Ищем ID в GET (если перешли по ссылке) или в POST (если нажали кнопку)
+        return self.request.GET.get('instrument') or self.request.POST.get('instrument')
+
     def get_initial(self):
         initial = super().get_initial()
-        instrument_id = self.request.GET.get('instrument')
+        instrument_id = self.get_instrument_id()
         if instrument_id:
-            initial['instrument'] = instrument_id
+            from .models import Instrument
+            try:
+                instrument = Instrument.objects.get(pk=instrument_id)
+                initial['instrument'] = instrument
+            except Instrument.DoesNotExist:
+                pass
         return initial
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        instrument_id = self.get_instrument_id()
+        if instrument_id:
+            from .models import Instrument
+            try:
+                instrument = Instrument.objects.get(pk=instrument_id)
+                context['initial_instrument_text'] = f"{instrument.inventory_N} - {instrument.name}"
+            except Instrument.DoesNotExist:
+                pass
+        return context
 
 
 @login_required
