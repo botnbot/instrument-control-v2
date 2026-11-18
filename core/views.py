@@ -1,7 +1,5 @@
-import os
 import shutil
 import sqlite3
-import subprocess
 import zipfile
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
@@ -210,6 +208,7 @@ class RepairListView(ListView):
         context['current_order'] = self.request.GET.get('order', 'desc')
         return context
 
+
 class RepairCreateView(LoginRequiredMixin, CreateView):
     model = Repair
     form_class = RepairForm
@@ -220,13 +219,7 @@ class RepairCreateView(LoginRequiredMixin, CreateView):
         initial = super().get_initial()
         instrument_id = self.request.GET.get('instrument')
         if instrument_id:
-            from .models import Instrument
-            try:
-                instrument = Instrument.objects.get(pk=instrument_id)
-                # Передаем в форму текст (инв. номер + название)
-                initial['instrument'] = f"{instrument.inventory_N} - {instrument.name}"
-            except Instrument.DoesNotExist:
-                pass
+            initial['instrument'] = instrument_id
         return initial
 
 
@@ -573,66 +566,6 @@ def restore_view(request):
 
     return redirect('core:backup_view')
 
-
-def is_superuser(user):
-    return user.is_superuser
-
-
-@user_passes_test(is_superuser)
-def restore_view(request):
-    """Восстановление из загруженного дампа базы (PostgreSQL) - только суперпользователь"""
-    if request.method == 'POST' and request.FILES.get('backup_file'):
-        uploaded_file = request.FILES['backup_file']
-
-        if not uploaded_file.name.endswith('.dump'):
-            messages.error(request, 'Файл должен быть в формате .dump')
-            return redirect('core:backup_view')
-
-        backup_dir = Path(settings.BACKUP_ROOT)
-        backup_dir.mkdir(parents=True, exist_ok=True)
-        temp_dump_path = backup_dir / 'temp_restore.dump'
-
-        try:
-            with open(temp_dump_path, 'wb+') as destination:
-                for chunk in uploaded_file.chunks():
-                    destination.write(chunk)
-
-            pg_restore_path = r"C:\Program Files\PostgreSQL\18\bin\pg_restore.exe"
-            if not Path(pg_restore_path).exists():
-                pg_restore_path = "pg_restore"
-
-            env = os.environ.copy()
-            env['PGPASSWORD'] = settings.DATABASES['default']['PASSWORD']
-
-            command = [
-                pg_restore_path,
-                "-h", settings.DATABASES['default']['HOST'],
-                "-p", str(settings.DATABASES['default']['PORT']),
-                "-U", settings.DATABASES['default']['USER'],
-                "-d", settings.DATABASES['default']['NAME'],
-                "--clean",
-                "--if-exists",
-                str(temp_dump_path)
-            ]
-
-            subprocess.run(command, env=env, check=True)
-            temp_dump_path.unlink()
-
-            messages.success(request, 'База данных успешно восстановлена. Перезапустите сервер.')
-            return redirect('core:instrument_list')
-
-        except subprocess.CalledProcessError as e:
-            messages.error(request, f'Ошибка при восстановлении БД: {str(e)}')
-            if temp_dump_path.exists():
-                temp_dump_path.unlink()
-            return redirect('core:backup_view')
-        except Exception as e:
-            messages.error(request, f'Ошибка при восстановлении: {str(e)}')
-            if temp_dump_path.exists():
-                temp_dump_path.unlink()
-            return redirect('core:backup_view')
-
-    return redirect('core:backup_view')
 
 # ========== СИНХРОНИЗАЦИЯ С TIMECONTROL ==========
 

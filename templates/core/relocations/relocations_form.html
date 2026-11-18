@@ -74,18 +74,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Если это редактирование существующего перемещения, показываем название инструмента
     {% if form.instance.instrument %}
         searchInput.value = "{{ form.instance.instrument.inventory_N }} - {{ form.instance.instrument.name }}";
-        {% elif form.initial.instrument %}
-        // Если пришли с GET-параметром ?instrument=... (там текст)
-        const initialText = "{{ form.initial.instrument|escapejs }}";
-        fetch(`/api/search-instruments/?q=${encodeURIComponent(initialText)}`)
+    {% elif form.initial.instrument %}
+        // Если пришли с GET-параметром ?instrument=...
+        fetch(`/api/search-instruments/?q={{ form.initial.instrument }}`)
             .then(r => r.json())
             .then(data => {
                 if (data.results && data.results.length > 0) {
-                    const found = data.results.find(item => item.text === initialText) || data.results[0];
-                    searchInput.value = found.text;
-                    hiddenInput.value = found.id;
-                } else {
-                    searchInput.value = initialText;
+                    // Ищем именно тот ID, который пришел
+                    const found = data.results.find(i => i.id == {{ form.initial.instrument }});
+                    if (found) {
+                        searchInput.value = found.text;
+                        hiddenInput.value = found.id;
+                    }
                 }
             })
             .catch(err => console.error('Ошибка предзаполнения:', err));

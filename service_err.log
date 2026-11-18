@@ -1,0 +1,12 @@
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+C:\Users\skoro\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\instrument-control-v2\\run_server.py': [Errno 2] No such file or directory
+SyntaxError: Non-UTF-8 code starting with '\xc7' in file C:\instrument-control-v2\run_server.py on line 13, but no encoding declared; see https://peps.python.org/pep-0263/ for details
+SyntaxError: Non-UTF-8 code starting with '\xc7' in file C:\instrument-control-v2\run_server.py on line 13, but no encoding declared; see https://peps.python.org/pep-0263/ for details
+SyntaxError: Non-UTF-8 code starting with '\xc7' in file C:\instrument-control-v2\run_server.py on line 13, but no encoding declared; see https://peps.python.org/pep-0263/ for details

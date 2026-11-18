@@ -1,0 +1,5428 @@
+[
+{
+  "model": "core.category",
+  "pk": 1,
+  "fields": {
+    "name": "Ручной"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 2,
+  "fields": {
+    "name": "Электрический"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 3,
+  "fields": {
+    "name": "Бензиновый/Дизельный"
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 1,
+  "fields": {
+    "name": "ООО \"Левша\"",
+    "address": "ул. Ленина д. 1",
+    "phone": "222333",
+    "contact_person": "Петрович",
+    "email": "ggg@ius.ru",
+    "comment": "[jhji"
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 2,
+  "fields": {
+    "name": "ООО \"Рукожопы\"",
+    "address": "Заднепроходный пер д.2",
+    "phone": "987-666-765",
+    "contact_person": "Иван",
+    "email": "email@dog.com",
+    "comment": "плох"
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 3,
+  "fields": {
+    "name": "Своими силами",
+    "address": "Турундаевская 126",
+    "phone": null,
+    "contact_person": "Сергей",
+    "email": "24@smn35.com",
+    "comment": null
+  }
+},
+{
+  "model": "core.repairer",
+  "pk": 4,
+  "fields": {
+    "name": "ИП Жуков",
+    "address": "Заводская 22",
+    "phone": null,
+    "contact_person": null,
+    "email": null,
+    "comment": null
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 1,
+  "fields": {
+    "instrument": 2,
+    "repairer": 2,
+    "failure_date": "2026-10-23",
+    "date_of_delivery_for_repair": "2026-10-22",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "10.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 2,
+  "fields": {
+    "instrument": 5,
+    "repairer": 1,
+    "failure_date": "2026-10-26",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "54785.25",
+    "comment": "комент"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 3,
+  "fields": {
+    "instrument": 5,
+    "repairer": 1,
+    "failure_date": "2026-10-22",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "9.00",
+    "comment": "всем"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 4,
+  "fields": {
+    "instrument": 3,
+    "repairer": 1,
+    "failure_date": "2026-10-26",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": null,
+    "comment": "хор"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 5,
+  "fields": {
+    "instrument": 9,
+    "repairer": 2,
+    "failure_date": "2026-10-09",
+    "date_of_delivery_for_repair": "2026-10-08",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "100.00",
+    "comment": "рпнгап"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 6,
+  "fields": {
+    "instrument": 9,
+    "repairer": 3,
+    "failure_date": "2026-10-19",
+    "date_of_delivery_for_repair": "2026-10-27",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "10.00",
+    "comment": "тирр"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 7,
+  "fields": {
+    "instrument": 9,
+    "repairer": 2,
+    "failure_date": "2026-10-21",
+    "date_of_delivery_for_repair": "2026-10-23",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "77.00",
+    "comment": "псоьсп"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 8,
+  "fields": {
+    "instrument": 2,
+    "repairer": 2,
+    "failure_date": "2026-10-29",
+    "date_of_delivery_for_repair": "2026-10-26",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "1111.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 9,
+  "fields": {
+    "instrument": 9,
+    "repairer": 1,
+    "failure_date": "2026-10-14",
+    "date_of_delivery_for_repair": "2026-10-16",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "4.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 10,
+  "fields": {
+    "instrument": 2,
+    "repairer": 2,
+    "failure_date": "2026-10-23",
+    "date_of_delivery_for_repair": "2026-10-25",
+    "date_of_receipt_from_repair": "2026-10-27",
+    "repair_cost": "6.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 11,
+  "fields": {
+    "instrument": 2,
+    "repairer": 3,
+    "failure_date": "2026-10-20",
+    "date_of_delivery_for_repair": "2026-10-22",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": null,
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 12,
+  "fields": {
+    "instrument": 5,
+    "repairer": 3,
+    "failure_date": "2026-10-13",
+    "date_of_delivery_for_repair": "2026-10-27",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "390.00",
+    "comment": "комментарий"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 13,
+  "fields": {
+    "instrument": 2,
+    "repairer": 3,
+    "failure_date": "2026-10-21",
+    "date_of_delivery_for_repair": "2026-10-29",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "200.00",
+    "comment": "комент"
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 14,
+  "fields": {
+    "instrument": 9,
+    "repairer": 2,
+    "failure_date": "2026-10-31",
+    "date_of_delivery_for_repair": "2026-11-01",
+    "date_of_receipt_from_repair": "2026-11-01",
+    "repair_cost": "456.00",
+    "comment": ""
+  }
+},
+{
+  "model": "core.repair",
+  "pk": 15,
+  "fields": {
+    "instrument": 11,
+    "repairer": 2,
+    "failure_date": "2026-10-27",
+    "date_of_delivery_for_repair": "2026-11-02",
+    "date_of_receipt_from_repair": null,
+    "repair_cost": "100.00",
+    "comment": "плохо"
+  }
+},
+{
+  "model": "core.relocation",
+  "pk": 1,
+  "fields": {
+    "instrument": 1,
+    "comment": "на денек",
+    "location": "домой",
+    "date": "2026-10-25"
+  }
+},
+{
+  "model": "core.relocation",
+  "pk": 2,
+  "fields": {
+    "instrument": 3,
+    "comment": "Дрова пилить",
+    "location": "в ад",
+    "date": "2026-11-02"
+  }
+},
+{
+  "model": "core.relocation",
+  "pk": 3,
+  "fields": {
+    "instrument": 12,
+    "comment": "",
+    "location": "в кузню",
+    "date": "2026-11-02"
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-06T16:22:12Z",
+    "is_superuser": true,
+    "first_name": "Сергей",
+    "last_name": "Складный",
+    "is_staff": true,
+    "date_joined": "2026-10-24T18:21:01Z",
+    "username": "кладовщик2",
+    "email": "ICKLADn@smn35.com",
+    "rfid_card": "0000503295",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$gSDraZ1XwdlZXyf36OyBck$/m1+Sa9hsnoQWkB0SfYMpwkBK23V6RnQcmxPu5nKjz0=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-10-26T19:24:29.818Z",
+    "is_superuser": false,
+    "first_name": "Вася",
+    "last_name": "Пупкин",
+    "is_staff": false,
+    "date_joined": "2026-10-24T20:52:49Z",
+    "username": "ВАСЯ",
+    "email": "jhb@dfg.er",
+    "rfid_card": "123456987",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$exbRvckwrg9nAYoD1mFyje$Sk4hd7qSt+wIsyyKsw8WW1aq/mxUXqqXvRUw6rIQUZw=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-05T15:57:53.995Z",
+    "is_superuser": false,
+    "first_name": "Петр",
+    "last_name": "Иванов",
+    "is_staff": false,
+    "date_joined": "2026-10-26T12:07:18Z",
+    "username": "Петя",
+    "email": "petr@smn35.com",
+    "rfid_card": "2222222222",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$T3A3eHLJ6am6Mi4PR4zlRj$opwOohLCsXM39GymJpx9mrr4vDrlXiIBvTiyFGwoPpM=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-01T19:49:19.418Z",
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Петров",
+    "is_staff": false,
+    "date_joined": "2026-10-26T12:12:17Z",
+    "username": "Ваня",
+    "email": "ivan@smn35.com",
+    "rfid_card": "33333333333333333333",
+    "tabnum": null,
+    "is_active": true,
+    "password": "!tDQoGxPzLZczH3k6mXTQUnj5vZkuV8QlejQVGtFT",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Дмитриев",
+    "is_staff": false,
+    "date_joined": "2026-10-27T12:04:49.536Z",
+    "username": "user",
+    "email": "vctc@snn.com",
+    "rfid_card": "123321123",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$sTh1Na4vqd839VQXbQhpJu$iDfosDVrApGlvT/aLz6z79R3u1eU/9Lleeupb3/tfdE=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-10-27T12:23:05.514Z",
+    "is_superuser": false,
+    "first_name": "Григорий",
+    "last_name": "Задов",
+    "is_staff": false,
+    "date_joined": "2026-10-27T12:23:03.322Z",
+    "username": "grigor",
+    "email": "user@wer.ru",
+    "rfid_card": "11",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$PEdzYn66fkH8vqlryCqHXH$J1IeXTMzGAvMnjWR8W8vAdfaMGjgHWprTvE9y6jM+ks=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": false,
+    "date_joined": "2026-11-04T16:17:45.128Z",
+    "username": "Кладовщик",
+    "email": "",
+    "rfid_card": null,
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$zRSBFeMFR59KSNXlAFHPck$CAfm+Xp/gjBqlzjzc/NfTe8tjOKvsikm2xfZu6Rfs5o=",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-06T19:45:50.200Z",
+    "is_superuser": false,
+    "first_name": "Имя",
+    "last_name": "Фамилия",
+    "is_staff": false,
+    "date_joined": "2026-11-04T16:57:07Z",
+    "username": "adminsky",
+    "email": "adm@min.sky",
+    "rfid_card": "390085",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$Fp7QRYC10Fzow2bYhDdZMw$PlNfpc2JWXwruaRudzlCCEy+/g6WMLv5Fl3iAACsfLQ=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "настройка",
+    "last_name": "1с",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.404Z",
+    "username": "410",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": null,
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Шаген",
+    "last_name": "Айрапетян",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.411Z",
+    "username": "534",
+    "email": null,
+    "rfid_card": "11794202",
+    "tabnum": "539",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Антон",
+    "last_name": "Алимпиев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.415Z",
+    "username": "589",
+    "email": null,
+    "rfid_card": "710657",
+    "tabnum": "594",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Артём",
+    "last_name": "Андрианов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.417Z",
+    "username": "517",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "522",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Артамонов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.418Z",
+    "username": "521",
+    "email": null,
+    "rfid_card": "33279",
+    "tabnum": "526",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Олег",
+    "last_name": "Багаев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.421Z",
+    "username": "508",
+    "email": null,
+    "rfid_card": "553170",
+    "tabnum": "513",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Бараташвили",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.423Z",
+    "username": "553",
+    "email": null,
+    "rfid_card": "494599",
+    "tabnum": "558",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Барулин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.424Z",
+    "username": "362",
+    "email": null,
+    "rfid_card": "162613",
+    "tabnum": "366",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Геннадий",
+    "last_name": "Белов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.427Z",
+    "username": "436",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "441",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Белоусов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.429Z",
+    "username": "475",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "480",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Белых",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.431Z",
+    "username": "550",
+    "email": null,
+    "rfid_card": "472110",
+    "tabnum": "555",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Константин",
+    "last_name": "Березин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.433Z",
+    "username": "528",
+    "email": null,
+    "rfid_card": "78595",
+    "tabnum": "533",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Беспалов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.434Z",
+    "username": "397",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "401",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Блюдов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.436Z",
+    "username": "339",
+    "email": null,
+    "rfid_card": "0003134527",
+    "tabnum": "343",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Богатых",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.438Z",
+    "username": "479",
+    "email": null,
+    "rfid_card": "543200",
+    "tabnum": "454",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Виктор",
+    "last_name": "Боков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.440Z",
+    "username": "367",
+    "email": null,
+    "rfid_card": "2167646",
+    "tabnum": "371",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Олег",
+    "last_name": "Большаков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.442Z",
+    "username": "477",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "478",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Борисов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.443Z",
+    "username": "208",
+    "email": null,
+    "rfid_card": "11733787",
+    "tabnum": "84",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Виктор",
+    "last_name": "Брашанов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.445Z",
+    "username": "435",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "440",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Надежда",
+    "last_name": "Бурова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.447Z",
+    "username": "84",
+    "email": null,
+    "rfid_card": "312676",
+    "tabnum": "1",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Быстров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.449Z",
+    "username": "575",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "580",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Валяев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.451Z",
+    "username": "586",
+    "email": null,
+    "rfid_card": "67728",
+    "tabnum": "591",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Олег",
+    "last_name": "Валяев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.452Z",
+    "username": "585",
+    "email": null,
+    "rfid_card": "666417",
+    "tabnum": "590",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Юрий",
+    "last_name": "Валяев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.454Z",
+    "username": "277",
+    "email": null,
+    "rfid_card": "2980356",
+    "tabnum": "281",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Варзинов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.456Z",
+    "username": "406",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "410",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Васильев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.458Z",
+    "username": "431",
+    "email": null,
+    "rfid_card": "0011783884",
+    "tabnum": "436",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Артём",
+    "last_name": "Виноградов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.460Z",
+    "username": "577",
+    "email": null,
+    "rfid_card": "469414",
+    "tabnum": "582",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Виноградов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.462Z",
+    "username": "576",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "581",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Вишняков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.464Z",
+    "username": "407",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "411",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Данил",
+    "last_name": "Власов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.465Z",
+    "username": "579",
+    "email": null,
+    "rfid_card": "18518",
+    "tabnum": "584",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Юрий",
+    "last_name": "Волков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.467Z",
+    "username": "207",
+    "email": null,
+    "rfid_card": "0011766800",
+    "tabnum": "209",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Любовь",
+    "last_name": "Волкова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.469Z",
+    "username": "297",
+    "email": null,
+    "rfid_card": "3120944",
+    "tabnum": "301",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Матвей",
+    "last_name": "Волокитин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.471Z",
+    "username": "461",
+    "email": null,
+    "rfid_card": "494053",
+    "tabnum": "466",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Антонина",
+    "last_name": "Воробьева",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.473Z",
+    "username": "296",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "300",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Антонина",
+    "last_name": "Воробьева",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.474Z",
+    "username": "447",
+    "email": null,
+    "rfid_card": "3134281",
+    "tabnum": "300",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Олег",
+    "last_name": "Воронин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.476Z",
+    "username": "505",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "510",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Роман",
+    "last_name": "Вторушин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.477Z",
+    "username": "566",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "571",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Денис",
+    "last_name": "Гайлюш",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.479Z",
+    "username": "519",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "524",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Геворг",
+    "last_name": "Гарибян",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.481Z",
+    "username": "88",
+    "email": null,
+    "rfid_card": "172747",
+    "tabnum": "5",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Павел",
+    "last_name": "Глебов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.483Z",
+    "username": "525",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "530",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Виталий",
+    "last_name": "Глод",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.485Z",
+    "username": "434",
+    "email": null,
+    "rfid_card": "00031220878",
+    "tabnum": "439",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Голованов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.487Z",
+    "username": "433",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "438",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Вадим",
+    "last_name": "Головань",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.489Z",
+    "username": "346",
+    "email": null,
+    "rfid_card": "3134272",
+    "tabnum": "350",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Илья",
+    "last_name": "Гордин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.490Z",
+    "username": "89",
+    "email": null,
+    "rfid_card": "0003120879",
+    "tabnum": "6",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Наталия",
+    "last_name": "Городкова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.492Z",
+    "username": "425",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "557",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Горюнов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.493Z",
+    "username": "403",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "407",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Игорь",
+    "last_name": "Губин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.495Z",
+    "username": "332",
+    "email": null,
+    "rfid_card": "0003134247",
+    "tabnum": "336",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Гуляев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.497Z",
+    "username": "90",
+    "email": null,
+    "rfid_card": "367823",
+    "tabnum": "7",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Даниил",
+    "last_name": "Гуляев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.499Z",
+    "username": "91",
+    "email": null,
+    "rfid_card": "504692",
+    "tabnum": "8",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Максим",
+    "last_name": "Демидов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.501Z",
+    "username": "222",
+    "email": null,
+    "rfid_card": "604680",
+    "tabnum": "94",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Павел",
+    "last_name": "Демидов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.503Z",
+    "username": "142",
+    "email": null,
+    "rfid_card": "0011739552",
+    "tabnum": "502",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Демидов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.505Z",
+    "username": "183",
+    "email": null,
+    "rfid_card": "83939",
+    "tabnum": "75",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Максим",
+    "last_name": "Дерябин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.507Z",
+    "username": "412",
+    "email": null,
+    "rfid_card": "162860",
+    "tabnum": "416",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Анна",
+    "last_name": "Добычина",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.508Z",
+    "username": "271",
+    "email": null,
+    "rfid_card": "0011767547",
+    "tabnum": "275",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Дороничев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.510Z",
+    "username": "541",
+    "email": null,
+    "rfid_card": "461839",
+    "tabnum": "339",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Дуванов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.512Z",
+    "username": "411",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "415",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Антон",
+    "last_name": "Дулепов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.513Z",
+    "username": "563",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "568",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Евстафеев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.515Z",
+    "username": "223",
+    "email": null,
+    "rfid_card": "3134269",
+    "tabnum": "95",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Вячеслав",
+    "last_name": "Егоров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.517Z",
+    "username": "445",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "450",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Михаил",
+    "last_name": "Ермалюк",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.519Z",
+    "username": "607",
+    "email": null,
+    "rfid_card": "722615",
+    "tabnum": "612",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Ерофеев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.521Z",
+    "username": "236",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "239",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Жиганов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.523Z",
+    "username": "357",
+    "email": null,
+    "rfid_card": "0011774009",
+    "tabnum": "361",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Журавлев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.525Z",
+    "username": "591",
+    "email": null,
+    "rfid_card": "513347",
+    "tabnum": "596",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Залётов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.527Z",
+    "username": "343",
+    "email": null,
+    "rfid_card": "000348199",
+    "tabnum": "347",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Анатолий",
+    "last_name": "Замуракин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.528Z",
+    "username": "279",
+    "email": null,
+    "rfid_card": "0003089241",
+    "tabnum": "283",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Заплатин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.530Z",
+    "username": "344",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "348",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Кирил",
+    "last_name": "Зародов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.532Z",
+    "username": "568",
+    "email": null,
+    "rfid_card": "473332",
+    "tabnum": "573",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Степан",
+    "last_name": "Зязин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.534Z",
+    "username": "601",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "606",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Игнат",
+    "last_name": "Игитов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.536Z",
+    "username": "462",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "467",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Игнатьев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.538Z",
+    "username": "439",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "447",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Игнашев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.539Z",
+    "username": "361",
+    "email": null,
+    "rfid_card": "11812618",
+    "tabnum": "280",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Игнашев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.541Z",
+    "username": "274",
+    "email": null,
+    "rfid_card": "0011802591",
+    "tabnum": "278",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Павел",
+    "last_name": "Инчин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.543Z",
+    "username": "556",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "561",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Любовь",
+    "last_name": "Исаева",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.545Z",
+    "username": "427",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "432",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Калмыков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.547Z",
+    "username": "351",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "355",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Каравацкий",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.548Z",
+    "username": "275",
+    "email": null,
+    "rfid_card": "0011794202",
+    "tabnum": "279",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Карачёв",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.550Z",
+    "username": "507",
+    "email": null,
+    "rfid_card": "450249",
+    "tabnum": "512",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Катаев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.552Z",
+    "username": "386",
+    "email": null,
+    "rfid_card": "319702",
+    "tabnum": "390",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Кашинцев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.554Z",
+    "username": "590",
+    "email": null,
+    "rfid_card": "690085",
+    "tabnum": "595",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Вера",
+    "last_name": "Кени",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.555Z",
+    "username": "272",
+    "email": null,
+    "rfid_card": "22905",
+    "tabnum": "276",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Клим",
+    "last_name": "Клёсов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.557Z",
+    "username": "438",
+    "email": null,
+    "rfid_card": "1961624",
+    "tabnum": "443",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Козекин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.559Z",
+    "username": "548",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "553",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Роман",
+    "last_name": "Козлов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.561Z",
+    "username": "573",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "578",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Вадим",
+    "last_name": "Кознов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.563Z",
+    "username": "95",
+    "email": null,
+    "rfid_card": "318291",
+    "tabnum": "12",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Козырев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.565Z",
+    "username": "481",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "486",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Коковин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.567Z",
+    "username": "150",
+    "email": null,
+    "rfid_card": "476646",
+    "tabnum": "58",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Виталий",
+    "last_name": "Комаров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.569Z",
+    "username": "510",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "515",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Виктор",
+    "last_name": "Коновалов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.571Z",
+    "username": "198",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "77",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Коновалов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.573Z",
+    "username": "383",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "387",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Коновалов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.574Z",
+    "username": "342",
+    "email": null,
+    "rfid_card": "395574",
+    "tabnum": "346",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Коноплев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.576Z",
+    "username": "97",
+    "email": null,
+    "rfid_card": "252573",
+    "tabnum": "14",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Павел",
+    "last_name": "Корепин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.578Z",
+    "username": "308",
+    "email": null,
+    "rfid_card": "11793541",
+    "tabnum": "312",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Корешков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.580Z",
+    "username": "524",
+    "email": null,
+    "rfid_card": "333196",
+    "tabnum": "529",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Михаил",
+    "last_name": "Корешков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.582Z",
+    "username": "402",
+    "email": null,
+    "rfid_card": "0000403501",
+    "tabnum": "406",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Даниил",
+    "last_name": "Корнийчук",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.583Z",
+    "username": "364",
+    "email": null,
+    "rfid_card": "11755312",
+    "tabnum": "368",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Коробейников",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.585Z",
+    "username": "139",
+    "email": null,
+    "rfid_card": "6401508",
+    "tabnum": "555",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Коршенюк",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.587Z",
+    "username": "570",
+    "email": null,
+    "rfid_card": "505987",
+    "tabnum": "575",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Коряковский",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.589Z",
+    "username": "533",
+    "email": null,
+    "rfid_card": "328554",
+    "tabnum": "538",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Светлана",
+    "last_name": "Кострова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.591Z",
+    "username": "483",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "558",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Котков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.593Z",
+    "username": "98",
+    "email": null,
+    "rfid_card": "572498",
+    "tabnum": "15",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Матвей",
+    "last_name": "Крутиков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.595Z",
+    "username": "476",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "481",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Анастасия",
+    "last_name": "Крутикова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.597Z",
+    "username": "413",
+    "email": null,
+    "rfid_card": "0002996257",
+    "tabnum": "417",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Крылов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.599Z",
+    "username": "317",
+    "email": null,
+    "rfid_card": "547771",
+    "tabnum": "321",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Станислав",
+    "last_name": "Кряжев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.601Z",
+    "username": "382",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "386",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Кузичев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.602Z",
+    "username": "260",
+    "email": null,
+    "rfid_card": "11738426",
+    "tabnum": "263",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Кузнецов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.604Z",
+    "username": "400",
+    "email": null,
+    "rfid_card": "470639",
+    "tabnum": "404",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Виктор",
+    "last_name": "Кузнецов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.606Z",
+    "username": "227",
+    "email": null,
+    "rfid_card": "11761544",
+    "tabnum": "230",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Денис",
+    "last_name": "Кузнецов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.608Z",
+    "username": "514",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "519",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Кука",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.610Z",
+    "username": "509",
+    "email": null,
+    "rfid_card": "605965",
+    "tabnum": "514",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Кукушкин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.611Z",
+    "username": "101",
+    "email": null,
+    "rfid_card": "11782867",
+    "tabnum": "18",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Курицын",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.613Z",
+    "username": "616",
+    "email": null,
+    "rfid_card": "432109",
+    "tabnum": "621",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Кушников",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.615Z",
+    "username": "324",
+    "email": null,
+    "rfid_card": "0003002496",
+    "tabnum": "328",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Лабутин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.617Z",
+    "username": "218",
+    "email": null,
+    "rfid_card": "439868",
+    "tabnum": "101",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Валентина",
+    "last_name": "Лобова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.619Z",
+    "username": "535",
+    "email": null,
+    "rfid_card": "232623",
+    "tabnum": "540",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Львов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.621Z",
+    "username": "532",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "537",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Любимов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.623Z",
+    "username": "262",
+    "email": null,
+    "rfid_card": "3089252",
+    "tabnum": "265",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Ляпков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.625Z",
+    "username": "572",
+    "email": null,
+    "rfid_card": "357227",
+    "tabnum": "577",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Вячеслав",
+    "last_name": "Макаров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.626Z",
+    "username": "338",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "342",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Вадим",
+    "last_name": "Малов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.628Z",
+    "username": "619",
+    "email": null,
+    "rfid_card": "24068",
+    "tabnum": "624",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Т.",
+    "last_name": "Малышева",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.630Z",
+    "username": "312",
+    "email": null,
+    "rfid_card": "194375",
+    "tabnum": "316",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Павел",
+    "last_name": "Мамонтов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.632Z",
+    "username": "441",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "446",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Марков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.634Z",
+    "username": "319",
+    "email": null,
+    "rfid_card": "11776792",
+    "tabnum": "323",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Илья",
+    "last_name": "Мартынов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.636Z",
+    "username": "464",
+    "email": null,
+    "rfid_card": "121757",
+    "tabnum": "469",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Маслюк",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.638Z",
+    "username": "539",
+    "email": null,
+    "rfid_card": "507846",
+    "tabnum": "544",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Медведев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.639Z",
+    "username": "104",
+    "email": null,
+    "rfid_card": "11786950",
+    "tabnum": "21",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Мельников",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.641Z",
+    "username": "105",
+    "email": null,
+    "rfid_card": "245645",
+    "tabnum": "22",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Мельников",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.643Z",
+    "username": "580",
+    "email": null,
+    "rfid_card": "174817",
+    "tabnum": "585",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Митин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.645Z",
+    "username": "564",
+    "email": null,
+    "rfid_card": "457946",
+    "tabnum": "569",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Митин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.647Z",
+    "username": "463",
+    "email": null,
+    "rfid_card": "657787",
+    "tabnum": "468",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Михеев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.649Z",
+    "username": "153",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "60",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Артём",
+    "last_name": "Морозов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.651Z",
+    "username": "574",
+    "email": null,
+    "rfid_card": "282137",
+    "tabnum": "579",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Мохов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.653Z",
+    "username": "259",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "262",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Муравьев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.655Z",
+    "username": "620",
+    "email": null,
+    "rfid_card": "577585",
+    "tabnum": "625",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Мурашов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.657Z",
+    "username": "456",
+    "email": null,
+    "rfid_card": "183440",
+    "tabnum": "461",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Мятлин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.659Z",
+    "username": "257",
+    "email": null,
+    "rfid_card": "445378",
+    "tabnum": "260",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Леонид",
+    "last_name": "Назаров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.661Z",
+    "username": "430",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "435",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Некипелов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.662Z",
+    "username": "596",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "601",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Неофитов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.664Z",
+    "username": "583",
+    "email": null,
+    "rfid_card": "528122",
+    "tabnum": "588",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Анна",
+    "last_name": "Нетужилова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.666Z",
+    "username": "595",
+    "email": null,
+    "rfid_card": "519168",
+    "tabnum": "600",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Павел",
+    "last_name": "Никитин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.668Z",
+    "username": "398",
+    "email": null,
+    "rfid_card": "3134247",
+    "tabnum": "402",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Никитинский",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.670Z",
+    "username": "608",
+    "email": null,
+    "rfid_card": "477653",
+    "tabnum": "613",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Арина",
+    "last_name": "Новгородова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.672Z",
+    "username": "379",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "383",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Максим",
+    "last_name": "Одинцов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.674Z",
+    "username": "469",
+    "email": null,
+    "rfid_card": "539732",
+    "tabnum": "474",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Ожигин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.676Z",
+    "username": "106",
+    "email": null,
+    "rfid_card": "327758",
+    "tabnum": "23",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Окунев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.678Z",
+    "username": "206",
+    "email": null,
+    "rfid_card": "0003002171",
+    "tabnum": "83",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Окунев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.680Z",
+    "username": "261",
+    "email": null,
+    "rfid_card": "3089219",
+    "tabnum": "264",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Олешев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.682Z",
+    "username": "599",
+    "email": null,
+    "rfid_card": "515491",
+    "tabnum": "604",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Роман",
+    "last_name": "Осотов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.684Z",
+    "username": "405",
+    "email": null,
+    "rfid_card": "545381",
+    "tabnum": "409",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Остудин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.686Z",
+    "username": "602",
+    "email": null,
+    "rfid_card": "473855",
+    "tabnum": "607",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Юрий",
+    "last_name": "Павлов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.688Z",
+    "username": "612",
+    "email": null,
+    "rfid_card": "511554",
+    "tabnum": "617",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Пальмин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.690Z",
+    "username": "345",
+    "email": null,
+    "rfid_card": "3120966",
+    "tabnum": "349",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Пахолков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.692Z",
+    "username": "408",
+    "email": null,
+    "rfid_card": "336730",
+    "tabnum": "412",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Пахомов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.694Z",
+    "username": "526",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "531",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владислав",
+    "last_name": "Пенюгалов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.696Z",
+    "username": "547",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "552",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Юрий",
+    "last_name": "Петров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.698Z",
+    "username": "567",
+    "email": null,
+    "rfid_card": "372436",
+    "tabnum": "572",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Петухов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.700Z",
+    "username": "558",
+    "email": null,
+    "rfid_card": "291653",
+    "tabnum": "563",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Анатолий",
+    "last_name": "Плахин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.703Z",
+    "username": "247",
+    "email": null,
+    "rfid_card": "0003120901",
+    "tabnum": "250",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Михаил",
+    "last_name": "Плахин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.705Z",
+    "username": "587",
+    "email": null,
+    "rfid_card": "570977",
+    "tabnum": "592",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Плахин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.707Z",
+    "username": "188",
+    "email": null,
+    "rfid_card": "0000047225",
+    "tabnum": "68",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Погодин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.709Z",
+    "username": "149",
+    "email": null,
+    "rfid_card": "11804464",
+    "tabnum": "57",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Подмятников",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.711Z",
+    "username": "107",
+    "email": null,
+    "rfid_card": "2129654",
+    "tabnum": "24",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Виктория",
+    "last_name": "Поленок",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.712Z",
+    "username": "378",
+    "email": null,
+    "rfid_card": "183840",
+    "tabnum": "382",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Данила",
+    "last_name": "Полетаев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.714Z",
+    "username": "495",
+    "email": null,
+    "rfid_card": "17404",
+    "tabnum": "500",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Людмила",
+    "last_name": "Полетаева",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.716Z",
+    "username": "489",
+    "email": null,
+    "rfid_card": "491945",
+    "tabnum": "494",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Полянский",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51Z",
+    "username": "147",
+    "email": "",
+    "rfid_card": "0011735418",
+    "tabnum": "444",
+    "is_active": true,
+    "password": null,
+    "groups": [
+      [
+        "Админы"
+      ],
+      [
+        "Администрация"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Пономарев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.720Z",
+    "username": "334",
+    "email": null,
+    "rfid_card": "0000583905",
+    "tabnum": "338",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Пономарев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.722Z",
+    "username": "399",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "403",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Попов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.724Z",
+    "username": "393",
+    "email": null,
+    "rfid_card": "0000335848",
+    "tabnum": "397",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Игорь",
+    "last_name": "Попов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.726Z",
+    "username": "109",
+    "email": null,
+    "rfid_card": "338100",
+    "tabnum": "26",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Роман",
+    "last_name": "Попов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.729Z",
+    "username": "110",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "27",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Михаил",
+    "last_name": "Порозов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.731Z",
+    "username": "593",
+    "email": null,
+    "rfid_card": "518830",
+    "tabnum": "598",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Олег",
+    "last_name": "Постников",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.733Z",
+    "username": "520",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "525",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "А.",
+    "last_name": "Потин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.735Z",
+    "username": "309",
+    "email": null,
+    "rfid_card": "0003089263",
+    "tabnum": "313",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Пробкин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.737Z",
+    "username": "611",
+    "email": null,
+    "rfid_card": "341982",
+    "tabnum": "616",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Кирилл",
+    "last_name": "Прокофьев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.740Z",
+    "username": "504",
+    "email": null,
+    "rfid_card": "0000605965",
+    "tabnum": "509",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Протопопов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.742Z",
+    "username": "511",
+    "email": null,
+    "rfid_card": "525384",
+    "tabnum": "516",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Антон",
+    "last_name": "Пушкин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.744Z",
+    "username": "112",
+    "email": null,
+    "rfid_card": "2113967",
+    "tabnum": "29",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Романов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.746Z",
+    "username": "598",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "603",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Рыбаченок",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.748Z",
+    "username": "233",
+    "email": null,
+    "rfid_card": "325062",
+    "tabnum": "236",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Рыбаченок",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.750Z",
+    "username": "96",
+    "email": null,
+    "rfid_card": "157369",
+    "tabnum": "13",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Рычков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.752Z",
+    "username": "401",
+    "email": null,
+    "rfid_card": "400554",
+    "tabnum": "405",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Самарин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.754Z",
+    "username": "472",
+    "email": null,
+    "rfid_card": "504316",
+    "tabnum": "477",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Самарин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.756Z",
+    "username": "474",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "476",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Самойлов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.758Z",
+    "username": "624",
+    "email": null,
+    "rfid_card": "527158",
+    "tabnum": "629",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Сахаров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.760Z",
+    "username": "363",
+    "email": null,
+    "rfid_card": "11783884",
+    "tabnum": "367",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Никита",
+    "last_name": "Селиванов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.762Z",
+    "username": "506",
+    "email": null,
+    "rfid_card": "514037",
+    "tabnum": "511",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Семихин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.764Z",
+    "username": "113",
+    "email": null,
+    "rfid_card": "0003120878",
+    "tabnum": "30",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Сергуничев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.766Z",
+    "username": "114",
+    "email": null,
+    "rfid_card": "399757",
+    "tabnum": "31",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Серебряков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.767Z",
+    "username": "217",
+    "email": null,
+    "rfid_card": "0003012206",
+    "tabnum": "219",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Серов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.769Z",
+    "username": "518",
+    "email": null,
+    "rfid_card": "396890",
+    "tabnum": "523",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Антон",
+    "last_name": "Сизов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.771Z",
+    "username": "193",
+    "email": null,
+    "rfid_card": "0011735409",
+    "tabnum": "90",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Скатов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.773Z",
+    "username": "115",
+    "email": null,
+    "rfid_card": "475305",
+    "tabnum": "32",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Скатов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.775Z",
+    "username": "291",
+    "email": null,
+    "rfid_card": "11754592",
+    "tabnum": "295",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Скородумов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.777Z",
+    "username": "390",
+    "email": null,
+    "rfid_card": "381340",
+    "tabnum": "394",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Смирнов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.779Z",
+    "username": "569",
+    "email": null,
+    "rfid_card": "240890",
+    "tabnum": "574",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Смирнов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.781Z",
+    "username": "118",
+    "email": null,
+    "rfid_card": "342780",
+    "tabnum": "35",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Смирнов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.783Z",
+    "username": "617",
+    "email": null,
+    "rfid_card": "0000174817",
+    "tabnum": "622",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Смирнов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.785Z",
+    "username": "584",
+    "email": null,
+    "rfid_card": "484231",
+    "tabnum": "589",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Смирнов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.786Z",
+    "username": "527",
+    "email": null,
+    "rfid_card": "2183247",
+    "tabnum": "532",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Игорь",
+    "last_name": "Соболь",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.788Z",
+    "username": "512",
+    "email": null,
+    "rfid_card": "2225849",
+    "tabnum": "517",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "Соколов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.790Z",
+    "username": "604",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "609",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Соколов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.792Z",
+    "username": "391",
+    "email": null,
+    "rfid_card": "0000419779",
+    "tabnum": "395",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Максим",
+    "last_name": "Соколов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.794Z",
+    "username": "488",
+    "email": null,
+    "rfid_card": "691661",
+    "tabnum": "493",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Соколов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.796Z",
+    "username": "141",
+    "email": null,
+    "rfid_card": "0006343480",
+    "tabnum": "501",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Ольга",
+    "last_name": "Соколова",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.798Z",
+    "username": "172",
+    "email": null,
+    "rfid_card": "0011793187",
+    "tabnum": "503",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Леонид",
+    "last_name": "Соловьев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.800Z",
+    "username": "350",
+    "email": null,
+    "rfid_card": "0011734695",
+    "tabnum": "354",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Александр",
+    "last_name": "Сорокин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.802Z",
+    "username": "120",
+    "email": null,
+    "rfid_card": "3120857",
+    "tabnum": "37",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Артем",
+    "last_name": "Стальмаков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.804Z",
+    "username": "457",
+    "email": null,
+    "rfid_card": "300967",
+    "tabnum": "462",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Столинин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.806Z",
+    "username": "490",
+    "email": null,
+    "rfid_card": "3134259",
+    "tabnum": "495",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Артем",
+    "last_name": "Сурков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.808Z",
+    "username": "121",
+    "email": null,
+    "rfid_card": "11753476",
+    "tabnum": "38",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Даниил",
+    "last_name": "Суслов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.810Z",
+    "username": "458",
+    "email": null,
+    "rfid_card": "338227",
+    "tabnum": "463",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Танцюра",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.811Z",
+    "username": "448",
+    "email": null,
+    "rfid_card": "394291",
+    "tabnum": "453",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Ю.",
+    "last_name": "Теплов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.813Z",
+    "username": "311",
+    "email": null,
+    "rfid_card": "269622",
+    "tabnum": "315",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Терновой",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.815Z",
+    "username": "122",
+    "email": null,
+    "rfid_card": "0011781032",
+    "tabnum": "39",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Тимофеев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.817Z",
+    "username": "581",
+    "email": null,
+    "rfid_card": "357993",
+    "tabnum": "586",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Тихомиров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.818Z",
+    "username": "452",
+    "email": null,
+    "rfid_card": "127178",
+    "tabnum": "457",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "С.",
+    "last_name": "Трепезов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.820Z",
+    "username": "310",
+    "email": null,
+    "rfid_card": "3002463",
+    "tabnum": "314",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Ульяновский",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.822Z",
+    "username": "486",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "491",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Максим",
+    "last_name": "Федоров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.824Z",
+    "username": "325",
+    "email": null,
+    "rfid_card": null,
+    "tabnum": "329",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Евгений",
+    "last_name": "Фролов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.825Z",
+    "username": "562",
+    "email": null,
+    "rfid_card": "15104433",
+    "tabnum": "567",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Хабаров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.827Z",
+    "username": "540",
+    "email": null,
+    "rfid_card": "451069",
+    "tabnum": "545",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Магамед",
+    "last_name": "Хаджаров",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.829Z",
+    "username": "578",
+    "email": null,
+    "rfid_card": "311042",
+    "tabnum": "583",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Эдуард",
+    "last_name": "Хаджирустанов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.831Z",
+    "username": "354",
+    "email": null,
+    "rfid_card": "0003136982",
+    "tabnum": "358",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Асадбек",
+    "last_name": "Хасанов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.833Z",
+    "username": "415",
+    "email": null,
+    "rfid_card": "403501",
+    "tabnum": "419",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Ахтам",
+    "last_name": "Хасанов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.835Z",
+    "username": "123",
+    "email": null,
+    "rfid_card": "0011748886",
+    "tabnum": "40",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Хрусталёв",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.837Z",
+    "username": "465",
+    "email": null,
+    "rfid_card": "585114",
+    "tabnum": "470",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Царев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.839Z",
+    "username": "124",
+    "email": null,
+    "rfid_card": "11737479",
+    "tabnum": "41",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Дмитрий",
+    "last_name": "Ципилев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.842Z",
+    "username": "560",
+    "email": null,
+    "rfid_card": "681872",
+    "tabnum": "565",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Иван",
+    "last_name": "Черемисин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.844Z",
+    "username": "516",
+    "email": null,
+    "rfid_card": "499448",
+    "tabnum": "521",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Владимир",
+    "last_name": "Чернов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.846Z",
+    "username": "374",
+    "email": null,
+    "rfid_card": "0002149182",
+    "tabnum": "374",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Константин",
+    "last_name": "Чиков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.848Z",
+    "username": "552",
+    "email": null,
+    "rfid_card": "597999",
+    "tabnum": "557",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Роман",
+    "last_name": "Чирков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.850Z",
+    "username": "330",
+    "email": null,
+    "rfid_card": "3002474",
+    "tabnum": "123",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Артём",
+    "last_name": "Чумаков",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.852Z",
+    "username": "500",
+    "email": null,
+    "rfid_card": "449023",
+    "tabnum": "505",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Наталья",
+    "last_name": "Шананина",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.854Z",
+    "username": "353",
+    "email": null,
+    "rfid_card": "3002193",
+    "tabnum": "556",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Артём",
+    "last_name": "Шаравин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.856Z",
+    "username": "470",
+    "email": null,
+    "rfid_card": "359208",
+    "tabnum": "475",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Алексей",
+    "last_name": "Шеркузеев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.858Z",
+    "username": "561",
+    "email": null,
+    "rfid_card": "315453",
+    "tabnum": "566",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Анатолий",
+    "last_name": "Шишкин",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.860Z",
+    "username": "549",
+    "email": null,
+    "rfid_card": "317073",
+    "tabnum": "554",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Григорий",
+    "last_name": "Шоломицкий",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.862Z",
+    "username": "531",
+    "email": null,
+    "rfid_card": "332779",
+    "tabnum": "536",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Николай",
+    "last_name": "Шумилов",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.866Z",
+    "username": "145",
+    "email": null,
+    "rfid_card": "3120989",
+    "tabnum": "56",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Роман",
+    "last_name": "Яковлев",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.868Z",
+    "username": "356",
+    "email": null,
+    "rfid_card": "0003134237",
+    "tabnum": "360",
+    "is_active": false,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": null,
+    "is_superuser": false,
+    "first_name": "Андрей",
+    "last_name": "ррр",
+    "is_staff": false,
+    "date_joined": "2026-11-05T22:13:51.870Z",
+    "username": "289",
+    "email": null,
+    "rfid_card": "0003096794",
+    "tabnum": "293",
+    "is_active": true,
+    "password": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-06T07:20:13.976Z",
+    "is_superuser": false,
+    "first_name": "Сергей",
+    "last_name": "Коробейников",
+    "is_staff": false,
+    "date_joined": "2026-11-06T07:20:11.838Z",
+    "username": "Admin1",
+    "email": "adminIC@smn35.com",
+    "rfid_card": "",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$5pPuuBnLVXtTebDGj3Zp4r$0V2Vuc2ouDrz3hVIIH3ZUt5reBjO9cRrFB+yNk4o2EQ=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-06T14:38:51.332Z",
+    "is_superuser": false,
+    "first_name": "admn",
+    "last_name": "ovv",
+    "is_staff": false,
+    "date_joined": "2026-11-06T14:38:49.309Z",
+    "username": "adminin",
+    "email": "wer@df.uy",
+    "rfid_card": "2",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$JhPCY36xxyYaxARMn93c4w$lmbcj19G8OIYroim4EilfBUoTtaTGN0799evEkzimfk=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-06T16:14:05.729Z",
+    "is_superuser": false,
+    "first_name": "Петр",
+    "last_name": "Тихушкин",
+    "is_staff": false,
+    "date_joined": "2026-11-06T16:14:03.537Z",
+    "username": "кладовщик",
+    "email": "eptit@fgh.com",
+    "rfid_card": "503295",
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$fjyoYy3FMToqjPDADXDsVB$bS4e8lEK5Qd+faoN1Z0xKINesBUX8KviDk9K+heKbY0=",
+    "groups": [
+      [
+        "Кладовщики"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "user.user",
+  "fields": {
+    "last_login": "2026-11-08T22:01:59.029Z",
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "date_joined": "2026-11-08T22:00:56.522Z",
+    "username": "administr",
+    "email": "",
+    "rfid_card": null,
+    "tabnum": null,
+    "is_active": true,
+    "password": "pbkdf2_sha256$1500000$Q3KRUKM4KdpwHwalnWyBSq$6cAXfLZfTtDrDyeRmzvH9QXTnkGX+L6iyWis7omeyV4=",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 1,
+  "fields": {
+    "category": null,
+    "name": "Лопата",
+    "inventory_N": "1",
+    "entry_date": "2026-10-24",
+    "price": "5.00",
+    "is_new": true,
+    "image1": "instruments/foto/_5e32d6178e231-big-1000x1000x.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "Топор",
+    "inventory_N": "2",
+    "entry_date": "2026-10-25",
+    "price": "6.00",
+    "is_new": true,
+    "image1": "instruments/foto/images.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_REPAIR",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 3,
+  "fields": {
+    "category": 3,
+    "name": "пила",
+    "inventory_N": "4",
+    "entry_date": "2022-01-25",
+    "price": "12.00",
+    "is_new": true,
+    "image1": "instruments/foto/пила.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "Дружба",
+    "status": "BROKEN",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 4,
+  "fields": {
+    "category": 2,
+    "name": "перфоратор",
+    "inventory_N": "1156",
+    "entry_date": "2026-09-01",
+    "price": "999.99",
+    "is_new": true,
+    "image1": "instruments/foto/18769951.webp",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 5,
+  "fields": {
+    "category": 1,
+    "name": "Вилы",
+    "inventory_N": "6725",
+    "entry_date": "2025-10-02",
+    "price": "13.13",
+    "is_new": false,
+    "image1": "instruments/foto/вилы.png",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "BROKEN",
+    "is_deleted": false,
+    "assigned_to": [
+      "Петя"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 6,
+  "fields": {
+    "category": 1,
+    "name": "руки",
+    "inventory_N": "0",
+    "entry_date": "2026-10-26",
+    "price": "10000.00",
+    "is_new": true,
+    "image1": "instruments/foto/pexels-nashu-otieno-2155157031-33573924.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 7,
+  "fields": {
+    "category": 3,
+    "name": "Вертолет",
+    "inventory_N": "1й12ц3у4",
+    "entry_date": "2026-08-04",
+    "price": "547.00",
+    "is_new": false,
+    "image1": "instruments/foto/4f03b18097dc27bc5524957e058ffb2a.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 8,
+  "fields": {
+    "category": null,
+    "name": "Молоток",
+    "inventory_N": "89754",
+    "entry_date": "2026-10-27",
+    "price": "555.55",
+    "is_new": true,
+    "image1": "instruments/foto/молоток.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 9,
+  "fields": {
+    "category": 2,
+    "name": "УШМ",
+    "inventory_N": "7643340",
+    "entry_date": "2026-10-27",
+    "price": "555.00",
+    "is_new": true,
+    "image1": "instruments/foto/УШМ_230.webp",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_USE",
+    "is_deleted": false,
+    "assigned_to": [
+      "кладовщик2"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 10,
+  "fields": {
+    "category": 2,
+    "name": "Дрель",
+    "inventory_N": "98165",
+    "entry_date": "2026-05-12",
+    "price": "88.00",
+    "is_new": true,
+    "image1": "instruments/foto/204497_00.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "WRITTEN_OFF",
+    "is_deleted": false,
+    "assigned_to": null
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 11,
+  "fields": {
+    "category": 2,
+    "name": "Дрель",
+    "inventory_N": "12апд90",
+    "entry_date": "2026-11-01",
+    "price": "20.00",
+    "is_new": false,
+    "image1": "instruments/foto/204497_00_tdcjpWB.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "Красная дрель",
+    "status": "IN_REPAIR",
+    "is_deleted": false,
+    "assigned_to": [
+      "grigor"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 12,
+  "fields": {
+    "category": 1,
+    "name": "напильник",
+    "inventory_N": "1111111",
+    "entry_date": "2026-11-03",
+    "price": "100.00",
+    "is_new": false,
+    "image1": "instruments/foto/напильник.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "Комент",
+    "status": "BROKEN",
+    "is_deleted": false,
+    "assigned_to": [
+      "ВАСЯ"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 13,
+  "fields": {
+    "category": 2,
+    "name": "Сварочный аппарат",
+    "inventory_N": "0005435",
+    "entry_date": "2024-01-02",
+    "price": "500047.00",
+    "is_new": true,
+    "image1": "instruments/foto/сварочник.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_USE",
+    "is_deleted": false,
+    "assigned_to": [
+      "Ваня"
+    ]
+  }
+},
+{
+  "model": "core.instrument",
+  "pk": 14,
+  "fields": {
+    "category": 2,
+    "name": "Сварочный аппарат",
+    "inventory_N": "9000476",
+    "entry_date": "2026-11-06",
+    "price": "89400.00",
+    "is_new": true,
+    "image1": "instruments/foto/сварочный.jpg",
+    "image2": "",
+    "image3": "",
+    "comment": "",
+    "status": "IN_USE",
+    "is_deleted": false,
+    "assigned_to": [
+      "Ваня"
+    ]
+  }
+}
+]
