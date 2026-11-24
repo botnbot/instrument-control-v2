@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Сдача инструмента{% endblock %}
+
+{% block content %}
+<h2>Сдача инструмента</h2>
+
+<!-- Шаг 1: Аутентификация по карте -->
+<div class="card mb-4">
+    <div class="card-header">Шаг 1: Приложите карту пользователя</div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="text" name="rfid_card" class="form-control" placeholder="Ожидание карты..." autofocus autocomplete="off" required>
+                <button type="submit" class="btn btn-primary">Найти пользователя</button>
+            </div>
+        </form>
+        {% if rfid_error %}
+            <div class="alert alert-danger mt-2">{{ rfid_error }}</div>
+        {% endif %}
+        {% if user_to_return %}
+            <div class="alert alert-success mt-2">
+                Пользователь найден: <strong>{{ user_to_return }}</strong>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Шаг 2: Выбор инструмента для сдачи -->
+{% if user_to_return %}
+<div class="card">
+    <div class="card-header">Шаг 2: Выберите инструмент для сдачи</div>
+    <div class="card-body">
+        {% if user_instruments %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Инв. номер</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for instrument in user_instruments %}
+                <tr>
+                    <td>{{ instrument.inventory_N }}</td>
+                    <td>{{ instrument.name }}</td>
+                    <td>{{ instrument.category.name|default:"—" }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="instrument_id" value="{{ instrument.pk }}">
+                            <button type="submit" class="btn btn-sm btn-success">Принять на склад</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">За этим пользователем не закреплено ни одного инструмента.</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

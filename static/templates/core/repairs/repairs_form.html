@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Редактировать ремонт{% else %}Добавить ремонт{% endif %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{% if form.instance.pk %}Редактировать ремонт{% else %}Отправить в ремонт{% endif
+                    %}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" id="repair-form">
+                    {% csrf_token %}
+                    <!-- Кастомное поле поиска инструмента -->
+                    <div class="mb-3">
+                        <label class="form-label">Инструмент (Инв. номер или Название)</label>
+                        <!-- Текстовое поле для поиска -->
+                        <input type="text" id="instrument-search" class="form-control"
+                               placeholder="Начните вводить номер или название..." autocomplete="off"
+                               data-initial-text="{% if initial_instrument_text %}{{ initial_instrument_text|safe }}{% endif %}">
+
+                        <!-- Скрытое поле, куда запишется ID -->
+                        <input type="hidden" name="instrument" id="id_instrument"
+                               value="{% if form.initial.instrument %}{{ form.initial.instrument.id }}{% endif %}">
+                        <div id="search-results" class="list-group mt-1"></div>
+                        <input type="hidden" name="instrument" id="id_instrument" value="">
+                    </div>
+
+                    <!-- Остальные поля формы (кроме instrument) -->
+                    {% for field in form %}
+                    {% if field.name != 'instrument' %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <hr>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <a href="{% url 'core:repair_list' %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('instrument-search');
+        const resultsBox = document.getElementById('search-results');
+        const hiddenInput = document.getElementById('id_instrument');
+
+        // Читаем начальный текст из data-атрибута (передается из views.py)
+        const initialText = searchInput.dataset.initialText || '';
+
+        if (initialText) {
+            searchInput.value = initialText;
+            // Ищем ID для скрытого поля через API
+            fetch(`/api/search-instruments/?q=${encodeURIComponent(initialText)}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.results && data.results.length > 0) {
+                        const found = data.results.find(item => item.text === initialText) || data.results[0];
+                        hiddenInput.value = found.id;
+                    }
+                })
+                .catch(err => console.error('Ошибка предзаполнения:', err));
+        }
+
+        let timeout = null;
+
+        searchInput.addEventListener('input', function () {
+            clearTimeout(timeout);
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                resultsBox.innerHTML = '';
+                hiddenInput.value = '';
+                return;
+            }
+
+            timeout = setTimeout(() => {
+                fetch(`/api/search-instruments/?q=${encodeURIComponent(query)}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.json();
+                    })
+                    .then(data => {
+                        resultsBox.innerHTML = '';
+                        if (!data.results || data.results.length === 0) {
+                            resultsBox.innerHTML = '<div class="list-group-item text-muted">Ничего не найдено</div>';
+                            return;
+                        }
+                        data.results.forEach(item => {
+                            const btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.className = 'list-group-item list-group-item-action';
+                            btn.textContent = item.text;
+                            btn.onclick = function () {
+                                searchInput.value = item.text;
+                                hiddenInput.value = item.id;
+                                resultsBox.innerHTML = '';
+                            };
+                            resultsBox.appendChild(btn);
+                        });
+                    })
+                    .catch(err => {
+                        console.error('Ошибка поиска:', err);
+                        resultsBox.innerHTML = '<div class="list-group-item text-danger">Ошибка сервера</div>';
+                    });
+            }, 300);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+                resultsBox.innerHTML = '';
+            }
+        });
+    });
+</script>
+{% endblock %}
+                               value="{% if form.initial.instrument %}{{ form.initial.instrument.id }}{% endif %}">
+                        <div id="search-results" class="list-group mt-1"></div>
+                        <input type="hidden" name="instrument" id="id_instrument" value="">
+                    </div>
