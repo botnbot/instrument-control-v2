@@ -1,6 +1,5 @@
-import shutil
-import sqlite3
-import zipfile
+import os
+import subprocess
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -29,7 +28,6 @@ User = get_user_model()
 def search_instruments(request):
     query = request.GET.get('q', '').strip()
     if query:
-        # PostgreSQL сам сделает поиск без учета регистра для кириллицы
         instruments = Instrument.objects.filter(
             Q(inventory_N__icontains=query) | Q(name__icontains=query)
         )[:10]
@@ -119,8 +117,8 @@ def write_off_instrument(request, pk):
     instrument = get_object_or_404(Instrument, pk=pk)
 
     is_allowed = (
-        request.user.is_superuser or
-        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+            request.user.is_superuser or
+            request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
     )
     if not is_allowed:
         messages.error(request, "У вас нет прав на списание.")
@@ -247,8 +245,8 @@ class RepairCreateView(LoginRequiredMixin, CreateView):
 @login_required
 def issue_instrument(request):
     is_allowed = (
-        request.user.is_superuser or
-        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+            request.user.is_superuser or
+            request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
     )
     if not is_allowed:
         messages.error(request, "У вас нет прав на выдачу инструментов.")
@@ -257,7 +255,6 @@ def issue_instrument(request):
     user_to_assign = None
     rfid_error = None
 
-    # Шаг 1:=== Поиск пользователя по карте ===
     if request.method == 'POST' and 'rfid_card' in request.POST:
         rfid = request.POST.get('rfid_card', '').strip()
         if rfid:
@@ -267,7 +264,6 @@ def issue_instrument(request):
             except User.DoesNotExist:
                 rfid_error = "Пользователь с такой картой не найден или неактивен."
 
-    # Шаг 2:=== Выдача ===
     if request.method == 'POST' and 'instrument_id' in request.POST:
         instrument = get_object_or_404(Instrument, pk=request.POST.get('instrument_id'))
         user_id = request.POST.get('user_id')
@@ -276,16 +272,13 @@ def issue_instrument(request):
         if instrument.status != Instrument.STATUS_IN_USE:
             messages.error(request, "Можно выдавать только инструменты со статусом «В работе».")
         elif instrument.assigned_to:
-            messages.warning(request, f'Инструмент уже закреплён за {user_to_assign.get_full_name()
-                                                                     or user_to_assign.username}')
+            messages.warning(request, f'Инструмент уже закреплён за {instrument.assigned_to}.')
         else:
             instrument.assigned_to = user_to_assign
             instrument.save()
-            messages.success(request, f'Инструмент "{instrument.name}" выдан пользователю'
-                                      f' {user_to_assign.get_full_name()or user_to_assign.username}')
+            messages.success(request, f'Инструмент "{instrument.name}" выдан пользователю {user_to_assign}.')
             return redirect('core:issue_instrument')
 
-    # Список доступных инструментов
     available_instruments = Instrument.objects.filter(
         is_deleted=False,
         status=Instrument.STATUS_IN_USE,
@@ -298,10 +291,11 @@ def issue_instrument(request):
         'available_instruments': available_instruments,
     })
 
-    # Шаг 3:=== Сдача инструмента ===
+
+# === Сдача инструмента ===
+
 @login_required
 def return_instrument(request):
-    # Проверка прав
     is_allowed = (
             request.user.is_superuser or
             request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
@@ -313,7 +307,6 @@ def return_instrument(request):
     user_to_return = None
     rfid_error = None
 
-    # Шаг 1:=== Поиск пользователя по карте ===
     if request.method == 'POST' and 'rfid_card' in request.POST:
         rfid = request.POST.get('rfid_card', '').strip()
         if rfid:
@@ -323,7 +316,6 @@ def return_instrument(request):
             except User.DoesNotExist:
                 rfid_error = "Пользователь с такой картой не найден или неактивен."
 
-    # Шаг 2:=== Прием инструмента ===
     if request.method == 'POST' and 'instrument_id' in request.POST:
         instrument = get_object_or_404(Instrument, pk=request.POST.get('instrument_id'))
 
@@ -334,11 +326,9 @@ def return_instrument(request):
                 instrument.assigned_to = None
                 instrument.save(update_fields=['assigned_to'])
             messages.success(request, f'Инструмент "{instrument.name}" успешно возвращён на склад.')
-            # Возвращаем на ту же страницу, чтобы удобно было сдавать несколько штук подряд
             return redirect(
                 f"{reverse_lazy('core:return_instrument')}?user_id={user_to_return.pk if user_to_return else ''}")
 
-    # Список инструментов, которые закреплены за пользователем
     user_instruments = []
     if user_to_return:
         user_instruments = Instrument.objects.filter(
@@ -346,7 +336,6 @@ def return_instrument(request):
             assigned_to=user_to_return
         )
     elif request.method == 'GET' and request.GET.get('user_id'):
-        # Если перешли по ссылке после сдачи (чтобы не прикладывать карту заново)
         user_to_return = get_object_or_404(User, pk=request.GET.get('user_id'))
         user_instruments = Instrument.objects.filter(
             is_deleted=False,
@@ -358,6 +347,7 @@ def return_instrument(request):
         'rfid_error': rfid_error,
         'user_instruments': user_instruments,
     })
+
 
 # === Перемещения ===
 
@@ -380,6 +370,7 @@ class RelocationCreateView(LoginRequiredMixin, CreateView):
             initial['instrument'] = instrument_id
         return initial
 
+
 # === Пометка сломанным ===
 
 @login_required
@@ -387,8 +378,8 @@ def mark_as_broken(request, pk):
     instrument = get_object_or_404(Instrument, pk=pk)
 
     is_allowed = (
-        request.user.is_superuser or
-        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+            request.user.is_superuser or
+            request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
     )
     if not is_allowed:
         messages.error(request, "У вас нет прав на изменение статуса.")
@@ -403,14 +394,16 @@ def mark_as_broken(request, pk):
     messages.success(request, f'Инструмент "{instrument.name}" отмечен как сломанный.')
     return redirect('core:instrument_list')
 
+
 # === Возврат из ремонта ===
+
 @login_required
 def return_from_repair(request, pk):
     instrument = get_object_or_404(Instrument, pk=pk)
 
     is_allowed = (
-        request.user.is_superuser or
-        request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
+            request.user.is_superuser or
+            request.user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
     )
     if not is_allowed:
         messages.error(request, "У вас нет прав на возврат из ремонта.")
@@ -467,61 +460,63 @@ def return_from_repair(request, pk):
     return redirect('core:instrument_list')
 
 
+# ========== ПРАВА ДОСТУПА ==========
+
 def is_storekeeper_or_admin(user):
     return user.is_superuser or user.groups.filter(name__in=['Администрация', 'Кладовщики']).exists()
 
 
-#  ==========  BACKUP  ==========
+def is_superuser(user):
+    return user.is_superuser
+
+
+# ========== БЭКАП (PostgreSQL) ==========
 
 @user_passes_test(is_storekeeper_or_admin)
 def backup_view(request):
-    """Создание бэкапа базы данных и медиа-файлов"""
+    """Создание бэкапа только базы данных PostgreSQL"""
     if request.method == 'POST':
         timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        backup_filename = f"backup_{timestamp}.zip"
+        backup_filename = f"db_backup_{timestamp}.dump"
 
         backup_dir = Path(settings.BACKUP_ROOT)
         backup_dir.mkdir(parents=True, exist_ok=True)
         backup_path = backup_dir / backup_filename
 
-        db_path = Path(settings.BASE_DIR) / 'db.sqlite3'
-        media_path = Path(settings.MEDIA_ROOT)
+        pg_dump_path = r"C:\Program Files\PostgreSQL\18\bin\pg_dump.exe"
+        if not Path(pg_dump_path).exists():
+            pg_dump_path = "pg_dump"
 
         try:
-            temp_db_path = backup_dir / 'temp_db.sqlite3'
-            if db_path.exists():
-                # Безопасное копирование SQLite
-                src_conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
-                dst_conn = sqlite3.connect(temp_db_path)
-                src_conn.backup(dst_conn)
-                dst_conn.close()
-                src_conn.close()
+            env = os.environ.copy()
+            env['PGPASSWORD'] = settings.DATABASES['default']['PASSWORD']
 
-            with zipfile.ZipFile(backup_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-                # Добавляем базу данных
-                if temp_db_path.exists():
-                    zipf.write(temp_db_path, arcname='db.sqlite3')
-                    temp_db_path.unlink()  # Удаляем временный файл
+            command = [
+                pg_dump_path,
+                "-h", settings.DATABASES['default']['HOST'],
+                "-p", str(settings.DATABASES['default']['PORT']),
+                "-U", settings.DATABASES['default']['USER'],
+                "-F", "c",
+                "-f", str(backup_path),
+                settings.DATABASES['default']['NAME']
+            ]
 
-                # Добавляем медиа-файлы
-                if media_path.exists():
-                    for file_path in media_path.rglob('*'):
-                        if file_path.is_file():
-                            arcname = Path('media') / file_path.relative_to(media_path)
-                            zipf.write(file_path, arcname=arcname.as_posix())
+            subprocess.run(command, env=env, check=True)
 
-            messages.success(request, f'Бэкап успешно создан: {backup_filename}')
+            messages.success(request, f'Бэкап базы данных успешно создан: {backup_filename}')
             return FileResponse(open(backup_path, 'rb'), as_attachment=True, filename=backup_filename)
 
+        except subprocess.CalledProcessError as e:
+            messages.error(request, f'Ошибка при создании дампа БД: {str(e)}')
+            return redirect('core:backup_view')
         except Exception as e:
             messages.error(request, f'Ошибка при создании бэкапа: {str(e)}')
             return redirect('core:backup_view')
 
-    # Список существующих бэкапов
     backups = []
     backup_dir = Path(settings.BACKUP_ROOT)
     if backup_dir.exists():
-        for f in backup_dir.glob('*.zip'):
+        for f in backup_dir.glob('*.dump'):
             backups.append(f.name)
     backups.sort(reverse=True)
 
@@ -530,8 +525,8 @@ def backup_view(request):
 
 @user_passes_test(is_storekeeper_or_admin)
 def backup_download(request, filename: str):
-    """Скачивание ранее созданного бэкапа (защита от Path Traversal)"""
-    if not filename.startswith("backup_") or not filename.endswith(".zip"):
+    """Скачивание ранее созданного бэкапа"""
+    if not filename.startswith("db_backup_") or not filename.endswith(".dump"):
         raise Http404
 
     root = Path(settings.BACKUP_ROOT).resolve()
@@ -544,45 +539,62 @@ def backup_download(request, filename: str):
         open(target, "rb"),
         as_attachment=True,
         filename=target.name,
-        content_type="application/zip",
+        content_type="application/octet-stream",
     )
 
 
-@user_passes_test(is_storekeeper_or_admin)
+@user_passes_test(is_superuser)
 def restore_view(request):
-    """Восстановление из загруженного бэкапа"""
+    """Восстановление из загруженного дампа базы (PostgreSQL) - только суперпользователь"""
     if request.method == 'POST' and request.FILES.get('backup_file'):
         uploaded_file = request.FILES['backup_file']
 
-        if not uploaded_file.name.endswith('.zip'):
-            messages.error(request, 'Файл должен быть в формате .zip')
+        if not uploaded_file.name.endswith('.dump'):
+            messages.error(request, 'Файл должен быть в формате .dump')
             return redirect('core:backup_view')
 
         backup_dir = Path(settings.BACKUP_ROOT)
         backup_dir.mkdir(parents=True, exist_ok=True)
-        temp_zip_path = backup_dir / 'temp_restore.zip'
+        temp_dump_path = backup_dir / 'temp_restore.dump'
 
         try:
-            with open(temp_zip_path, 'wb+') as destination:
+            with open(temp_dump_path, 'wb+') as destination:
                 for chunk in uploaded_file.chunks():
                     destination.write(chunk)
 
-            db_path = Path(settings.BASE_DIR) / 'db.sqlite3'
-            if db_path.exists():
-                shutil.copy2(db_path, str(db_path) + '.backup_before_restore')
+            pg_restore_path = r"C:\Program Files\PostgreSQL\18\bin\pg_restore.exe"
+            if not Path(pg_restore_path).exists():
+                pg_restore_path = "pg_restore"
 
-            with zipfile.ZipFile(temp_zip_path, 'r') as zipf:
-                zipf.extractall(settings.BASE_DIR)
+            env = os.environ.copy()
+            env['PGPASSWORD'] = settings.DATABASES['default']['PASSWORD']
 
-            temp_zip_path.unlink()
+            command = [
+                pg_restore_path,
+                "-h", settings.DATABASES['default']['HOST'],
+                "-p", str(settings.DATABASES['default']['PORT']),
+                "-U", settings.DATABASES['default']['USER'],
+                "-d", settings.DATABASES['default']['NAME'],
+                "--clean",
+                "--if-exists",
+                str(temp_dump_path)
+            ]
 
-            messages.success(request, 'База данных и файлы успешно восстановлены. Перезапустите сервер.')
+            subprocess.run(command, env=env, check=True)
+            temp_dump_path.unlink()
+
+            messages.success(request, 'База данных успешно восстановлена. Перезапустите сервер.')
             return redirect('core:instrument_list')
 
+        except subprocess.CalledProcessError as e:
+            messages.error(request, f'Ошибка при восстановлении БД: {str(e)}')
+            if temp_dump_path.exists():
+                temp_dump_path.unlink()
+            return redirect('core:backup_view')
         except Exception as e:
             messages.error(request, f'Ошибка при восстановлении: {str(e)}')
-            if temp_zip_path.exists():
-                temp_zip_path.unlink()
+            if temp_dump_path.exists():
+                temp_dump_path.unlink()
             return redirect('core:backup_view')
 
     return redirect('core:backup_view')
@@ -593,22 +605,34 @@ def restore_view(request):
 @user_passes_test(is_storekeeper_or_admin)
 def sync_timecontrol_view(request):
     if request.method == 'POST':
-        stats = sync_users_from_timecontrol(force_overwrite=True)  # Всегда жесткая синхронизация
+        # Вызываем функцию жесткой синхронизации
+        stats = sync_users_from_timecontrol(force_overwrite=True)
 
-        # Выводим предупреждения о дубликатах и ошибки
+        # 1. Выводим предупреждения о дубликатах карт (желтые плашки)
         if stats.get('conflicts'):
             for msg in stats['conflicts']:
-                messages.warning(request, msg)  # Желтая плашка
+                messages.warning(request, msg)
 
+        # 2. Выводим ошибки, если они возникли (красные плашки)
         if stats.get('errors'):
             for err in stats['errors']:
-                messages.error(request, err)  # Красная плашка
+                messages.error(request, err)
 
+
+        # 3. Выводим финальную статистику
         messages.success(
             request,
-            f"Синхронизация завершена. Создано: {stats.get('created', 0)}, Обновлено: {stats.get('updated', 0)}. "
-            f"Всего: {stats.get('total_processed', 0)}."
+            f"Синхронизация завершена. Создано: {stats.get('created', 0)}, "
+            f"Обновлено: {stats.get('updated', 0)}, "
+            f"Удалено: {stats.get('deleted', 0)}. "
+            f"Всего обработано: {stats.get('total_processed', 0)}."
         )
+
+        # ВЫВОДИМ СПИСОК УДАЛЕННЫХ (если они были)
+        if stats.get('deleted_users'):
+            deleted_str = ", ".join(stats['deleted_users'])
+            messages.info(request, f"Удаленные сотрудники: {deleted_str}")
         return redirect('core:sync_timecontrol')
 
+    # Для GET-запроса просто рендерим страницу
     return render(request, 'core/sync_timecontrol.html')

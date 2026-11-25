@@ -1822,6 +1822,8 @@ FILE: templates\core\repairs\repairs_form.html
                     <div class="mb-3">
                         <label class="form-label">РРЅСЃС‚СЂСѓРјРµРЅС‚ (РРЅРІ. РЅРѕРјРµСЂ РёР»Рё РќР°Р·РІР°РЅРёРµ)</label>
                         <input type="text" id="instrument-search" class="form-control"
+       placeholder="Начните вводить номер или название..." autocomplete="off"
+       data-initial-text="{% if initial_instrument_text %}{{ initial_instrument_text|safe }}{% endif %}">
                                placeholder="РќР°С‡РЅРёС‚Рµ РІРІРѕРґРёС‚СЊ РЅРѕРјРµСЂ..." autocomplete="off">
                         <div id="search-results" class="list-group mt-1"></div>
 

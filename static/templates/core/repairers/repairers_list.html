@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Ремонтники</h2>
+<a href="{% url 'core:repairer_create' %}" class="btn btn-success mb-3">+ Добавить</a>
+<table class="table table-striped">
+    <thead><tr><th>Название</th><th>Контакт</th><th>Телефон</th></tr></thead>
+    <tbody>
+        {% for r in repairers %}
+        <tr><td>{{ r.name }}</td><td>{{ r.contact_person }}</td><td>{{ r.phone }}</td></tr>
+        {% empty %}
+        <tr><td colspan="3">Пусто</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

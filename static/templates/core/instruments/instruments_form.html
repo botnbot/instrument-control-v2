@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} инструмент</h2>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isNewCheckbox = document.getElementById('id_is_new');
+        const entryDateInput = document.getElementById('id_entry_date');
+
+        if (isNewCheckbox && entryDateInput) {
+            // Функция для установки даты
+            const setDateIfEmpty = () => {
+                if (isNewCheckbox.checked && !entryDateInput.value) {
+                    const today = new Date().toISOString().split('T')[0];
+                    entryDateInput.value = today;
+                }
+            };
+
+            // Проверяем сразу при загрузке страницы
+            setDateIfEmpty();
+
+            // И проверяем при каждом клике на галочку
+            isNewCheckbox.addEventListener('change', setDateIfEmpty);
+        }
+    });
+</script>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a href="{% url 'core:instrument_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

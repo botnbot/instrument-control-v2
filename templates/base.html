@@ -47,7 +47,11 @@
                 {% endif %}
             {% endif %}
             {% if user.is_authenticated %}
-                <span class="text-warning me-3">Вы вошли как: <strong>{{ user.first_name|default:user.username }}</strong></span>
+               <div class="text-white text-end" style="line-height: 1.2;">
+    <div class="small">Вы вошли как:</div>
+    <div class="fw-bold fs-5">{{ user.first_name }} {{ user.last_name }}</div>
+    <div class="small text-muted">{{ user.position|default:"Должность не указана" }}</div>
+</div>
                 <form method="post" action="{% url 'logout' %}" class="d-inline">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-outline-light btn-sm">Выйти</button>
