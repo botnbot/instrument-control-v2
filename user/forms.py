@@ -6,7 +6,7 @@ from .models import User
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True, label="Email")
+    email = forms.EmailField(required=False, label="Email")
     first_name = forms.CharField(max_length=30, required=True, label="Имя")
     last_name = forms.CharField(max_length=30, required=True, label="Фамилия")
     rfid_card = forms.CharField(max_length=50, required=False, label="Номер RFID-карты")

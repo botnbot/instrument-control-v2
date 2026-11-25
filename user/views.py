@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django import forms
 from django.shortcuts import render, redirect
+from django.conf import settings  # <-- Важно: импортируем настройки Django
 
 from .forms import LoginForm, UserRegisterForm
 
@@ -45,12 +46,18 @@ def rfid_login_view(request):
             user = authenticate(request, rfid_card=rfid)
             if user is not None:
                 login(request, user)
+                messages.success(request, f'Добро пожаловать, {user.first_name or user.username}!')
                 return redirect('core:instrument_list')
             else:
                 form.add_error('rfid_card', 'Карта не найдена или пользователь неактивен.')
     else:
         form = RFIDLoginForm()
-    return render(request, 'user/card_login.html', {'form': form})
+
+    # Передаем debug в шаблон, чтобы спрятать поле ввода, если DEBUG=False
+    return render(request, 'user/card_login.html', {
+        'form': form,
+        'debug': settings.DEBUG
+    })
 
 
 def login_view(request):
@@ -69,4 +76,7 @@ def login_view(request):
     else:
         form = LoginForm()
 
-    return render(request, 'user/login.html', {'form': form})
+    return render(request, 'user/login.html', {
+        'form': form,
+        'debug': settings.DEBUG
+    })
