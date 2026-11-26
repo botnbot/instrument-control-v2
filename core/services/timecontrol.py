@@ -2,6 +2,7 @@ import requests
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction, IntegrityError
+from django.contrib.auth.models import Group
 
 User = get_user_model()
 
@@ -16,7 +17,9 @@ def sync_users_from_timecontrol(force_overwrite=False):
         'errors': [],
         'conflicts': [],
         'transferred': [],
-        'total_processed': 0
+        'total_processed': 0,
+        'deleted': 0,
+        'deleted_users': []  # Сюда будем складывать "лишних" пользователей
     }
 
     try:
@@ -40,23 +43,36 @@ def sync_users_from_timecontrol(force_overwrite=False):
 
         for card, names in duplicate_cards.items():
             stats['conflicts'].append(
-                f"ОШИБКА В ТАЙМКОНТРОЛЕ: Карта {card} назначена сразу нескольким сотрудникам: {', '.join(names)}. Карта не будет присвоена никому."
+                f"ОШИБКА В ТАЙМКОНТРОЛЕ: Карта {card} назначена сразу нескольким сотрудникам: {', '.join(names)}."
+                f" Карта не будет присвоена никому."
             )
 
-        # --- ШАГ 2: Жесткая очистка и присвоение ---
-        # Очищаем все карты ОДИН РАЗ перед циклом (в отдельной транзакции)
+        timecontrol_uids = {str(p.get('UID')) for p in persons if p.get('UID')}
+
+        # --- ШАГ 2: Синхронизация ---
         with transaction.atomic():
+            # 1. Очищаем все карты
             User.objects.update(rfid_card=None)
 
-        # Раздаем карты заново. Каждого пользователя сохраняем в отдельной транзакции.
+            # 2. Находим пользователей, которых нет в TimeControl (но НЕ УДАЛЯЕМ)
+            users_to_keep = User.objects.exclude(username__in=timecontrol_uids).exclude(is_superuser=True)
+
+            # Запоминаем их ФИО
+            kept_users_list = [
+                f"{u.first_name} {u.last_name}".strip() or u.username
+                for u in users_to_keep
+            ]
+
+            stats['deleted'] = 0  # Мы никого не удаляем
+            stats['deleted_users'] = kept_users_list  # Передаем список для предупреждения
+
+        # 3. Раздаем карты заново
         for person in persons:
             uid = person.get('UID')
             tabnum = person.get('TABNUM', '')
             fullname = person.get('FULLNAME', '')
             is_locked = person.get('ISLOCKED') == '1'
             rfid_card = person.get('SHEDCARDKEY', '').strip()
-
-            # Получаем должность и отдел
             position = person.get('DOLJNAME', '').strip()
             department = person.get('DEPNAME', '').strip()
 
@@ -77,7 +93,7 @@ def sync_users_from_timecontrol(force_overwrite=False):
                     user.position = position
                     user.department = department
 
-                    # === ГЛАВНАЯ ПРОВЕРКА ===
+                    # Проверка на дубликаты
                     if rfid_card and rfid_card in duplicate_cards:
                         user.rfid_card = None
                     else:
@@ -85,12 +101,21 @@ def sync_users_from_timecontrol(force_overwrite=False):
 
                     user.save()
 
+                    # === АВТОМАТИЧЕСКОЕ ДОБАВЛЕНИЕ В ГРУППУ ===
+                    if position and "кладовщик" in position.lower():
+                        group, _ = Group.objects.get_or_create(name='Кладовщики')
+                        user.groups.add(group)
+                    else:
+                        group = Group.objects.filter(name='Кладовщики').first()
+                        if group and group in user.groups.all():
+                            user.groups.remove(group)
+
                 if created:
                     stats['created'] += 1
                 else:
                     stats['updated'] += 1
 
-            except IntegrityError as e:
+            except IntegrityError:
                 stats['errors'].append(
                     f"Пользователь {fullname} (UID: {uid}): карта {rfid_card} уже занята другим сотрудником. Пропущен."
                 )

@@ -587,7 +587,7 @@ def restore_view(request):
 @user_passes_test(is_storekeeper_or_admin)
 def sync_timecontrol_view(request):
     if request.method == 'POST':
-        # Вызываем функцию жесткой синхронизации
+        # Вызываем функцию синхронизации
         stats = sync_users_from_timecontrol(force_overwrite=True)
 
         # 1. Выводим предупреждения о дубликатах карт (желтые плашки)
@@ -600,7 +600,6 @@ def sync_timecontrol_view(request):
             for err in stats['errors']:
                 messages.error(request, err)
 
-
         # 3. Выводим финальную статистику
         messages.success(
             request,
@@ -610,10 +609,15 @@ def sync_timecontrol_view(request):
             f"Всего обработано: {stats.get('total_processed', 0)}."
         )
 
-        # ВЫВОДИМ СПИСОК УДАЛЕННЫХ (если они были)
+        # 4. ВЫВОДИМ ПРЕДУПРЕЖДЕНИЕ О ПОЛЬЗОВАТЕЛЯХ, КОТОРЫХ НЕТ В TIMECONTROL
         if stats.get('deleted_users'):
-            deleted_str = ", ".join(stats['deleted_users'])
-            messages.info(request, f"Удаленные сотрудники: {deleted_str}")
+            kept_str = ", ".join(stats['deleted_users'])
+            messages.warning(
+                request,
+                f"ВНИМАНИЕ: В базе найдены пользователи, которых нет в TimeControl: {kept_str}. "
+                f"Они НЕ БЫЛИ УДАЛЕНЫ. Проверьте их вручную."
+            )
+
         return redirect('core:sync_timecontrol')
 
     # Для GET-запроса просто рендерим страницу
